@@ -2,7 +2,7 @@
 <html lang="zh-HK">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>⚡ 四年級打字大師聯賽 · 寶可夢榮譽殿堂 🏆</title>
   <style>
     :root {
@@ -42,12 +42,33 @@
     
     /* Mode Switcher Tabs */
     .mode-tab-bar {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin: 6px auto 10px !important;
+      flex-wrap: nowrap !important;
+      max-width: 960px !important;
+      width: 100% !important;
+    }
+    .mode-tab-btn {
+      flex: 1 1 0 !important;
+      background: white;
+      border: 2px solid #CBD5E1;
+      padding: 7px 10px !important;
+      border-radius: 20px !important;
+      font-size: 13px !important;
+      font-weight: 800;
+      color: #475569;
+      cursor: pointer;
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin: 14px auto 16px;
-      flex-wrap: wrap;
-      max-width: 900px;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap !important;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
     .mode-tab-btn {
       background: white;
@@ -103,8 +124,8 @@
 
     
 .poke-img-avatar {
-  width: 52px;
-  height: 52px;
+      width: 36px;
+      height: 36px;
   object-fit: contain;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -122,9 +143,7 @@
 
 /* Hero Banner Header */
     .hero-banner {
-      background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #3B82F6 100%);
-      color: white;
-      padding: 26px 20px 22px;
+      padding: 12px 16px 10px;
       text-align: center;
       position: relative;
       box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
@@ -140,8 +159,8 @@
     }
 
     .poke-avatar-badge {
-      width: 64px;
-      height: 64px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -165,7 +184,7 @@
     }
 
     h1.title {
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 900;
       letter-spacing: 1.5px;
       margin-bottom: 6px;
@@ -578,13 +597,15 @@
     /* Minigame Section (Tab 4) */
     .game-box {
       background: white;
-      border-radius: 24px;
-      padding: 30px 20px;
-      max-width: 650px;
-      margin: 20px auto;
+      border-radius: 18px;
+      padding: 10px 16px;
+      max-width: 980px;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 10px auto;
       text-align: center;
-      border: 4px solid var(--poke-blue);
-      box-shadow: 0 12px 32px rgba(37, 99, 235, 0.15);
+      border: 2px solid #E2E8F0;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
       position: relative;
     }
 
@@ -1424,6 +1445,497 @@
       color: #334155;
     }
 
+
+    /* ======================================================== */
+    /* 🎮 1080*720 緊湊排版優化：參考六年級標準，無須滾動一屏盡覽 */
+    /* ======================================================== */
+    body {
+      padding-bottom: 24px !important;
+    }
+    .hero-banner {
+      padding: 10px 16px 8px !important;
+      border-bottom: 3.5px solid var(--poke-yellow) !important;
+    }
+    .pokemon-trio {
+      gap: 10px !important;
+      margin-bottom: 3px !important;
+    }
+    .poke-avatar-badge {
+      width: 40px !important;
+      height: 40px !important;
+      border-width: 2px !important;
+    }
+    .poke-img-avatar {
+      width: 32px !important;
+      height: 32px !important;
+    }
+    h1.title {
+      font-size: 20px !important;
+      margin-bottom: 2px !important;
+    }
+    p.subtitle {
+      font-size: 11.5px !important;
+    }
+    .stats-bar {
+      margin-top: 5px !important;
+      gap: 6px !important;
+    }
+    .stat-pill {
+      padding: 3px 9px !important;
+      font-size: 11px !important;
+    }
+    .nav-container {
+      max-width: 980px !important;
+      margin: 6px auto !important;
+      padding: 0 8px !important;
+    }
+    .tab-bar {
+      padding: 3px 6px !important;
+      gap: 4px !important;
+    }
+    .tab-btn {
+      padding: 5px 12px !important;
+      font-size: 12px !important;
+    }
+
+    /* 訓練家資訊橫條 (緊湊化) */
+    .trainer-header-bar {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 6px 12px !important;
+      background: #F8FAFC !important;
+      border-radius: 12px !important;
+      border: 1.5px solid #E2E8F0 !important;
+      margin-bottom: 6px !important;
+    }
+    .trainer-badge-icon {
+      font-size: 24px !important;
+    }
+    .trainer-name-text {
+      font-size: 14px !important;
+      font-weight: 900 !important;
+      color: #1E3A8A !important;
+    }
+    .trainer-title-pill {
+      font-size: 10.5px !important;
+      font-weight: 800 !important;
+      color: #D97706 !important;
+      background: #FEF3C7 !important;
+      padding: 1px 7px !important;
+      border-radius: 10px !important;
+    }
+    .btn-hub {
+      padding: 4px 10px !important;
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 模式 1-3 按鈕橫向排版：防止任何溢出 */
+    .mode-tab-bar {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin: 4px auto 6px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .mode-tab-btn {
+      flex: 1 1 0 !important;
+      padding: 6px 8px !important;
+      font-size: 12.5px !important;
+      font-weight: 800 !important;
+      border-radius: 20px !important;
+      white-space: nowrap !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .mode-badge-pill {
+      font-size: 10px !important;
+      padding: 1px 5px !important;
+      border-radius: 8px !important;
+      white-space: nowrap !important;
+    }
+
+    /* 目標怪物與文字 (緊湊居中) */
+    .game-header {
+      margin-top: 2px !important;
+      margin-bottom: 4px !important;
+      padding-bottom: 4px !important;
+    }
+    .target-monster-badge {
+      font-size: 32px !important;
+      margin-bottom: 2px !important;
+      line-height: 1 !important;
+    }
+    .target-word {
+      font-size: 48px !important;
+      font-weight: 900 !important;
+      color: #1E3A8A !important;
+      letter-spacing: 2px !important;
+      margin-bottom: 2px !important;
+      text-shadow: 2px 2px 0px #DBEAFE !important;
+      line-height: 1 !important;
+    }
+    #target-sub-hint {
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      color: #475569 !important;
+      margin: 0 0 2px !important;
+    }
+    .game-prompt {
+      font-size: 12.5px !important;
+      margin-bottom: 4px !important;
+      min-height: 18px !important;
+    }
+
+    /* 槽位高度緊湊化 */
+    .input-slots-row {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin: 4px 0 6px !important;
+    }
+    .code-slot {
+      width: 70px !important;
+      height: 50px !important;
+      padding: 2px 4px !important;
+      border-radius: 10px !important;
+    }
+    .code-slot-label {
+      font-size: 9.5px !important;
+      margin-bottom: 1px !important;
+    }
+    .code-slot-val {
+      font-size: 20px !important;
+      font-weight: 900 !important;
+    }
+
+    /* 緊湊精靈遊行原野 */
+    .capture-arena-container {
+      height: 250px !important;
+      border-radius: 16px !important;
+      position: relative !important;
+      overflow: hidden !important;
+      margin: 4px 0 !important;
+      touch-action: manipulation !important;
+    }
+    .arena-speed-controls {
+      top: 6px !important;
+      right: 8px !important;
+      gap: 4px !important;
+    }
+    .arena-speed-btn {
+      padding: 2px 7px !important;
+      font-size: 10.5px !important;
+    }
+    .poke-orb {
+      width: 68px !important;
+      height: 68px !important;
+      touch-action: manipulation !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .poke-orb-center-ring {
+      width: 20px !important;
+      height: 20px !important;
+    }
+    .poke-orb-char {
+      font-size: 24px !important;
+    }
+
+    /* ======================================================== */
+    /* 📱 手機端自動適配 (Mobile Responsive Layout) */
+    /* ======================================================== */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 6px !important;
+      }
+      .tab-bar {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+      }
+      .action-tools {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+      .search-box, .search-input {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .game-box {
+        width: 96% !important;
+        max-width: 96% !important;
+        padding: 8px 10px !important;
+        margin: 6px auto !important;
+      }
+      .trainer-header-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 6px !important;
+        padding: 6px 8px !important;
+      }
+      .trainer-actions {
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        gap: 4px !important;
+      }
+      .trainer-actions .btn-hub {
+        flex: 1 !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 4px 6px !important;
+        font-size: 11px !important;
+      }
+      .mode-tab-bar {
+        gap: 4px !important;
+        margin: 4px auto 6px !important;
+      }
+      .mode-tab-btn {
+        flex-direction: column !important;
+        padding: 5px 2px !important;
+        font-size: 11px !important;
+        gap: 2px !important;
+        white-space: normal !important;
+        text-align: center !important;
+      }
+      .mode-badge-pill {
+        font-size: 9px !important;
+        padding: 1px 4px !important;
+      }
+      .target-monster-badge {
+        font-size: 28px !important;
+      }
+      .target-word {
+        font-size: 40px !important;
+      }
+      .code-slot {
+        width: 60px !important;
+        height: 46px !important;
+      }
+      .code-slot-val {
+        font-size: 18px !important;
+      }
+      .capture-arena-container {
+        height: 220px !important;
+      }
+      .poke-orb {
+        width: 58px !important;
+        height: 58px !important;
+      }
+      .poke-orb-center-ring {
+        width: 18px !important;
+        height: 18px !important;
+      }
+      .poke-orb-char {
+        font-size: 20px !important;
+      }
+      .podium-container {
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .podium-step {
+        height: auto !important;
+        margin-bottom: 8px !important;
+        order: initial !important;
+      }
+      .rank-card {
+        padding: 8px 10px !important;
+        gap: 6px !important;
+      }
+      .modal-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 12px 10px !important;
+        border-radius: 16px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-banner {
+        padding: 8px 10px !important;
+      }
+      h1.title {
+        font-size: 17px !important;
+      }
+      p.subtitle {
+        font-size: 10.5px !important;
+      }
+      .stats-bar {
+        display: none !important; /* 螢幕極窄時隱藏次要統計橫條以節省高度 */
+      }
+      .tab-btn {
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+      }
+      .mode-tab-btn {
+        font-size: 10px !important;
+        padding: 4px 1px !important;
+      }
+      .capture-arena-container {
+        height: 200px !important;
+      }
+      .poke-orb {
+        width: 52px !important;
+        height: 52px !important;
+      }
+      .poke-orb-char {
+        font-size: 18px !important;
+      }
+    }
+
+    /* ======================================================== */
+    /* 🌟 第 5 點：全級前40名 (第4-10名) & 各班前10名 (前3名) 炫彩榮譽特效 */
+    /* ======================================================== */
+    /* 全級前40名之第 4 至 10 名：璀璨金紅流光呼吸光暈與外框閃爍 */
+    @keyframes elitePulseGlow {
+      0% {
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.45), 0 0 0 2px #F59E0B;
+        border-color: #F59E0B;
+      }
+      50% {
+        box-shadow: 0 0 22px rgba(239, 68, 68, 0.75), 0 0 0 3.5px #EF4444;
+        border-color: #EF4444;
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.45), 0 0 0 2px #F59E0B;
+        border-color: #F59E0B;
+      }
+    }
+    @keyframes eliteBgShimmer {
+      0% { background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 100%); }
+      50% { background: linear-gradient(135deg, #FFF1F2 0%, #FED7AA 100%); }
+      100% { background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 100%); }
+    }
+    .rank-card-elite-flash {
+      position: relative !important;
+      animation: elitePulseGlow 2.2s infinite ease-in-out, eliteBgShimmer 4s infinite ease-in-out !important;
+      border: 2px solid #F59E0B !important;
+      overflow: visible !important;
+    }
+    .badge-elite-top10 {
+      background: linear-gradient(90deg, #F59E0B 0%, #EF4444 100%);
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(239, 68, 68, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: 6px;
+      animation: badgePulseAnim 1.8s infinite ease-in-out;
+    }
+
+    /* 各班前 10 名之第 1 名（冠軍）：黃金熾熱光環閃爍 */
+    @keyframes classTop1Pulse {
+      0% {
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.5), 0 0 0 2.5px #F59E0B;
+        border-color: #F59E0B;
+      }
+      50% {
+        box-shadow: 0 0 24px rgba(234, 179, 8, 0.9), 0 0 0 4px #EAB308;
+        border-color: #EAB308;
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.5), 0 0 0 2.5px #F59E0B;
+        border-color: #F59E0B;
+      }
+    }
+    .rank-card-class-champion {
+      position: relative !important;
+      background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 100%) !important;
+      animation: classTop1Pulse 2s infinite ease-in-out !important;
+      border: 2.5px solid #F59E0B !important;
+      overflow: visible !important;
+    }
+
+    /* 各班前 10 名之第 2 名（亞軍）：蔚藍銀光呼吸閃爍 */
+    @keyframes classTop2Pulse {
+      0% {
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.45), 0 0 0 2px #3B82F6;
+        border-color: #3B82F6;
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(96, 165, 250, 0.85), 0 0 0 3.5px #60A5FA;
+        border-color: #60A5FA;
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.45), 0 0 0 2px #3B82F6;
+        border-color: #3B82F6;
+      }
+    }
+    .rank-card-class-runnerup {
+      position: relative !important;
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%) !important;
+      animation: classTop2Pulse 2.3s infinite ease-in-out !important;
+      border: 2px solid #3B82F6 !important;
+      overflow: visible !important;
+    }
+
+    /* 各班前 10 名之第 3 名（季軍）：曜石古銅光彩閃爍 */
+    @keyframes classTop3Pulse {
+      0% {
+        box-shadow: 0 0 8px rgba(217, 119, 6, 0.45), 0 0 0 2px #D97706;
+        border-color: #D97706;
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(249, 115, 22, 0.8), 0 0 0 3.5px #F97316;
+        border-color: #F97316;
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(217, 119, 6, 0.45), 0 0 0 2px #D97706;
+        border-color: #D97706;
+      }
+    }
+    .rank-card-class-third {
+      position: relative !important;
+      background: linear-gradient(135deg, #FFFBEB 0%, #FFEDD5 100%) !important;
+      animation: classTop3Pulse 2.6s infinite ease-in-out !important;
+      border: 2px solid #D97706 !important;
+      overflow: visible !important;
+    }
+
+    .badge-class-honor {
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      animation: badgePulseAnim 2s infinite ease-in-out;
+    }
+    .badge-class-honor.gold {
+      background: linear-gradient(90deg, #F59E0B 0%, #EAB308 100%);
+    }
+    .badge-class-honor.silver {
+      background: linear-gradient(90deg, #3B82F6 0%, #60A5FA 100%);
+    }
+    .badge-class-honor.bronze {
+      background: linear-gradient(90deg, #D97706 0%, #F97316 100%);
+    }
+    @keyframes badgePulseAnim {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.06); opacity: 0.9; }
+    }
+
   </style>
 </head>
 <body>
@@ -1730,9 +2242,9 @@
             
             <div class="arena-controls-bar">
               <span style="font-size: 11px; font-weight: 800; color: #1E3A8A; background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 8px;">游行速度：</span>
-              <button class="arena-speed-btn active" id="speed-normal" onclick="setArenaSpeed(1.0, 'speed-normal')">🟢 悠閒</button>
-              <button class="arena-speed-btn" id="speed-fast" onclick="setArenaSpeed(1.7, 'speed-fast')">🟡 敏捷</button>
-              <button class="arena-speed-btn" id="speed-pause" onclick="setArenaSpeed(0.0, 'speed-pause')">⏸️ 定點</button>
+              <button class="arena-speed-btn active" id="speed-normal" onclick="setArenaSpeed(1.0, 'speed-normal')" title="標準游行速度 (1.0x 標準分)">🟢 悠閒 (1.0x)</button>
+              <button class="arena-speed-btn" id="speed-fast" onclick="setArenaSpeed(1.7, 'speed-fast')" title="敏捷高速游行 (1.4x 獎勵加成)">🟡 敏捷 (1.4x 獎勵)</button>
+              <button class="arena-speed-btn" id="speed-pause" onclick="setArenaSpeed(0.0, 'speed-pause')" title="定點靜止輔助 (0.6x 簡易得分)">⏸️ 定點 (0.6x 簡易)</button>
             </div>
 
             <div id="orbs-container"></div>
@@ -2174,7 +2686,7 @@
       }
     };
 
-    const DATA = {"top40": [{"rank": 1, "cls": "P4B", "num": 4, "name": "P4B 04號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 17:33:04"}, {"rank": 2, "cls": "P4B", "num": 31, "name": "P4B 31號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 17:37:51"}, {"rank": 3, "cls": "P4A", "num": 27, "name": "P4A 27號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 18:06:53"}, {"rank": 4, "cls": "P4A", "num": 2, "name": "P4A 02號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 19:45:39"}, {"rank": 5, "cls": "P4B", "num": 24, "name": "P4B 24號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 19:52:37"}, {"rank": 6, "cls": "P4A", "num": 28, "name": "P4A 28號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:35:10"}, {"rank": 7, "cls": "P4B", "num": 27, "name": "P4B 27號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:38:26"}, {"rank": 8, "cls": "P4A", "num": 19, "name": "P4A 19號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:52:26"}, {"rank": 9, "cls": "P4F", "num": 22, "name": "P4F 22號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:53:02"}, {"rank": 10, "cls": "P4C", "num": 4, "name": "P4C 04號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 21:13:55"}, {"rank": 11, "cls": "P4A", "num": 5, "name": "P4A 05號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 21:21:18"}, {"rank": 12, "cls": "P4B", "num": 10, "name": "P4B 10號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 21:43:57"}, {"rank": 13, "cls": "P4D", "num": 29, "name": "P4D 29號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 19:23:51"}, {"rank": 14, "cls": "P4E", "num": 26, "name": "P4E 26號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 20:05:48"}, {"rank": 15, "cls": "P4E", "num": 29, "name": "P4E 29號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 20:29:49"}, {"rank": 16, "cls": "P4E", "num": 18, "name": "P4E 18號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 20:40:23"}, {"rank": 17, "cls": "P4D", "num": 22, "name": "P4D 22號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 21:33:24"}, {"rank": 18, "cls": "P4E", "num": 15, "name": "P4E 15號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 21:35:34"}, {"rank": 19, "cls": "P4D", "num": 20, "name": "P4D 20號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 22:10:28"}, {"rank": 20, "cls": "P4E", "num": 6, "name": "P4E 06號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 22:19:39"}, {"rank": 21, "cls": "P4C", "num": 34, "name": "P4C 34號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 23:01:35"}, {"rank": 22, "cls": "P4D", "num": 12, "name": "P4D 12號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 15:13:42"}, {"rank": 23, "cls": "P4D", "num": 15, "name": "P4D 15號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:01:51"}, {"rank": 24, "cls": "P4F", "num": 10, "name": "P4F 10號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:35:49"}, {"rank": 25, "cls": "P4B", "num": 29, "name": "P4B 29號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:46:15"}, {"rank": 26, "cls": "P4B", "num": 8, "name": "P4B 08號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:52:00"}, {"rank": 27, "cls": "P4C", "num": 12, "name": "P4C 12號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 21:54:13"}, {"rank": 28, "cls": "P4C", "num": 11, "name": "P4C 11號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 22:53:46"}, {"rank": 29, "cls": "P4C", "num": 31, "name": "P4C 31號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 19:16:03"}, {"rank": 30, "cls": "P4B", "num": 18, "name": "P4B 18號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 19:49:19"}, {"rank": 31, "cls": "P4A", "num": 20, "name": "P4A 20號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 20:22:27"}, {"rank": 32, "cls": "P4B", "num": 13, "name": "P4B 13號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 20:27:59"}, {"rank": 33, "cls": "P4A", "num": 12, "name": "P4A 12號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:12:15"}, {"rank": 34, "cls": "P4E", "num": 24, "name": "P4E 24號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:18:16"}, {"rank": 35, "cls": "P4F", "num": 14, "name": "P4F 14號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:26:34"}, {"rank": 36, "cls": "P4F", "num": 16, "name": "P4F 16號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:48:21"}, {"rank": 37, "cls": "P4D", "num": 25, "name": "P4D 25號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 22:11:12"}, {"rank": 38, "cls": "P4A", "num": 13, "name": "P4A 13號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-18 08:56:10"}, {"rank": 39, "cls": "P4A", "num": 18, "name": "P4A 18號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-18 19:26:02"}, {"rank": 40, "cls": "P4C", "num": 35, "name": "P4C 35號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-18 19:30:44"}], "class_top10": {"P4A": [{"rank": 1, "num": 27, "name": "27號", "total": 400.0, "badges": 5, "date": "2026-09-14 18:06:53"}, {"rank": 2, "num": 2, "name": "02號", "total": 400.0, "badges": 5, "date": "2026-09-14 19:45:39"}, {"rank": 3, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:35:10"}, {"rank": 4, "num": 19, "name": "19號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:52:26"}, {"rank": 5, "num": 5, "name": "05號", "total": 400.0, "badges": 5, "date": "2026-09-14 21:21:18"}, {"rank": 6, "num": 20, "name": "20號", "total": 400.0, "badges": 5, "date": "2026-09-17 20:22:27"}, {"rank": 7, "num": 12, "name": "12號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:12:15"}, {"rank": 8, "num": 13, "name": "13號", "total": 400.0, "badges": 5, "date": "2026-09-18 08:56:10"}, {"rank": 9, "num": 18, "name": "18號", "total": 400.0, "badges": 5, "date": "2026-09-18 19:26:02"}, {"rank": 10, "num": 9, "name": "09號", "total": 400.0, "badges": 5, "date": "2026-09-18 20:09:59"}], "P4B": [{"rank": 1, "num": 4, "name": "04號", "total": 400.0, "badges": 5, "date": "2026-09-14 17:33:04"}, {"rank": 2, "num": 31, "name": "31號", "total": 400.0, "badges": 5, "date": "2026-09-14 17:37:51"}, {"rank": 3, "num": 24, "name": "24號", "total": 400.0, "badges": 5, "date": "2026-09-14 19:52:37"}, {"rank": 4, "num": 27, "name": "27號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:38:26"}, {"rank": 5, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-14 21:43:57"}, {"rank": 6, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:46:15"}, {"rank": 7, "num": 8, "name": "08號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:52:00"}, {"rank": 8, "num": 18, "name": "18號", "total": 400.0, "badges": 5, "date": "2026-09-17 19:49:19"}, {"rank": 9, "num": 13, "name": "13號", "total": 400.0, "badges": 5, "date": "2026-09-17 20:27:59"}, {"rank": 10, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-18 20:10:02"}], "P4C": [{"rank": 1, "num": 4, "name": "04號", "total": 400.0, "badges": 5, "date": "2026-09-14 21:13:55"}, {"rank": 2, "num": 34, "name": "34號", "total": 400.0, "badges": 5, "date": "2026-09-15 23:01:35"}, {"rank": 3, "num": 12, "name": "12號", "total": 400.0, "badges": 5, "date": "2026-09-16 21:54:13"}, {"rank": 4, "num": 11, "name": "11號", "total": 400.0, "badges": 5, "date": "2026-09-16 22:53:46"}, {"rank": 5, "num": 31, "name": "31號", "total": 400.0, "badges": 5, "date": "2026-09-17 19:16:03"}, {"rank": 6, "num": 35, "name": "35號", "total": 400.0, "badges": 5, "date": "2026-09-18 19:30:44"}, {"rank": 7, "num": 6, "name": "06號", "total": 400.0, "badges": 5, "date": "2026-09-19 09:55:27"}, {"rank": 8, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-19 14:34:09"}, {"rank": 9, "num": 26, "name": "26號", "total": 400.0, "badges": 5, "date": "2026-09-19 15:10:59"}, {"rank": 10, "num": 13, "name": "13號", "total": 400.0, "badges": 5, "date": "2026-09-19 15:42:39"}], "P4D": [{"rank": 1, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-15 19:23:51"}, {"rank": 2, "num": 22, "name": "22號", "total": 400.0, "badges": 5, "date": "2026-09-15 21:33:24"}, {"rank": 3, "num": 20, "name": "20號", "total": 400.0, "badges": 5, "date": "2026-09-15 22:10:28"}, {"rank": 4, "num": 12, "name": "12號", "total": 400.0, "badges": 5, "date": "2026-09-16 15:13:42"}, {"rank": 5, "num": 15, "name": "15號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:01:51"}, {"rank": 6, "num": 25, "name": "25號", "total": 400.0, "badges": 5, "date": "2026-09-17 22:11:12"}, {"rank": 7, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-19 10:21:19"}, {"rank": 8, "num": 34, "name": "34號", "total": 400.0, "badges": 5, "date": "2026-09-19 11:00:43"}, {"rank": 9, "num": 8, "name": "08號", "total": 400.0, "badges": 5, "date": "2026-09-19 11:46:56"}, {"rank": 10, "num": 19, "name": "19號", "total": 400.0, "badges": 5, "date": "2026-09-19 12:18:26"}], "P4E": [{"rank": 1, "num": 26, "name": "26號", "total": 400.0, "badges": 5, "date": "2026-09-15 20:05:48"}, {"rank": 2, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-15 20:29:49"}, {"rank": 3, "num": 18, "name": "18號", "total": 400.0, "badges": 5, "date": "2026-09-15 20:40:23"}, {"rank": 4, "num": 15, "name": "15號", "total": 400.0, "badges": 5, "date": "2026-09-15 21:35:34"}, {"rank": 5, "num": 6, "name": "06號", "total": 400.0, "badges": 5, "date": "2026-09-15 22:19:39"}, {"rank": 6, "num": 24, "name": "24號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:18:16"}, {"rank": 7, "num": 23, "name": "23號", "total": 400.0, "badges": 5, "date": "2026-09-18 22:22:24"}, {"rank": 8, "num": 21, "name": "21號", "total": 400.0, "badges": 5, "date": "2026-09-18 22:23:43"}, {"rank": 9, "num": 30, "name": "30號", "total": 400.0, "badges": 5, "date": "2026-09-19 18:54:54"}, {"rank": 10, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-19 20:44:22"}], "P4F": [{"rank": 1, "num": 22, "name": "22號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:53:02"}, {"rank": 2, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:35:49"}, {"rank": 3, "num": 14, "name": "14號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:26:34"}, {"rank": 4, "num": 16, "name": "16號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:48:21"}, {"rank": 5, "num": 11, "name": "11號", "total": 400.0, "badges": 5, "date": "2026-09-18 22:32:31"}, {"rank": 6, "num": 32, "name": "32號", "total": 400.0, "badges": 5, "date": "2026-09-19 05:49:17"}, {"rank": 7, "num": 9, "name": "09號", "total": 400.0, "badges": 5, "date": "2026-09-19 10:31:12"}, {"rank": 8, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-19 16:32:33"}, {"rank": 9, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-19 21:24:18"}, {"rank": 10, "num": 3, "name": "03號", "total": 400.0, "badges": 5, "date": "2026-09-19 23:40:57"}]}, "perfect_students": {"P4A": ["01號", "02號", "05號", "06號", "07號", "09號", "10號", "11號", "12號", "13號", "15號", "16號", "17號", "18號", "19號", "20號", "24號", "27號", "28號", "30號"], "P4B": ["04號", "08號", "10號", "11號", "13號", "15號", "18號", "22號", "24號", "27號", "28號", "29號", "31號", "33號", "34號"], "P4C": ["01號", "02號", "03號", "04號", "06號", "09號", "10號", "11號", "12號", "13號", "16號", "19號", "20號", "24號", "26號", "27號", "29號", "31號", "32號", "34號", "35號"], "P4D": ["08號", "09號", "10號", "11號", "12號", "13號", "14號", "15號", "19號", "20號", "22號", "25號", "27號", "28號", "29號", "31號", "32號", "33號", "34號"], "P4E": ["03號", "06號", "08號", "15號", "18號", "21號", "23號", "24號", "25號", "26號", "28號", "29號", "30號"], "P4F": ["01號", "03號", "04號", "09號", "10號", "11號", "14號", "15號", "16號", "22號", "28號", "29號", "30號", "32號"]}, "cangjie_words": [{"char": "究", "hw": "第 3 周功課3", "count": 26, "first_code": "十", "first_key": "J", "last_code": "弓", "last_key": "N", "cj_full": "十金竹弓 (JCHG)", "secret": "【首碼】十 (J)：取字頂「穴」部首筆【十】（筆畫「一」＋「丨」）；【尾碼】弓 (N)：取下部「九」之末筆彎折【𠃌】。速成鍵入：十 (J) ＋ 弓 (N)。切勿誤取「力」或「大」！"}, {"char": "風", "hw": "第 3 周功課4", "count": 19, "first_code": "竹", "first_key": "H", "last_code": "戈", "last_key": "I", "cj_full": "竹弓竹戈 (HNHI)", "secret": "【首碼】竹 (H)：取外廓「几」左側撇筆【丿】；【尾碼】戈 (I)：取核心「虫」之末筆點【丶】。速成鍵入：竹 (H) ＋ 戈 (I)。"}, {"char": "凡", "hw": "第 3 周功課4", "count": 18, "first_code": "竹", "first_key": "H", "last_code": "戈", "last_key": "I", "cj_full": "竹弓戈 (HNI) [難字]", "secret": "【首碼】竹 (H)：取外廓左側撇筆【丿】；【尾碼】戈 (I)：取中心之點【丶】（依倉頡難字規則取碼）。速成鍵入：竹 (H) ＋ 戈 (I)。"}, {"char": "了", "hw": "第 3 周功課3", "count": 17, "first_code": "弓", "first_key": "N", "last_code": "木", "last_key": "D", "cj_full": "弓木 (ND)", "secret": "【首碼】弓 (N)：取頂部折筆【㇇】；【尾碼】木 (D)：取下部末筆豎鉤【亅】。速成鍵入：弓 (N) ＋ 木 (D)。"}, {"char": "骨", "hw": "第 3 周功課1", "count": 16, "first_code": "月", "first_key": "B", "last_code": "月", "last_key": "B", "cj_full": "月月月 (BBB)", "secret": "【首碼】月 (B)：取上部「冎」之頂框【冂】；【尾碼】月 (B)：取下部字身【月】（首尾同鍵）。速成鍵入：月 (B) ＋ 月 (B)。"}, {"char": "几", "hw": "第 3 周功課3", "count": 16, "first_code": "竹", "first_key": "H", "last_code": "弓", "last_key": "N", "cj_full": "竹弓 (HN)", "secret": "【首碼】竹 (H)：取左側撇筆【丿】；【尾碼】弓 (N)：取右側橫折彎鉤【乚】。速成鍵入：竹 (H) ＋ 弓 (N)。"}, {"char": "第", "hw": "第 3 周功課4", "count": 16, "first_code": "竹", "first_key": "H", "last_code": "竹", "last_key": "H", "cj_full": "竹弓中竹 (HNLH)", "secret": "【首碼】竹 (H)：取頂部竹字頭【⺮】；【尾碼】竹 (H)：取底部「弟」末筆豎撇【丿】（首尾同鍵）。速成鍵入：竹 (H) ＋ 竹 (H)。"}, {"char": "具", "hw": "第 3 周功課1", "count": 15, "first_code": "月", "first_key": "B", "last_code": "金", "last_key": "C", "cj_full": "月一一金 (BMMC)", "secret": "【首碼】月 (B)：取上部「目」字框；【尾碼】金 (C)：取底部末筆分開兩筆【八】。速成鍵入：月 (B) ＋ 金 (C)。"}, {"char": "宜", "hw": "第 3 周功課3", "count": 15, "first_code": "十", "first_key": "J", "last_code": "一", "last_key": "M", "cj_full": "十月一 (JBM)", "secret": "【首碼】十 (J)：取頂部寶蓋頭「宀」首筆【十】；【尾碼】一 (M)：取底部「且」末筆橫【一】。速成鍵入：十 (J) ＋ 一 (M)。"}, {"char": "乾", "hw": "第 3 周功課3", "count": 14, "first_code": "十", "first_key": "J", "last_code": "弓", "last_key": "N", "cj_full": "十十人弓 (JJON)", "secret": "【首碼】十 (J)：取左上角首筆【十】；【尾碼】弓 (N)：取右下「乞」末筆彎鉤【乚】。速成鍵入：十 (J) ＋ 弓 (N)。"}, {"char": "都", "hw": "第 3 周功課3", "count": 14, "first_code": "十", "first_key": "J", "last_code": "中", "last_key": "L", "cj_full": "十日弓中 (JANL)", "secret": "【首碼】十 (J)：取左部頂端【十】；【尾碼】中 (L)：取右側右耳旁「阝」之懸針豎【丨】。速成鍵入：十 (J) ＋ 中 (L)。"}, {"char": "衝", "hw": "第 3 周功課4", "count": 14, "first_code": "竹", "first_key": "H", "last_code": "弓", "last_key": "N", "cj_full": "竹人竹十弓 (HOHJN)", "secret": "【首碼】竹 (H)：取左側「彳」首筆撇【丿】；【尾碼】弓 (N)：取右側「亍」末筆鉤【亅/弓】（依「行」部包圍取碼規範，尾碼取右側「亍」之末筆，切勿誤取中間「重」字之「十」！）。速成鍵入：竹 (H) ＋ 弓 (N)。"}], "cangjie_clean_letters": [{"code": "日", "key": "A", "category": "哲理類", "aux": "日、曰", "examples": "明、早、最、星、普"}, {"code": "月", "key": "B", "category": "哲理類", "aux": "月、爫、夕、冂、冖", "examples": "朋、受、同、名、然、采"}, {"code": "金", "key": "C", "category": "哲理類", "aux": "金、八、丷、儿", "examples": "錯、分、益、兒、公、曾"}, {"code": "木", "key": "D", "category": "哲理類", "aux": "木、寸、才、十", "examples": "李、村、材、導、柴"}, {"code": "水", "key": "E", "category": "哲理類", "aux": "水、氵、又、氺", "examples": "冰、江、友、取、求、泉"}, {"code": "火", "key": "F", "category": "哲理類", "aux": "火、灬、⺌、小", "examples": "伙、焦、堂、尖、炎、照"}, {"code": "土", "key": "G", "category": "哲理類", "aux": "土、士", "examples": "地、吉、志、社、城"}, {"code": "竹", "key": "H", "category": "筆畫類", "aux": "竹、丿、⺮", "examples": "竹、笑、自、白、生、毛"}, {"code": "戈", "key": "I", "category": "筆畫類", "aux": "戈、丶、厶、广", "examples": "找、主、台、府、應、底"}, {"code": "十", "key": "J", "category": "筆畫類", "aux": "十、宀、穴", "examples": "汁、安、空、家、針、究"}, {"code": "大", "key": "K", "category": "筆畫類", "aux": "大、乂、ナ、疒、犭", "examples": "天、病、左、狗、痛、猛"}, {"code": "中", "key": "L", "category": "筆畫類", "aux": "中、丨、亅、川、衤", "examples": "巾、川、被、初、申、州"}, {"code": "一", "key": "M", "category": "筆畫類", "aux": "一、厂、工、刁", "examples": "旦、原、巧、石、可、刁"}, {"code": "弓", "key": "N", "category": "筆畫類", "aux": "弓、フ、勹、ク、乙、ㄋ、⺄", "examples": "引、句、包、乙、乃、風、弱"}, {"code": "人", "key": "O", "category": "人體類", "aux": "人、亻、入、𠆢", "examples": "你、他、合、內、全、休"}, {"code": "心", "key": "P", "category": "人體類", "aux": "心、忄、匕、七", "examples": "快、情、北、七、化、怨"}, {"code": "手", "key": "Q", "category": "人體類", "aux": "手、扌、龵", "examples": "打、提、拜、看、拳、持"}, {"code": "口", "key": "R", "category": "人體類", "aux": "口", "examples": "唱、叫、品、器、味、台"}, {"code": "尸", "key": "S", "category": "字形類", "aux": "尸、コ、匚、阝、卩", "examples": "居、局、區、巨、都、節"}, {"code": "廿", "key": "T", "category": "字形類", "aux": "廿、艹、龷", "examples": "花、草、共、黃、茶、英"}, {"code": "山", "key": "U", "category": "字形類", "aux": "山、凵、屮、乚", "examples": "出、歲、凶、幽、逆、岳"}, {"code": "女", "key": "V", "category": "字形類", "aux": "女、ㄑ、巛", "examples": "好、如、巡、巢、委、妹"}, {"code": "田", "key": "W", "category": "字形類", "aux": "田、毌", "examples": "男、畏、果、思、甲、申、貫"}, {"code": "卜", "key": "Y", "category": "字形類", "aux": "卜、亠、辶、冫", "examples": "外、高、這、道、冰、交"}], "pokemon_pool": [{"id": 25, "name": "皮卡丘", "tag": "⚡ 電氣", "icon": "⚡", "color": "#FEF08A", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"}, {"id": 4, "name": "小火龍", "tag": "🔥 火焰", "icon": "🔥", "color": "#FFEDD5", "border": "#FB923C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"}, {"id": 1, "name": "妙蛙種子", "tag": "🍃 草系", "icon": "🍃", "color": "#DCFCE7", "border": "#4ADE80", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"}, {"id": 7, "name": "傑尼龜", "tag": "💧 水系", "icon": "💧", "color": "#E0F2FE", "border": "#38BDF8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png"}, {"id": 6, "name": "噴火龍", "tag": "🔥 飛火", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"}, {"id": 9, "name": "水箭龜", "tag": "💧 巨浪", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"}, {"id": 26, "name": "雷丘", "tag": "⚡ 雷霆", "icon": "⚡", "color": "#FEF9C3", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png"}, {"id": 35, "name": "皮皮", "tag": "✨ 妖精", "icon": "✨", "color": "#FCE7F3", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png"}, {"id": 37, "name": "六尾", "tag": "🔥 狐火", "icon": "🔥", "color": "#FFEDD5", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png"}, {"id": 38, "name": "九尾", "tag": "🔥 幻火", "icon": "🔥", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png"}, {"id": 39, "name": "胖丁", "tag": "🎵 音律", "icon": "🎵", "color": "#FCE7F3", "border": "#EC4899", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png"}, {"id": 52, "name": "喵喵", "tag": "💰 聚寶", "icon": "💰", "color": "#FFF7ED", "border": "#FDBA74", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png"}, {"id": 54, "name": "可達鴨", "tag": "🧠 念力", "icon": "🧠", "color": "#FEF9C3", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png"}, {"id": 58, "name": "卡蒂狗", "tag": "🔥 忠勇", "icon": "🔥", "color": "#FFEDD5", "border": "#FB923C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png"}, {"id": 59, "name": "風速狗", "tag": "🔥 烈焰", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png"}, {"id": 65, "name": "胡地", "tag": "🔮 超能", "icon": "🔮", "color": "#FEF08A", "border": "#CA8A04", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png"}, {"id": 68, "name": "怪力", "tag": "🥊 格鬥", "icon": "🥊", "color": "#E2E8F0", "border": "#64748B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png"}, {"id": 77, "name": "小火馬", "tag": "🔥 疾馳", "icon": "🔥", "color": "#FFF1F2", "border": "#FB7185", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png"}, {"id": 79, "name": "呆呆獸", "tag": "💤 悠閒", "icon": "💤", "color": "#FDF2F8", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png"}, {"id": 94, "name": "耿鬼", "tag": "👻 幽靈", "icon": "👻", "color": "#F3E8FF", "border": "#9333EA", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png"}, {"id": 130, "name": "暴鯉龍", "tag": "🌊 狂瀾", "icon": "🌊", "color": "#DBEAFE", "border": "#1D4ED8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png"}, {"id": 131, "name": "拉普拉斯", "tag": "❄️ 乘浪", "icon": "❄️", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png"}, {"id": 132, "name": "百變怪", "tag": "⭐ 變身", "icon": "⭐", "color": "#F5F3FF", "border": "#A855F7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"}, {"id": 133, "name": "伊布", "tag": "⭐ 潛力", "icon": "⭐", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png"}, {"id": 134, "name": "水伊布", "tag": "💧 水華", "icon": "💧", "color": "#E0F2FE", "border": "#06B6D4", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png"}, {"id": 135, "name": "雷伊布", "tag": "⚡ 迅雷", "icon": "⚡", "color": "#FEF08A", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png"}, {"id": 136, "name": "火伊布", "tag": "🔥 炎熱", "icon": "🔥", "color": "#FFEDD5", "border": "#EF4444", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png"}, {"id": 143, "name": "卡比獸", "tag": "💤 泰山", "icon": "💤", "color": "#E2E8F0", "border": "#475569", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png"}, {"id": 144, "name": "急凍鳥", "tag": "❄️ 冰風", "icon": "❄️", "color": "#E0F2FE", "border": "#38BDF8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png"}, {"id": 145, "name": "閃電鳥", "tag": "⚡ 雷鳴", "icon": "⚡", "color": "#FEF08A", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png"}, {"id": 146, "name": "火焰鳥", "tag": "🔥 火羽", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png"}, {"id": 147, "name": "迷你龍", "tag": "🐉 龍裔", "icon": "🐉", "color": "#E0E7FF", "border": "#6366F1", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png"}, {"id": 149, "name": "快龍", "tag": "🐉 龍威", "icon": "🐉", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png"}, {"id": 150, "name": "超夢", "tag": "🔮 絕頂", "icon": "🔮", "color": "#F3E8FF", "border": "#7C3AED", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png"}, {"id": 151, "name": "夢幻", "tag": "✨ 傳奇", "icon": "✨", "color": "#FDF2F8", "border": "#F43F5E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png"}, {"id": 152, "name": "菊草葉", "tag": "🍃 香氣", "icon": "🍃", "color": "#DCFCE7", "border": "#22C55E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png"}, {"id": 155, "name": "火球鼠", "tag": "🔥 火花", "icon": "🔥", "color": "#FFEDD5", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png"}, {"id": 158, "name": "小鋸鱷", "tag": "💧 巨顎", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/158.png"}, {"id": 172, "name": "皮丘", "tag": "⚡ 電氣", "icon": "⚡", "color": "#FEF08A", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png"}, {"id": 175, "name": "波克比", "tag": "🥚 幸運", "icon": "🥚", "color": "#FFFBEB", "border": "#FCD34D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png"}, {"id": 179, "name": "咩利羊", "tag": "⚡ 棉絨", "icon": "⚡", "color": "#FEF9C3", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/179.png"}, {"id": 183, "name": "瑪力露", "tag": "💧 水球", "icon": "💧", "color": "#DBEAFE", "border": "#3B82F6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/183.png"}, {"id": 196, "name": "太陽伊布", "tag": "🔮 晨曦", "icon": "🔮", "color": "#F3E8FF", "border": "#A855F7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png"}, {"id": 197, "name": "月亮伊布", "tag": "🌙 月夜", "icon": "🌙", "color": "#F1F5F9", "border": "#334155", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png"}, {"id": 202, "name": "果然翁", "tag": "🛡️ 反擊", "icon": "🛡️", "color": "#DBEAFE", "border": "#2563EB", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png"}, {"id": 246, "name": "由基拉", "tag": "🪨 岩石", "icon": "🪨", "color": "#ECFCCB", "border": "#65A30D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/246.png"}, {"id": 248, "name": "班基拉斯", "tag": "🪨 霸主", "icon": "🪨", "color": "#ECFCCB", "border": "#4D7C0F", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png"}, {"id": 249, "name": "洛奇亞", "tag": "🌊 海神", "icon": "🌊", "color": "#EFF6FF", "border": "#1D4ED8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png"}, {"id": 250, "name": "鳳王", "tag": "🌈 彩虹", "icon": "🌈", "color": "#FEF2F2", "border": "#DC2626", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png"}, {"id": 251, "name": "雪拉比", "tag": "🌲 森林", "icon": "🌲", "color": "#DCFCE7", "border": "#16A34A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/251.png"}, {"id": 252, "name": "木守宮", "tag": "🍃 拍擊", "icon": "🍃", "color": "#DCFCE7", "border": "#15803D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png"}, {"id": 255, "name": "火稚雞", "tag": "🔥 暖心", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/255.png"}, {"id": 258, "name": "水躍魚", "tag": "💧 潮汐", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png"}, {"id": 280, "name": "拉魯拉絲", "tag": "✨ 感知", "icon": "✨", "color": "#ECFDF5", "border": "#059669", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/280.png"}, {"id": 282, "name": "沙奈朵", "tag": "✨ 守護", "icon": "✨", "color": "#ECFDF5", "border": "#10B981", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png"}, {"id": 300, "name": "向尾喵", "tag": "🐾 萌萌", "icon": "🐾", "color": "#FCE7F3", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/300.png"}, {"id": 359, "name": "阿勃梭魯", "tag": "⚔️ 災難", "icon": "⚔️", "color": "#F8FAFC", "border": "#475569", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png"}, {"id": 384, "name": "烈空坐", "tag": "🐉 蒼空", "icon": "🐉", "color": "#DCFCE7", "border": "#047857", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png"}, {"id": 385, "name": "基拉祈", "tag": "⭐ 願望", "icon": "⭐", "color": "#FEF9C3", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png"}, {"id": 387, "name": "草苗龜", "tag": "🍃 苗木", "icon": "🍃", "color": "#DCFCE7", "border": "#15803D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/387.png"}, {"id": 390, "name": "小火焰猴", "tag": "🔥 靈巧", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/390.png"}, {"id": 393, "name": "波加曼", "tag": "🐧 驕傲", "icon": "🐧", "color": "#E0E7FF", "border": "#6366F1", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png"}, {"id": 403, "name": "小貓怪", "tag": "⚡ 閃光", "icon": "⚡", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/403.png"}, {"id": 446, "name": "小卡比獸", "tag": "🍙 活力", "icon": "🍙", "color": "#ECFDF5", "border": "#059669", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/446.png"}, {"id": 448, "name": "路卡利歐", "tag": "🥊 波導", "icon": "🥊", "color": "#E0F2FE", "border": "#2563EB", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png"}, {"id": 470, "name": "葉伊布", "tag": "🍃 綠意", "icon": "🍃", "color": "#DCFCE7", "border": "#16A34A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/470.png"}, {"id": 471, "name": "冰伊布", "tag": "❄️ 霜雪", "icon": "❄️", "color": "#E0F2FE", "border": "#06B6D4", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/471.png"}, {"id": 492, "name": "謝米", "tag": "🌸 感恩", "icon": "🌸", "color": "#F0FDF4", "border": "#22C55E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/492.png"}, {"id": 493, "name": "阿爾宙斯", "tag": "🌟 創世", "icon": "🌟", "color": "#FFFBEB", "border": "#D97706", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/493.png"}, {"id": 495, "name": "藤藤蛇", "tag": "🍃 優雅", "icon": "🍃", "color": "#DCFCE7", "border": "#15803D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/495.png"}, {"id": 501, "name": "水水獺", "tag": "💧 扇貝", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png"}, {"id": 570, "name": "索羅亞", "tag": "🦊 幻影", "icon": "🦊", "color": "#F1F5F9", "border": "#1E293B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/570.png"}, {"id": 571, "name": "索羅亞克", "tag": "🦊 魘幻", "icon": "🦊", "color": "#F1F5F9", "border": "#0F172A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png"}, {"id": 653, "name": "火狐狸", "tag": "🔥 魔導", "icon": "🔥", "color": "#FFEDD5", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/653.png"}, {"id": 658, "name": "甲賀忍蛙", "tag": "🌊 飛水", "icon": "🌊", "color": "#DBEAFE", "border": "#1D4ED8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png"}, {"id": 700, "name": "仙子伊布", "tag": "🎀 曼妙", "icon": "🎀", "color": "#FDF2F8", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png"}, {"id": 702, "name": "咚咚鼠", "tag": "⚡ 頰囊", "icon": "⚡", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/702.png"}, {"id": 719, "name": "蒂安希", "tag": "💎 晶瑩", "icon": "💎", "color": "#FDF2F8", "border": "#FB7185", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/719.png"}, {"id": 722, "name": "木木梟", "tag": "🍃 飛葉", "icon": "🍃", "color": "#FEF3C7", "border": "#84CC16", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/722.png"}, {"id": 778, "name": "謎擬Ｑ", "tag": "👻 謎裝", "icon": "👻", "color": "#FEFCE8", "border": "#CA8A04", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png"}, {"id": 802, "name": "瑪夏多", "tag": "🥊 暗影", "icon": "🥊", "color": "#F1F5F9", "border": "#334155", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/802.png"}, {"id": 807, "name": "捷拉奧拉", "tag": "⚡ 疾雷", "icon": "⚡", "color": "#FEF9C3", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/807.png"}, {"id": 810, "name": "敲音猴", "tag": "🥁 節拍", "icon": "🥁", "color": "#DCFCE7", "border": "#16A34A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/810.png"}, {"id": 813, "name": "炎兔兒", "tag": "🔥 蹴擊", "icon": "🔥", "color": "#FFEDD5", "border": "#EF4444", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/813.png"}, {"id": 816, "name": "淚眼蜥", "tag": "💧 水狙", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/816.png"}, {"id": 888, "name": "蒼響", "tag": "⚔️ 劍聖", "icon": "⚔️", "color": "#DBEAFE", "border": "#2563EB", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png"}, {"id": 906, "name": "新葉喵", "tag": "🍃 花草", "icon": "🍃", "color": "#DCFCE7", "border": "#22C55E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/906.png"}, {"id": 909, "name": "呆火鱷", "tag": "🔥 歌唱", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/909.png"}, {"id": 912, "name": "潤水鴨", "tag": "💧 舞者", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/912.png"}, {"id": 921, "name": "布撥", "tag": "⚡ 電氣", "icon": "⚡", "color": "#FEF3C7", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/921.png"}, {"id": 1008, "name": "密勒頓", "tag": "⚡ 未來", "icon": "⚡", "color": "#EDE9FE", "border": "#7C3AED", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1008.png"}], "cangjie_letters_full": [{"code": "日", "key": "A", "category": "哲理類", "aux": "日、曰、目", "examples": "明、早、象、巴"}, {"code": "月", "key": "B", "category": "哲理類", "aux": "月、冂、爫、冖", "examples": "朋、受、同、然、愛"}, {"code": "金", "key": "C", "category": "哲理類", "aux": "金、八、丷、儿", "examples": "錯、分、四、曾"}, {"code": "木", "key": "D", "category": "哲理類", "aux": "木、寸、才", "examples": "李、才、他"}, {"code": "水", "key": "E", "category": "哲理類", "aux": "水、氵、又、氺", "examples": "冰、沒、求、雙、函"}, {"code": "火", "key": "F", "category": "哲理類", "aux": "火、灬、小、⺌、ハ", "examples": "伙、堂、示、組、羔、尖"}, {"code": "土", "key": "G", "category": "哲理類", "aux": "土、士", "examples": "社、志、地"}, {"code": "竹", "key": "H", "category": "筆畫類", "aux": "竹、⺮、丿", "examples": "竹、笛、自、反、身"}, {"code": "戈", "key": "I", "category": "筆畫類", "aux": "戈、丶、广、ム", "examples": "找、勺、應、允"}, {"code": "十", "key": "J", "category": "筆畫類", "aux": "十、宀、穴", "examples": "汁、寫、究"}, {"code": "大", "key": "K", "category": "筆畫類", "aux": "大、乂、ナ、疒、犭", "examples": "天、較、有、痛、狗"}, {"code": "中", "key": "L", "category": "筆畫類", "aux": "中、丨、川、衤、肀", "examples": "仲、巾、川、畫、被、肅"}, {"code": "一", "key": "M", "category": "筆畫類", "aux": "一、厂、工、刁", "examples": "旦、刁、曆、石、巧、逐"}, {"code": "弓", "key": "N", "category": "筆畫類", "aux": "弓、𠃌、乚、乙、ㄋ", "examples": "引、例、吃、了、免、沒、風"}, {"code": "人", "key": "O", "category": "人體類", "aux": "人、亻、入、𠆢", "examples": "你、他、內、介、合"}, {"code": "心", "key": "P", "category": "人體類", "aux": "心、忄、匕、七", "examples": "情、性、怡、勿、七"}, {"code": "手", "key": "Q", "category": "人體類", "aux": "手、扌、龵", "examples": "打、提、拿、拜、看"}, {"code": "口", "key": "R", "category": "人體類", "aux": "口", "examples": "唱、叫、品、司"}, {"code": "尸", "key": "S", "category": "字形類", "aux": "尸、コ、匚", "examples": "居、屋、展、局、區"}, {"code": "廿", "key": "T", "category": "字形類", "aux": "廿、艹、龷", "examples": "花、草、共、黃、舊"}, {"code": "山", "key": "U", "category": "字形類", "aux": "山、屮、凵", "examples": "出、岳、凶、幽、函"}, {"code": "女", "key": "V", "category": "字形類", "aux": "女、巛、ㄑ", "examples": "好、始、巡、如、妹"}, {"code": "田", "key": "W", "category": "字形類", "aux": "田、囗、四", "examples": "思、男、國、因、腦"}, {"code": "卜", "key": "Y", "category": "字形類", "aux": "卜、亠、辶", "examples": "言、高、佔、外、走"}], "roster": {}, "tiers_config": [{"min": 0, "max": 49, "badge": "🥉", "title": "🥉【新手訓練家】", "desc": "初登速成道館，開啟錯字討伐征途。", "skill": null}, {"min": 50, "max": 149, "badge": "🥈", "title": "🥈【字根見習生】", "desc": "熟悉指法鍵位，能迅速辨識首碼與尾碼。", "skill": {"name": "⚡【精準直覺】", "type": "被動輔助", "rate": 0.25, "desc": "每關有 25% 機率自動聚焦高亮正確首碼精靈球！"}}, {"min": 150, "max": 349, "badge": "🥇", "title": "🥇【鍵影遊俠】", "desc": "盲打速度初顯，能從容擊破各類常錯高頻字。", "skill": {"name": "🔍【雷霆看破】", "type": "主動隨機", "rate": 0.3, "desc": "每關開始時有 30% 機率自動剔除 2 個干擾字根球！"}}, {"min": 350, "max": 699, "badge": "💎", "title": "💎【速成道館館主】", "desc": "威震一方道館，能冷靜拆解複雜易混字形。", "skill": {"name": "🛡️【聖盾防護】", "type": "保護格擋", "rate": 0.35, "desc": "捕捉失誤時有 35% 機率格擋一次失誤，免扣分且保留連擊！"}}, {"min": 700, "max": 1199, "badge": "🔥", "title": "🔥【魔王討伐大將】", "desc": "攻克無數高難度錯字魔王，傷害爆擊力大幅提升。", "skill": {"name": "💥【烈焰爆擊】", "type": "增益加成", "rate": 0.25, "desc": "擊破魔王時有 25% 機率觸發爆擊，本關額外獲得 +5 點爆擊分！"}}, {"min": 1200, "max": 1999, "badge": "⚡", "title": "⚡【疾風奧義宗師】", "desc": "指法如疾風驟雨，速成拆碼達到出神入化境界。", "skill": {"name": "⏳【時空凝滯】", "type": "提示輔助", "rate": 0.25, "desc": "遭遇難題時有 25% 機率發動，直接點亮並自動填入首碼！"}}, {"min": 2000, "max": 3499, "badge": "👑", "title": "👑【傳奇鍵王大師】", "desc": "全級傳奇打字大師，任何生僻偏旁均能瞬間擊破。", "skill": {"name": "🌊【極限連擊】", "type": "持續增益", "rate": 0.3, "desc": "連擊 2 次以上時，答題額外獲得 +3 點連擊增益！"}}, {"min": 3500, "max": 5000, "badge": "🌟", "title": "🌟【無雙神域殿堂至尊】", "desc": "登峰造極，榮登錯字討伐最高神域殿堂！", "skill": {"name": "🌌【神域天罰】", "type": "終極神技", "rate": 0.2, "desc": "戰鬥中有 20% 機率召喚神域天雷，秒殺魔王並額外獎勵 +10 點天罰分！"}}], "benchmark_leaderboard": [], "aux_dataset": [{"code": "日", "key": "A", "category": "哲理類", "aux_list": ["曰"], "examples": "明、早、最、星、普"}, {"code": "月", "key": "B", "category": "哲理類", "aux_list": ["爫", "夕", "冂", "冖"], "examples": "朋、受、同、名、然、采"}, {"code": "金", "key": "C", "category": "哲理類", "aux_list": ["八", "丷", "儿"], "examples": "錯、分、益、兒、公、曾"}, {"code": "木", "key": "D", "category": "哲理類", "aux_list": ["寸", "才", "十"], "examples": "李、村、材、導、柴"}, {"code": "水", "key": "E", "category": "哲理類", "aux_list": ["氵", "又", "氺"], "examples": "冰、江、友、取、求、泉"}, {"code": "火", "key": "F", "category": "哲理類", "aux_list": ["灬", "⺌", "小"], "examples": "伙、焦、堂、尖、炎、照"}, {"code": "土", "key": "G", "category": "哲理類", "aux_list": ["士"], "examples": "地、吉、志、社、城"}, {"code": "竹", "key": "H", "category": "筆畫類", "aux_list": ["丿", "⺮"], "examples": "竹、笑、自、白、生、毛"}, {"code": "戈", "key": "I", "category": "筆畫類", "aux_list": ["丶", "厶", "广"], "examples": "找、主、台、府、應、底"}, {"code": "十", "key": "J", "category": "筆畫類", "aux_list": ["宀", "穴"], "examples": "汁、安、空、家、針、究"}, {"code": "大", "key": "K", "category": "筆畫類", "aux_list": ["乂", "ナ", "疒", "犭"], "examples": "天、病、左、狗、痛、猛"}, {"code": "中", "key": "L", "category": "筆畫類", "aux_list": ["丨", "亅", "川", "衤"], "examples": "巾、川、被、初、申、州"}, {"code": "一", "key": "M", "category": "筆畫類", "aux_list": ["厂", "工", "刁"], "examples": "旦、原、巧、石、可、刁"}, {"code": "弓", "key": "N", "category": "筆畫類", "aux_list": ["フ", "勹", "ク", "乙", "ㄋ", "⺄"], "examples": "引、句、包、乙、乃、風、弱"}, {"code": "人", "key": "O", "category": "人體類", "aux_list": ["亻", "入", "𠆢"], "examples": "你、他、合、內、全、休"}, {"code": "心", "key": "P", "category": "人體類", "aux_list": ["忄", "匕", "七"], "examples": "快、情、北、七、化、怨"}, {"code": "手", "key": "Q", "category": "人體類", "aux_list": ["扌", "龵"], "examples": "打、提、拜、看、拳、持"}, {"code": "口", "key": "R", "category": "人體類", "aux_list": ["口"], "examples": "唱、叫、品、器、味、台"}, {"code": "尸", "key": "S", "category": "字形類", "aux_list": ["コ", "匚", "阝", "卩"], "examples": "居、局、區、巨、都、節"}, {"code": "廿", "key": "T", "category": "字形類", "aux_list": ["艹", "龷"], "examples": "花、草、共、黃、茶、英"}, {"code": "山", "key": "U", "category": "字形類", "aux_list": ["凵", "屮", "乚"], "examples": "出、歲、凶、幽、逆、岳"}, {"code": "女", "key": "V", "category": "字形類", "aux_list": ["ㄑ", "巛", "女"], "examples": "好、如、巡、巢、委、妹"}, {"code": "田", "key": "W", "category": "字形類", "aux_list": ["毌"], "examples": "男、畏、果、思、甲、申、貫"}, {"code": "卜", "key": "Y", "category": "字形類", "aux_list": ["亠", "辶", "冫"], "examples": "外、高、這、道、冰、交"}]};
+    const DATA = {"top40": [{"rank": 1, "cls": "P4B", "num": 4, "name": "P4B 04號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 17:33:04"}, {"rank": 2, "cls": "P4B", "num": 31, "name": "P4B 31號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 17:37:51"}, {"rank": 3, "cls": "P4A", "num": 27, "name": "P4A 27號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 18:06:53"}, {"rank": 4, "cls": "P4A", "num": 2, "name": "P4A 02號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 19:45:39"}, {"rank": 5, "cls": "P4B", "num": 24, "name": "P4B 24號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 19:52:37"}, {"rank": 6, "cls": "P4A", "num": 28, "name": "P4A 28號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:35:10"}, {"rank": 7, "cls": "P4B", "num": 27, "name": "P4B 27號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:38:26"}, {"rank": 8, "cls": "P4A", "num": 19, "name": "P4A 19號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:52:26"}, {"rank": 9, "cls": "P4F", "num": 22, "name": "P4F 22號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 20:53:02"}, {"rank": 10, "cls": "P4C", "num": 4, "name": "P4C 04號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 21:13:55"}, {"rank": 11, "cls": "P4A", "num": 5, "name": "P4A 05號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 21:21:18"}, {"rank": 12, "cls": "P4B", "num": 10, "name": "P4B 10號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-14 21:43:57"}, {"rank": 13, "cls": "P4D", "num": 29, "name": "P4D 29號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 19:23:51"}, {"rank": 14, "cls": "P4E", "num": 26, "name": "P4E 26號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 20:05:48"}, {"rank": 15, "cls": "P4E", "num": 29, "name": "P4E 29號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 20:29:49"}, {"rank": 16, "cls": "P4E", "num": 18, "name": "P4E 18號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 20:40:23"}, {"rank": 17, "cls": "P4D", "num": 22, "name": "P4D 22號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 21:33:24"}, {"rank": 18, "cls": "P4E", "num": 15, "name": "P4E 15號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 21:35:34"}, {"rank": 19, "cls": "P4D", "num": 20, "name": "P4D 20號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 22:10:28"}, {"rank": 20, "cls": "P4E", "num": 6, "name": "P4E 06號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 22:19:39"}, {"rank": 21, "cls": "P4C", "num": 34, "name": "P4C 34號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-15 23:01:35"}, {"rank": 22, "cls": "P4D", "num": 12, "name": "P4D 12號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 15:13:42"}, {"rank": 23, "cls": "P4D", "num": 15, "name": "P4D 15號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:01:51"}, {"rank": 24, "cls": "P4F", "num": 10, "name": "P4F 10號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:35:49"}, {"rank": 25, "cls": "P4B", "num": 29, "name": "P4B 29號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:46:15"}, {"rank": 26, "cls": "P4B", "num": 8, "name": "P4B 08號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 20:52:00"}, {"rank": 27, "cls": "P4C", "num": 12, "name": "P4C 12號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 21:54:13"}, {"rank": 28, "cls": "P4C", "num": 11, "name": "P4C 11號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-16 22:53:46"}, {"rank": 29, "cls": "P4C", "num": 31, "name": "P4C 31號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 19:16:03"}, {"rank": 30, "cls": "P4B", "num": 18, "name": "P4B 18號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 19:49:19"}, {"rank": 31, "cls": "P4A", "num": 20, "name": "P4A 20號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 20:22:27"}, {"rank": 32, "cls": "P4B", "num": 13, "name": "P4B 13號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 20:27:59"}, {"rank": 33, "cls": "P4A", "num": 12, "name": "P4A 12號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:12:15"}, {"rank": 34, "cls": "P4E", "num": 24, "name": "P4E 24號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:18:16"}, {"rank": 35, "cls": "P4F", "num": 14, "name": "P4F 14號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:26:34"}, {"rank": 36, "cls": "P4F", "num": 16, "name": "P4F 16號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 21:48:21"}, {"rank": 37, "cls": "P4D", "num": 25, "name": "P4D 25號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-17 22:11:12"}, {"rank": 38, "cls": "P4A", "num": 13, "name": "P4A 13號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-18 08:56:10"}, {"rank": 39, "cls": "P4A", "num": 18, "name": "P4A 18號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-18 19:26:02"}, {"rank": 40, "cls": "P4C", "num": 35, "name": "P4C 35號", "hw1": 100.0, "hw2": 100.0, "hw3": 100.0, "hw4": 100.0, "total": 400.0, "badges": 5, "date": "2026-09-18 19:30:44"}], "class_top10": {"P4A": [{"rank": 1, "num": 27, "name": "27號", "total": 400.0, "badges": 5, "date": "2026-09-14 18:06:53"}, {"rank": 2, "num": 2, "name": "02號", "total": 400.0, "badges": 5, "date": "2026-09-14 19:45:39"}, {"rank": 3, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:35:10"}, {"rank": 4, "num": 19, "name": "19號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:52:26"}, {"rank": 5, "num": 5, "name": "05號", "total": 400.0, "badges": 5, "date": "2026-09-14 21:21:18"}, {"rank": 6, "num": 20, "name": "20號", "total": 400.0, "badges": 5, "date": "2026-09-17 20:22:27"}, {"rank": 7, "num": 12, "name": "12號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:12:15"}, {"rank": 8, "num": 13, "name": "13號", "total": 400.0, "badges": 5, "date": "2026-09-18 08:56:10"}, {"rank": 9, "num": 18, "name": "18號", "total": 400.0, "badges": 5, "date": "2026-09-18 19:26:02"}, {"rank": 10, "num": 9, "name": "09號", "total": 400.0, "badges": 5, "date": "2026-09-18 20:09:59"}], "P4B": [{"rank": 1, "num": 4, "name": "04號", "total": 400.0, "badges": 5, "date": "2026-09-14 17:33:04"}, {"rank": 2, "num": 31, "name": "31號", "total": 400.0, "badges": 5, "date": "2026-09-14 17:37:51"}, {"rank": 3, "num": 24, "name": "24號", "total": 400.0, "badges": 5, "date": "2026-09-14 19:52:37"}, {"rank": 4, "num": 27, "name": "27號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:38:26"}, {"rank": 5, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-14 21:43:57"}, {"rank": 6, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:46:15"}, {"rank": 7, "num": 8, "name": "08號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:52:00"}, {"rank": 8, "num": 18, "name": "18號", "total": 400.0, "badges": 5, "date": "2026-09-17 19:49:19"}, {"rank": 9, "num": 13, "name": "13號", "total": 400.0, "badges": 5, "date": "2026-09-17 20:27:59"}, {"rank": 10, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-18 20:10:02"}], "P4C": [{"rank": 1, "num": 4, "name": "04號", "total": 400.0, "badges": 5, "date": "2026-09-14 21:13:55"}, {"rank": 2, "num": 34, "name": "34號", "total": 400.0, "badges": 5, "date": "2026-09-15 23:01:35"}, {"rank": 3, "num": 12, "name": "12號", "total": 400.0, "badges": 5, "date": "2026-09-16 21:54:13"}, {"rank": 4, "num": 11, "name": "11號", "total": 400.0, "badges": 5, "date": "2026-09-16 22:53:46"}, {"rank": 5, "num": 31, "name": "31號", "total": 400.0, "badges": 5, "date": "2026-09-17 19:16:03"}, {"rank": 6, "num": 35, "name": "35號", "total": 400.0, "badges": 5, "date": "2026-09-18 19:30:44"}, {"rank": 7, "num": 6, "name": "06號", "total": 400.0, "badges": 5, "date": "2026-09-19 09:55:27"}, {"rank": 8, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-19 14:34:09"}, {"rank": 9, "num": 26, "name": "26號", "total": 400.0, "badges": 5, "date": "2026-09-19 15:10:59"}, {"rank": 10, "num": 13, "name": "13號", "total": 400.0, "badges": 5, "date": "2026-09-19 15:42:39"}], "P4D": [{"rank": 1, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-15 19:23:51"}, {"rank": 2, "num": 22, "name": "22號", "total": 400.0, "badges": 5, "date": "2026-09-15 21:33:24"}, {"rank": 3, "num": 20, "name": "20號", "total": 400.0, "badges": 5, "date": "2026-09-15 22:10:28"}, {"rank": 4, "num": 12, "name": "12號", "total": 400.0, "badges": 5, "date": "2026-09-16 15:13:42"}, {"rank": 5, "num": 15, "name": "15號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:01:51"}, {"rank": 6, "num": 25, "name": "25號", "total": 400.0, "badges": 5, "date": "2026-09-17 22:11:12"}, {"rank": 7, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-19 10:21:19"}, {"rank": 8, "num": 34, "name": "34號", "total": 400.0, "badges": 5, "date": "2026-09-19 11:00:43"}, {"rank": 9, "num": 8, "name": "08號", "total": 400.0, "badges": 5, "date": "2026-09-19 11:46:56"}, {"rank": 10, "num": 19, "name": "19號", "total": 400.0, "badges": 5, "date": "2026-09-19 12:18:26"}], "P4E": [{"rank": 1, "num": 26, "name": "26號", "total": 400.0, "badges": 5, "date": "2026-09-15 20:05:48"}, {"rank": 2, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-15 20:29:49"}, {"rank": 3, "num": 18, "name": "18號", "total": 400.0, "badges": 5, "date": "2026-09-15 20:40:23"}, {"rank": 4, "num": 15, "name": "15號", "total": 400.0, "badges": 5, "date": "2026-09-15 21:35:34"}, {"rank": 5, "num": 6, "name": "06號", "total": 400.0, "badges": 5, "date": "2026-09-15 22:19:39"}, {"rank": 6, "num": 24, "name": "24號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:18:16"}, {"rank": 7, "num": 23, "name": "23號", "total": 400.0, "badges": 5, "date": "2026-09-18 22:22:24"}, {"rank": 8, "num": 21, "name": "21號", "total": 400.0, "badges": 5, "date": "2026-09-18 22:23:43"}, {"rank": 9, "num": 30, "name": "30號", "total": 400.0, "badges": 5, "date": "2026-09-19 18:54:54"}, {"rank": 10, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-19 20:44:22"}], "P4F": [{"rank": 1, "num": 22, "name": "22號", "total": 400.0, "badges": 5, "date": "2026-09-14 20:53:02"}, {"rank": 2, "num": 10, "name": "10號", "total": 400.0, "badges": 5, "date": "2026-09-16 20:35:49"}, {"rank": 3, "num": 14, "name": "14號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:26:34"}, {"rank": 4, "num": 16, "name": "16號", "total": 400.0, "badges": 5, "date": "2026-09-17 21:48:21"}, {"rank": 5, "num": 11, "name": "11號", "total": 400.0, "badges": 5, "date": "2026-09-18 22:32:31"}, {"rank": 6, "num": 32, "name": "32號", "total": 400.0, "badges": 5, "date": "2026-09-19 05:49:17"}, {"rank": 7, "num": 9, "name": "09號", "total": 400.0, "badges": 5, "date": "2026-09-19 10:31:12"}, {"rank": 8, "num": 28, "name": "28號", "total": 400.0, "badges": 5, "date": "2026-09-19 16:32:33"}, {"rank": 9, "num": 29, "name": "29號", "total": 400.0, "badges": 5, "date": "2026-09-19 21:24:18"}, {"rank": 10, "num": 3, "name": "03號", "total": 400.0, "badges": 5, "date": "2026-09-19 23:40:57"}]}, "perfect_students": {"P4A": ["01號", "02號", "05號", "06號", "07號", "09號", "10號", "11號", "12號", "13號", "15號", "16號", "17號", "18號", "19號", "20號", "24號", "27號", "28號", "30號"], "P4B": ["04號", "08號", "10號", "11號", "13號", "15號", "18號", "22號", "24號", "27號", "28號", "29號", "31號", "33號", "34號"], "P4C": ["01號", "02號", "03號", "04號", "06號", "09號", "10號", "11號", "12號", "13號", "16號", "19號", "20號", "24號", "26號", "27號", "29號", "31號", "32號", "34號", "35號"], "P4D": ["08號", "09號", "10號", "11號", "12號", "13號", "14號", "15號", "19號", "20號", "22號", "25號", "27號", "28號", "29號", "31號", "32號", "33號", "34號"], "P4E": ["03號", "06號", "08號", "15號", "18號", "21號", "23號", "24號", "25號", "26號", "28號", "29號", "30號"], "P4F": ["01號", "03號", "04號", "09號", "10號", "11號", "14號", "15號", "16號", "22號", "28號", "29號", "30號", "32號"]}, "cangjie_words": [{"char": "究", "hw": "第 3 周功課3", "count": 26, "first_code": "十", "first_key": "J", "last_code": "弓", "last_key": "N", "cj_full": "十金竹弓 (JCHG)", "secret": "【首碼】十 (J)：取字頂「穴」部首筆【十】（筆畫「一」＋「丨」）；【尾碼】弓 (N)：取下部「九」之末筆彎折【𠃌】。速成鍵入：十 (J) ＋ 弓 (N)。切勿誤取「力」或「大」！"}, {"char": "風", "hw": "第 3 周功課4", "count": 19, "first_code": "竹", "first_key": "H", "last_code": "戈", "last_key": "I", "cj_full": "竹弓竹戈 (HNHI)", "secret": "【首碼】竹 (H)：取外廓「几」左側撇筆【丿】；【尾碼】戈 (I)：取核心「虫」之末筆點【丶】。速成鍵入：竹 (H) ＋ 戈 (I)。"}, {"char": "凡", "hw": "第 3 周功課4", "count": 18, "first_code": "竹", "first_key": "H", "last_code": "戈", "last_key": "I", "cj_full": "竹弓戈 (HNI) [難字]", "secret": "【首碼】竹 (H)：取外廓左側撇筆【丿】；【尾碼】戈 (I)：取中心之點【丶】（依倉頡難字規則取碼）。速成鍵入：竹 (H) ＋ 戈 (I)。"}, {"char": "了", "hw": "第 3 周功課3", "count": 17, "first_code": "弓", "first_key": "N", "last_code": "弓", "last_key": "N", "cj_full": "弓弓 (NN)", "secret": "【速成首尾取碼】「了」字首筆橫折取【弓 (N)】，末筆豎彎鉤取【弓 (N)】。速成鍵入：弓 (N) ＋ 弓 (N)。"}, {"char": "骨", "hw": "第 3 周功課1", "count": 16, "first_code": "月", "first_key": "B", "last_code": "月", "last_key": "B", "cj_full": "月月月 (BBB)", "secret": "【首碼】月 (B)：取上部「冎」之頂框【冂】；【尾碼】月 (B)：取下部字身【月】（首尾同鍵）。速成鍵入：月 (B) ＋ 月 (B)。"}, {"char": "几", "hw": "第 3 周功課3", "count": 16, "first_code": "竹", "first_key": "H", "last_code": "弓", "last_key": "N", "cj_full": "竹弓 (HN)", "secret": "【首碼】竹 (H)：取左側撇筆【丿】；【尾碼】弓 (N)：取右側橫折彎鉤【乚】。速成鍵入：竹 (H) ＋ 弓 (N)。"}, {"char": "第", "hw": "第 3 周功課4", "count": 16, "first_code": "竹", "first_key": "H", "last_code": "竹", "last_key": "H", "cj_full": "竹弓中竹 (HNLH)", "secret": "【首碼】竹 (H)：取頂部竹字頭【⺮】；【尾碼】竹 (H)：取底部「弟」末筆豎撇【丿】（首尾同鍵）。速成鍵入：竹 (H) ＋ 竹 (H)。"}, {"char": "具", "hw": "第 3 周功課1", "count": 15, "first_code": "月", "first_key": "B", "last_code": "金", "last_key": "C", "cj_full": "月一一金 (BMMC)", "secret": "【首碼】月 (B)：取上部「目」字框；【尾碼】金 (C)：取底部末筆分開兩筆【八】。速成鍵入：月 (B) ＋ 金 (C)。"}, {"char": "宜", "hw": "第 3 周功課3", "count": 15, "first_code": "十", "first_key": "J", "last_code": "一", "last_key": "M", "cj_full": "十月一 (JBM)", "secret": "【首碼】十 (J)：取頂部寶蓋頭「宀」首筆【十】；【尾碼】一 (M)：取底部「且」末筆橫【一】。速成鍵入：十 (J) ＋ 一 (M)。"}, {"char": "乾", "hw": "第 3 周功課3", "count": 14, "first_code": "十", "first_key": "J", "last_code": "弓", "last_key": "N", "cj_full": "十十人弓 (JJON)", "secret": "【首碼】十 (J)：取左上角首筆【十】；【尾碼】弓 (N)：取右下「乞」末筆彎鉤【乚】。速成鍵入：十 (J) ＋ 弓 (N)。"}, {"char": "都", "hw": "第 3 周功課3", "count": 14, "first_code": "十", "first_key": "J", "last_code": "中", "last_key": "L", "cj_full": "十日弓中 (JANL)", "secret": "【首碼】十 (J)：取左部頂端【十】；【尾碼】中 (L)：取右側右耳旁「阝」之懸針豎【丨】。速成鍵入：十 (J) ＋ 中 (L)。"}, {"char": "衝", "hw": "第 3 周功課4", "count": 14, "first_code": "竹", "first_key": "H", "last_code": "弓", "last_key": "N", "cj_full": "竹人竹十弓 (HOHJN)", "secret": "【首碼】竹 (H)：取左側「彳」首筆撇【丿】；【尾碼】弓 (N)：取右側「亍」末筆鉤【亅/弓】（依「行」部包圍取碼規範，尾碼取右側「亍」之末筆，切勿誤取中間「重」字之「十」！）。速成鍵入：竹 (H) ＋ 弓 (N)。"}], "cangjie_clean_letters": [{"code": "日", "key": "A", "category": "哲理類", "aux": "日、曰", "examples": "明、早、最、星、普"}, {"code": "月", "key": "B", "category": "哲理類", "aux": "月、爫、夕、冂、冖", "examples": "朋、受、同、名、然、采"}, {"code": "金", "key": "C", "category": "哲理類", "aux": "金、八、丷、儿", "examples": "錯、分、益、兒、公、曾"}, {"code": "木", "key": "D", "category": "哲理類", "aux": "木、寸、才、十", "examples": "李、村、材、導、柴"}, {"code": "水", "key": "E", "category": "哲理類", "aux": "水、氵、又、氺", "examples": "冰、江、友、取、求、泉"}, {"code": "火", "key": "F", "category": "哲理類", "aux": "火、灬、⺌、小", "examples": "伙、焦、堂、尖、炎、照"}, {"code": "土", "key": "G", "category": "哲理類", "aux": "土、士", "examples": "地、吉、志、社、城"}, {"code": "竹", "key": "H", "category": "筆畫類", "aux": "竹、丿、⺮", "examples": "竹、笑、自、白、生、毛"}, {"code": "戈", "key": "I", "category": "筆畫類", "aux": "戈、丶、厶、广", "examples": "找、主、台、府、應、底"}, {"code": "十", "key": "J", "category": "筆畫類", "aux": "十、宀、穴", "examples": "汁、安、空、家、針、究"}, {"code": "大", "key": "K", "category": "筆畫類", "aux": "大、乂、ナ、疒、犭", "examples": "天、病、左、狗、痛、猛"}, {"code": "中", "key": "L", "category": "筆畫類", "aux": "中、丨、亅、川、衤", "examples": "巾、川、被、初、申、州"}, {"code": "一", "key": "M", "category": "筆畫類", "aux": "一、厂、工、刁", "examples": "旦、原、巧、石、可、刁"}, {"code": "弓", "key": "N", "category": "筆畫類", "aux": "弓、フ、勹、ク、乙、ㄋ、⺄", "examples": "引、句、包、乙、乃、風、弱"}, {"code": "人", "key": "O", "category": "人體類", "aux": "人、亻、入、𠆢", "examples": "你、他、合、內、全、休"}, {"code": "心", "key": "P", "category": "人體類", "aux": "心、忄、匕、七", "examples": "快、情、北、七、化、怨"}, {"code": "手", "key": "Q", "category": "人體類", "aux": "手、扌、龵", "examples": "打、提、拜、看、拳、持"}, {"code": "口", "key": "R", "category": "人體類", "aux": "口", "examples": "唱、叫、品、器、味、台"}, {"code": "尸", "key": "S", "category": "字形類", "aux": "尸、コ、匚、阝、卩", "examples": "居、局、區、巨、都、節"}, {"code": "廿", "key": "T", "category": "字形類", "aux": "廿、艹、龷", "examples": "花、草、共、黃、茶、英"}, {"code": "山", "key": "U", "category": "字形類", "aux": "山、凵、屮、乚", "examples": "出、歲、凶、幽、逆、岳"}, {"code": "女", "key": "V", "category": "字形類", "aux": "女、ㄑ、巛", "examples": "好、如、巡、巢、委、妹"}, {"code": "田", "key": "W", "category": "字形類", "aux": "田、毌", "examples": "男、畏、果、思、甲、申、貫"}, {"code": "卜", "key": "Y", "category": "字形類", "aux": "卜、亠、辶、冫", "examples": "外、高、這、道、冰、交"}], "pokemon_pool": [{"id": 25, "name": "皮卡丘", "tag": "⚡ 電氣", "icon": "⚡", "color": "#FEF08A", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"}, {"id": 4, "name": "小火龍", "tag": "🔥 火焰", "icon": "🔥", "color": "#FFEDD5", "border": "#FB923C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"}, {"id": 1, "name": "妙蛙種子", "tag": "🍃 草系", "icon": "🍃", "color": "#DCFCE7", "border": "#4ADE80", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"}, {"id": 7, "name": "傑尼龜", "tag": "💧 水系", "icon": "💧", "color": "#E0F2FE", "border": "#38BDF8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png"}, {"id": 6, "name": "噴火龍", "tag": "🔥 飛火", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"}, {"id": 9, "name": "水箭龜", "tag": "💧 巨浪", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"}, {"id": 26, "name": "雷丘", "tag": "⚡ 雷霆", "icon": "⚡", "color": "#FEF9C3", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png"}, {"id": 35, "name": "皮皮", "tag": "✨ 妖精", "icon": "✨", "color": "#FCE7F3", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png"}, {"id": 37, "name": "六尾", "tag": "🔥 狐火", "icon": "🔥", "color": "#FFEDD5", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png"}, {"id": 38, "name": "九尾", "tag": "🔥 幻火", "icon": "🔥", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png"}, {"id": 39, "name": "胖丁", "tag": "🎵 音律", "icon": "🎵", "color": "#FCE7F3", "border": "#EC4899", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png"}, {"id": 52, "name": "喵喵", "tag": "💰 聚寶", "icon": "💰", "color": "#FFF7ED", "border": "#FDBA74", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png"}, {"id": 54, "name": "可達鴨", "tag": "🧠 念力", "icon": "🧠", "color": "#FEF9C3", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png"}, {"id": 58, "name": "卡蒂狗", "tag": "🔥 忠勇", "icon": "🔥", "color": "#FFEDD5", "border": "#FB923C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png"}, {"id": 59, "name": "風速狗", "tag": "🔥 烈焰", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png"}, {"id": 65, "name": "胡地", "tag": "🔮 超能", "icon": "🔮", "color": "#FEF08A", "border": "#CA8A04", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png"}, {"id": 68, "name": "怪力", "tag": "🥊 格鬥", "icon": "🥊", "color": "#E2E8F0", "border": "#64748B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png"}, {"id": 77, "name": "小火馬", "tag": "🔥 疾馳", "icon": "🔥", "color": "#FFF1F2", "border": "#FB7185", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png"}, {"id": 79, "name": "呆呆獸", "tag": "💤 悠閒", "icon": "💤", "color": "#FDF2F8", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png"}, {"id": 94, "name": "耿鬼", "tag": "👻 幽靈", "icon": "👻", "color": "#F3E8FF", "border": "#9333EA", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png"}, {"id": 130, "name": "暴鯉龍", "tag": "🌊 狂瀾", "icon": "🌊", "color": "#DBEAFE", "border": "#1D4ED8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png"}, {"id": 131, "name": "拉普拉斯", "tag": "❄️ 乘浪", "icon": "❄️", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png"}, {"id": 132, "name": "百變怪", "tag": "⭐ 變身", "icon": "⭐", "color": "#F5F3FF", "border": "#A855F7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"}, {"id": 133, "name": "伊布", "tag": "⭐ 潛力", "icon": "⭐", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png"}, {"id": 134, "name": "水伊布", "tag": "💧 水華", "icon": "💧", "color": "#E0F2FE", "border": "#06B6D4", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png"}, {"id": 135, "name": "雷伊布", "tag": "⚡ 迅雷", "icon": "⚡", "color": "#FEF08A", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png"}, {"id": 136, "name": "火伊布", "tag": "🔥 炎熱", "icon": "🔥", "color": "#FFEDD5", "border": "#EF4444", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png"}, {"id": 143, "name": "卡比獸", "tag": "💤 泰山", "icon": "💤", "color": "#E2E8F0", "border": "#475569", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png"}, {"id": 144, "name": "急凍鳥", "tag": "❄️ 冰風", "icon": "❄️", "color": "#E0F2FE", "border": "#38BDF8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png"}, {"id": 145, "name": "閃電鳥", "tag": "⚡ 雷鳴", "icon": "⚡", "color": "#FEF08A", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png"}, {"id": 146, "name": "火焰鳥", "tag": "🔥 火羽", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png"}, {"id": 147, "name": "迷你龍", "tag": "🐉 龍裔", "icon": "🐉", "color": "#E0E7FF", "border": "#6366F1", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png"}, {"id": 149, "name": "快龍", "tag": "🐉 龍威", "icon": "🐉", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png"}, {"id": 150, "name": "超夢", "tag": "🔮 絕頂", "icon": "🔮", "color": "#F3E8FF", "border": "#7C3AED", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png"}, {"id": 151, "name": "夢幻", "tag": "✨ 傳奇", "icon": "✨", "color": "#FDF2F8", "border": "#F43F5E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png"}, {"id": 152, "name": "菊草葉", "tag": "🍃 香氣", "icon": "🍃", "color": "#DCFCE7", "border": "#22C55E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png"}, {"id": 155, "name": "火球鼠", "tag": "🔥 火花", "icon": "🔥", "color": "#FFEDD5", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png"}, {"id": 158, "name": "小鋸鱷", "tag": "💧 巨顎", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/158.png"}, {"id": 172, "name": "皮丘", "tag": "⚡ 電氣", "icon": "⚡", "color": "#FEF08A", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png"}, {"id": 175, "name": "波克比", "tag": "🥚 幸運", "icon": "🥚", "color": "#FFFBEB", "border": "#FCD34D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png"}, {"id": 179, "name": "咩利羊", "tag": "⚡ 棉絨", "icon": "⚡", "color": "#FEF9C3", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/179.png"}, {"id": 183, "name": "瑪力露", "tag": "💧 水球", "icon": "💧", "color": "#DBEAFE", "border": "#3B82F6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/183.png"}, {"id": 196, "name": "太陽伊布", "tag": "🔮 晨曦", "icon": "🔮", "color": "#F3E8FF", "border": "#A855F7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png"}, {"id": 197, "name": "月亮伊布", "tag": "🌙 月夜", "icon": "🌙", "color": "#F1F5F9", "border": "#334155", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png"}, {"id": 202, "name": "果然翁", "tag": "🛡️ 反擊", "icon": "🛡️", "color": "#DBEAFE", "border": "#2563EB", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png"}, {"id": 246, "name": "由基拉", "tag": "🪨 岩石", "icon": "🪨", "color": "#ECFCCB", "border": "#65A30D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/246.png"}, {"id": 248, "name": "班基拉斯", "tag": "🪨 霸主", "icon": "🪨", "color": "#ECFCCB", "border": "#4D7C0F", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png"}, {"id": 249, "name": "洛奇亞", "tag": "🌊 海神", "icon": "🌊", "color": "#EFF6FF", "border": "#1D4ED8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png"}, {"id": 250, "name": "鳳王", "tag": "🌈 彩虹", "icon": "🌈", "color": "#FEF2F2", "border": "#DC2626", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png"}, {"id": 251, "name": "雪拉比", "tag": "🌲 森林", "icon": "🌲", "color": "#DCFCE7", "border": "#16A34A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/251.png"}, {"id": 252, "name": "木守宮", "tag": "🍃 拍擊", "icon": "🍃", "color": "#DCFCE7", "border": "#15803D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png"}, {"id": 255, "name": "火稚雞", "tag": "🔥 暖心", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/255.png"}, {"id": 258, "name": "水躍魚", "tag": "💧 潮汐", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png"}, {"id": 280, "name": "拉魯拉絲", "tag": "✨ 感知", "icon": "✨", "color": "#ECFDF5", "border": "#059669", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/280.png"}, {"id": 282, "name": "沙奈朵", "tag": "✨ 守護", "icon": "✨", "color": "#ECFDF5", "border": "#10B981", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png"}, {"id": 300, "name": "向尾喵", "tag": "🐾 萌萌", "icon": "🐾", "color": "#FCE7F3", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/300.png"}, {"id": 359, "name": "阿勃梭魯", "tag": "⚔️ 災難", "icon": "⚔️", "color": "#F8FAFC", "border": "#475569", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png"}, {"id": 384, "name": "烈空坐", "tag": "🐉 蒼空", "icon": "🐉", "color": "#DCFCE7", "border": "#047857", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png"}, {"id": 385, "name": "基拉祈", "tag": "⭐ 願望", "icon": "⭐", "color": "#FEF9C3", "border": "#FACC15", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png"}, {"id": 387, "name": "草苗龜", "tag": "🍃 苗木", "icon": "🍃", "color": "#DCFCE7", "border": "#15803D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/387.png"}, {"id": 390, "name": "小火焰猴", "tag": "🔥 靈巧", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/390.png"}, {"id": 393, "name": "波加曼", "tag": "🐧 驕傲", "icon": "🐧", "color": "#E0E7FF", "border": "#6366F1", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png"}, {"id": 403, "name": "小貓怪", "tag": "⚡ 閃光", "icon": "⚡", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/403.png"}, {"id": 446, "name": "小卡比獸", "tag": "🍙 活力", "icon": "🍙", "color": "#ECFDF5", "border": "#059669", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/446.png"}, {"id": 448, "name": "路卡利歐", "tag": "🥊 波導", "icon": "🥊", "color": "#E0F2FE", "border": "#2563EB", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png"}, {"id": 470, "name": "葉伊布", "tag": "🍃 綠意", "icon": "🍃", "color": "#DCFCE7", "border": "#16A34A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/470.png"}, {"id": 471, "name": "冰伊布", "tag": "❄️ 霜雪", "icon": "❄️", "color": "#E0F2FE", "border": "#06B6D4", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/471.png"}, {"id": 492, "name": "謝米", "tag": "🌸 感恩", "icon": "🌸", "color": "#F0FDF4", "border": "#22C55E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/492.png"}, {"id": 493, "name": "阿爾宙斯", "tag": "🌟 創世", "icon": "🌟", "color": "#FFFBEB", "border": "#D97706", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/493.png"}, {"id": 495, "name": "藤藤蛇", "tag": "🍃 優雅", "icon": "🍃", "color": "#DCFCE7", "border": "#15803D", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/495.png"}, {"id": 501, "name": "水水獺", "tag": "💧 扇貝", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/501.png"}, {"id": 570, "name": "索羅亞", "tag": "🦊 幻影", "icon": "🦊", "color": "#F1F5F9", "border": "#1E293B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/570.png"}, {"id": 571, "name": "索羅亞克", "tag": "🦊 魘幻", "icon": "🦊", "color": "#F1F5F9", "border": "#0F172A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png"}, {"id": 653, "name": "火狐狸", "tag": "🔥 魔導", "icon": "🔥", "color": "#FFEDD5", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/653.png"}, {"id": 658, "name": "甲賀忍蛙", "tag": "🌊 飛水", "icon": "🌊", "color": "#DBEAFE", "border": "#1D4ED8", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png"}, {"id": 700, "name": "仙子伊布", "tag": "🎀 曼妙", "icon": "🎀", "color": "#FDF2F8", "border": "#F472B6", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png"}, {"id": 702, "name": "咚咚鼠", "tag": "⚡ 頰囊", "icon": "⚡", "color": "#FEF3C7", "border": "#F59E0B", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/702.png"}, {"id": 719, "name": "蒂安希", "tag": "💎 晶瑩", "icon": "💎", "color": "#FDF2F8", "border": "#FB7185", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/719.png"}, {"id": 722, "name": "木木梟", "tag": "🍃 飛葉", "icon": "🍃", "color": "#FEF3C7", "border": "#84CC16", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/722.png"}, {"id": 778, "name": "謎擬Ｑ", "tag": "👻 謎裝", "icon": "👻", "color": "#FEFCE8", "border": "#CA8A04", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png"}, {"id": 802, "name": "瑪夏多", "tag": "🥊 暗影", "icon": "🥊", "color": "#F1F5F9", "border": "#334155", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/802.png"}, {"id": 807, "name": "捷拉奧拉", "tag": "⚡ 疾雷", "icon": "⚡", "color": "#FEF9C3", "border": "#EAB308", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/807.png"}, {"id": 810, "name": "敲音猴", "tag": "🥁 節拍", "icon": "🥁", "color": "#DCFCE7", "border": "#16A34A", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/810.png"}, {"id": 813, "name": "炎兔兒", "tag": "🔥 蹴擊", "icon": "🔥", "color": "#FFEDD5", "border": "#EF4444", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/813.png"}, {"id": 816, "name": "淚眼蜥", "tag": "💧 水狙", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/816.png"}, {"id": 888, "name": "蒼響", "tag": "⚔️ 劍聖", "icon": "⚔️", "color": "#DBEAFE", "border": "#2563EB", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png"}, {"id": 906, "name": "新葉喵", "tag": "🍃 花草", "icon": "🍃", "color": "#DCFCE7", "border": "#22C55E", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/906.png"}, {"id": 909, "name": "呆火鱷", "tag": "🔥 歌唱", "icon": "🔥", "color": "#FFEDD5", "border": "#EA580C", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/909.png"}, {"id": 912, "name": "潤水鴨", "tag": "💧 舞者", "icon": "💧", "color": "#E0F2FE", "border": "#0284C7", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/912.png"}, {"id": 921, "name": "布撥", "tag": "⚡ 電氣", "icon": "⚡", "color": "#FEF3C7", "border": "#F97316", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/921.png"}, {"id": 1008, "name": "密勒頓", "tag": "⚡ 未來", "icon": "⚡", "color": "#EDE9FE", "border": "#7C3AED", "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1008.png"}], "cangjie_letters_full": [{"code": "日", "key": "A", "category": "哲理類", "aux": "日、曰、目", "examples": "明、早、象、巴"}, {"code": "月", "key": "B", "category": "哲理類", "aux": "月、冂、爫、冖", "examples": "朋、受、同、然、愛"}, {"code": "金", "key": "C", "category": "哲理類", "aux": "金、八、丷、儿", "examples": "錯、分、四、曾"}, {"code": "木", "key": "D", "category": "哲理類", "aux": "木、寸、才", "examples": "李、才、他"}, {"code": "水", "key": "E", "category": "哲理類", "aux": "水、氵、又、氺", "examples": "冰、沒、求、雙、函"}, {"code": "火", "key": "F", "category": "哲理類", "aux": "火、灬、小、⺌、ハ", "examples": "伙、堂、示、組、羔、尖"}, {"code": "土", "key": "G", "category": "哲理類", "aux": "土、士", "examples": "社、志、地"}, {"code": "竹", "key": "H", "category": "筆畫類", "aux": "竹、⺮、丿", "examples": "竹、笛、自、反、身"}, {"code": "戈", "key": "I", "category": "筆畫類", "aux": "戈、丶、广、ム", "examples": "找、勺、應、允"}, {"code": "十", "key": "J", "category": "筆畫類", "aux": "十、宀、穴", "examples": "汁、寫、究"}, {"code": "大", "key": "K", "category": "筆畫類", "aux": "大、乂、ナ、疒、犭", "examples": "天、較、有、痛、狗"}, {"code": "中", "key": "L", "category": "筆畫類", "aux": "中、丨、川、衤、肀", "examples": "仲、巾、川、畫、被、肅"}, {"code": "一", "key": "M", "category": "筆畫類", "aux": "一、厂、工、刁", "examples": "旦、刁、曆、石、巧、逐"}, {"code": "弓", "key": "N", "category": "筆畫類", "aux": "弓、𠃌、乚、乙、ㄋ", "examples": "引、例、吃、了、免、沒、風"}, {"code": "人", "key": "O", "category": "人體類", "aux": "人、亻、入、𠆢", "examples": "你、他、內、介、合"}, {"code": "心", "key": "P", "category": "人體類", "aux": "心、忄、匕、七", "examples": "情、性、怡、勿、七"}, {"code": "手", "key": "Q", "category": "人體類", "aux": "手、扌、龵", "examples": "打、提、拿、拜、看"}, {"code": "口", "key": "R", "category": "人體類", "aux": "口", "examples": "唱、叫、品、司"}, {"code": "尸", "key": "S", "category": "字形類", "aux": "尸、コ、匚", "examples": "居、屋、展、局、區"}, {"code": "廿", "key": "T", "category": "字形類", "aux": "廿、艹、龷", "examples": "花、草、共、黃、舊"}, {"code": "山", "key": "U", "category": "字形類", "aux": "山、屮、凵", "examples": "出、岳、凶、幽、函"}, {"code": "女", "key": "V", "category": "字形類", "aux": "女、巛、ㄑ", "examples": "好、始、巡、如、妹"}, {"code": "田", "key": "W", "category": "字形類", "aux": "田、囗、四", "examples": "思、男、國、因、腦"}, {"code": "卜", "key": "Y", "category": "字形類", "aux": "卜、亠、辶", "examples": "言、高、佔、外、走"}], "roster": {}, "tiers_config": [{"min": 0, "max": 49, "badge": "🥉", "title": "🥉【新手訓練家】", "desc": "初登速成道館，開啟錯字討伐征途。", "skill": null}, {"min": 50, "max": 149, "badge": "🥈", "title": "🥈【字根見習生】", "desc": "熟悉指法鍵位，能迅速辨識首碼與尾碼。", "skill": {"name": "⚡【精準直覺】", "type": "被動輔助", "rate": 0.25, "desc": "每關有 25% 機率自動聚焦高亮正確首碼精靈球！"}}, {"min": 150, "max": 349, "badge": "🥇", "title": "🥇【鍵影遊俠】", "desc": "盲打速度初顯，能從容擊破各類常錯高頻字。", "skill": {"name": "🔍【雷霆看破】", "type": "主動隨機", "rate": 0.3, "desc": "每關開始時有 30% 機率自動剔除 2 個干擾字根球！"}}, {"min": 350, "max": 699, "badge": "💎", "title": "💎【速成道館館主】", "desc": "威震一方道館，能冷靜拆解複雜易混字形。", "skill": {"name": "🛡️【聖盾防護】", "type": "保護格擋", "rate": 0.35, "desc": "捕捉失誤時有 35% 機率格擋一次失誤，免扣分且保留連擊！"}}, {"min": 700, "max": 1199, "badge": "🔥", "title": "🔥【魔王討伐大將】", "desc": "攻克無數高難度錯字魔王，傷害爆擊力大幅提升。", "skill": {"name": "💥【烈焰爆擊】", "type": "增益加成", "rate": 0.25, "desc": "擊破魔王時有 25% 機率觸發爆擊，本關額外獲得 +5 點爆擊分！"}}, {"min": 1200, "max": 1999, "badge": "⚡", "title": "⚡【疾風奧義宗師】", "desc": "指法如疾風驟雨，速成拆碼達到出神入化境界。", "skill": {"name": "⏳【時空凝滯】", "type": "提示輔助", "rate": 0.25, "desc": "遭遇難題時有 25% 機率發動，直接點亮並自動填入首碼！"}}, {"min": 2000, "max": 3499, "badge": "👑", "title": "👑【傳奇鍵王大師】", "desc": "全級傳奇打字大師，任何生僻偏旁均能瞬間擊破。", "skill": {"name": "🌊【極限連擊】", "type": "持續增益", "rate": 0.3, "desc": "連擊 2 次以上時，答題額外獲得 +3 點連擊增益！"}}, {"min": 3500, "max": 5000, "badge": "🌟", "title": "🌟【無雙神域殿堂至尊】", "desc": "登峰造極，榮登錯字討伐最高神域殿堂！", "skill": {"name": "🌌【神域天罰】", "type": "終極神技", "rate": 0.2, "desc": "戰鬥中有 20% 機率召喚神域天雷，秒殺魔王並額外獎勵 +10 點天罰分！"}}], "benchmark_leaderboard": [{"cls": "P4A", "num": 1, "name": "P4A 01號", "score": 1068, "kills": 4, "max_score": 20, "title": "🔥【魔王討伐大將】", "last_time": "2026-09-23 14:51:48"}, {"cls": "P4A", "num": 2, "name": "P4A 02號", "score": 2186, "kills": 87, "max_score": 30, "title": "👑【傳奇鍵王大師】", "last_time": "2026-09-23 14:52:23"}, {"cls": "P4A", "num": 3, "name": "P4A 03號", "score": 1721, "kills": 11, "max_score": 21, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:19"}, {"cls": "P4A", "num": 4, "name": "P4A 04號", "score": 1785, "kills": 0, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:23"}, {"cls": "P4A", "num": 5, "name": "P4A 05號", "score": 1185, "kills": 46, "max_score": 26, "title": "🔥【魔王討伐大將】", "last_time": "2026-09-23 14:52:13"}, {"cls": "P4A", "num": 6, "name": "P4A 06號", "score": 1586, "kills": 0, "max_score": 17, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:24"}, {"cls": "P4A", "num": 7, "name": "P4A 07號", "score": 2407, "kills": 4, "max_score": 25, "title": "👑【傳奇鍵王大師】", "last_time": "2026-09-23 14:52:20"}, {"cls": "P4A", "num": 8, "name": "P4A 08號", "score": 1386, "kills": 0, "max_score": 25, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:23"}, {"cls": "P4A", "num": 9, "name": "P4A 09號", "score": 233, "kills": 0, "max_score": 20, "title": "🥇【鍵影遊俠】", "last_time": "2026-09-23 14:22:06"}, {"cls": "P4A", "num": 10, "name": "P4A 10號", "score": 323, "kills": 0, "max_score": 15, "title": "🥇【鍵影遊俠】", "last_time": "2026-09-23 14:21:57"}, {"cls": "P4A", "num": 11, "name": "P4A 11號", "score": 1538, "kills": 0, "max_score": 25, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:24"}, {"cls": "P4A", "num": 12, "name": "P4A 12號", "score": 1240, "kills": 0, "max_score": 25, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:00"}, {"cls": "P4A", "num": 13, "name": "P4A 13號", "score": 754, "kills": 3, "max_score": 17, "title": "🔥【魔王討伐大將】", "last_time": "2026-09-23 14:52:22"}, {"cls": "P4A", "num": 14, "name": "P4A 14號", "score": 1477, "kills": 0, "max_score": 25, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:20"}, {"cls": "P4A", "num": 15, "name": "P4A 15號", "score": 2688, "kills": 0, "max_score": 21, "title": "👑【傳奇鍵王大師】", "last_time": "2026-09-23 14:52:23"}, {"cls": "P4A", "num": 16, "name": "P4A 16號", "score": 2071, "kills": 2, "max_score": 19, "title": "👑【傳奇鍵王大師】", "last_time": "2026-09-23 14:52:24"}, {"cls": "P4A", "num": 17, "name": "P4A 17號", "score": 504, "kills": 0, "max_score": 15, "title": "💎【速成道館館主】", "last_time": "2026-09-23 14:22:04"}, {"cls": "P4A", "num": 18, "name": "P4A 18號", "score": 1094, "kills": 25, "max_score": 21, "title": "🔥【魔王討伐大將】", "last_time": "2026-09-23 14:52:22"}, {"cls": "P4A", "num": 19, "name": "P4A 19號", "score": 1424, "kills": 0, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:21"}, {"cls": "P4A", "num": 20, "name": "P4A 20號", "score": 836, "kills": 31, "max_score": 25, "title": "🔥【魔王討伐大將】", "last_time": "2026-09-23 14:52:25"}, {"cls": "P4A", "num": 21, "name": "P4A 21號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4A", "num": 22, "name": "P4A 22號", "score": 1398, "kills": 3, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:21"}, {"cls": "P4A", "num": 23, "name": "P4A 23號", "score": 1520, "kills": 0, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:23"}, {"cls": "P4A", "num": 24, "name": "P4A 24號", "score": 1667, "kills": 1, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:19"}, {"cls": "P4A", "num": 25, "name": "P4A 25號", "score": 1472, "kills": 0, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:25"}, {"cls": "P4A", "num": 26, "name": "P4A 26號", "score": 1887, "kills": 0, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:20"}, {"cls": "P4A", "num": 27, "name": "P4A 27號", "score": 666, "kills": 14, "max_score": 25, "title": "💎【速成道館館主】", "last_time": "2026-09-23 14:52:12"}, {"cls": "P4A", "num": 28, "name": "P4A 28號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4A", "num": 29, "name": "P4A 29號", "score": 1745, "kills": 0, "max_score": 19, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:24"}, {"cls": "P4A", "num": 30, "name": "P4A 30號", "score": 1920, "kills": 0, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:24"}, {"cls": "P4A", "num": 31, "name": "P4A 31號", "score": 975, "kills": 0, "max_score": 15, "title": "🔥【魔王討伐大將】", "last_time": "2026-09-23 14:52:23"}, {"cls": "P4A", "num": 32, "name": "P4A 32號", "score": 2984, "kills": 143, "max_score": 30, "title": "👑【傳奇鍵王大師】", "last_time": "2026-09-23 14:52:22"}, {"cls": "P4A", "num": 33, "name": "P4A 33號", "score": 2020, "kills": 0, "max_score": 23, "title": "👑【傳奇鍵王大師】", "last_time": "2026-09-23 14:52:10"}, {"cls": "P4A", "num": 34, "name": "P4A 34號", "score": 1999, "kills": 1, "max_score": 20, "title": "⚡【疾風奧義宗師】", "last_time": "2026-09-23 14:52:04"}, {"cls": "P4B", "num": 1, "name": "P4B 01號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 2, "name": "P4B 02號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 3, "name": "P4B 03號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 4, "name": "P4B 04號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 5, "name": "P4B 05號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 6, "name": "P4B 06號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 7, "name": "P4B 07號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 8, "name": "P4B 08號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 9, "name": "P4B 09號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 10, "name": "P4B 10號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 11, "name": "P4B 11號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 12, "name": "P4B 12號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 13, "name": "P4B 13號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 14, "name": "P4B 14號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 15, "name": "P4B 15號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 16, "name": "P4B 16號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 17, "name": "P4B 17號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 18, "name": "P4B 18號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 19, "name": "P4B 19號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 20, "name": "P4B 20號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 21, "name": "P4B 21號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 22, "name": "P4B 22號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 23, "name": "P4B 23號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 24, "name": "P4B 24號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 25, "name": "P4B 25號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 26, "name": "P4B 26號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 27, "name": "P4B 27號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 28, "name": "P4B 28號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 29, "name": "P4B 29號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 30, "name": "P4B 30號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 31, "name": "P4B 31號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 32, "name": "P4B 32號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 33, "name": "P4B 33號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 34, "name": "P4B 34號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4B", "num": 35, "name": "P4B 35號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 1, "name": "P4C 01號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 2, "name": "P4C 02號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 3, "name": "P4C 03號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 4, "name": "P4C 04號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 5, "name": "P4C 05號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 6, "name": "P4C 06號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 7, "name": "P4C 07號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 8, "name": "P4C 08號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 9, "name": "P4C 09號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 10, "name": "P4C 10號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 11, "name": "P4C 11號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 12, "name": "P4C 12號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 13, "name": "P4C 13號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 14, "name": "P4C 14號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 15, "name": "P4C 15號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 16, "name": "P4C 16號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 17, "name": "P4C 17號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 18, "name": "P4C 18號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 19, "name": "P4C 19號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 20, "name": "P4C 20號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 21, "name": "P4C 21號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 22, "name": "P4C 22號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 23, "name": "P4C 23號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 24, "name": "P4C 24號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 25, "name": "P4C 25號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 26, "name": "P4C 26號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 27, "name": "P4C 27號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 28, "name": "P4C 28號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 29, "name": "P4C 29號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 30, "name": "P4C 30號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 31, "name": "P4C 31號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 32, "name": "P4C 32號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 33, "name": "P4C 33號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 34, "name": "P4C 34號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4C", "num": 35, "name": "P4C 35號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 1, "name": "P4D 01號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 2, "name": "P4D 02號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 3, "name": "P4D 03號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 4, "name": "P4D 04號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 5, "name": "P4D 05號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 6, "name": "P4D 06號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 7, "name": "P4D 07號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 8, "name": "P4D 08號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 9, "name": "P4D 09號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 10, "name": "P4D 10號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 11, "name": "P4D 11號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 12, "name": "P4D 12號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 13, "name": "P4D 13號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 14, "name": "P4D 14號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 15, "name": "P4D 15號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 16, "name": "P4D 16號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 17, "name": "P4D 17號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 18, "name": "P4D 18號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 19, "name": "P4D 19號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 20, "name": "P4D 20號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 21, "name": "P4D 21號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 22, "name": "P4D 22號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 23, "name": "P4D 23號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 24, "name": "P4D 24號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 25, "name": "P4D 25號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 26, "name": "P4D 26號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 27, "name": "P4D 27號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 28, "name": "P4D 28號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 29, "name": "P4D 29號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 30, "name": "P4D 30號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 31, "name": "P4D 31號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 32, "name": "P4D 32號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 33, "name": "P4D 33號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 34, "name": "P4D 34號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4D", "num": 35, "name": "P4D 35號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 1, "name": "P4E 01號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 2, "name": "P4E 02號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 3, "name": "P4E 03號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 4, "name": "P4E 04號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 5, "name": "P4E 05號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 6, "name": "P4E 06號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 7, "name": "P4E 07號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 8, "name": "P4E 08號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 9, "name": "P4E 09號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 10, "name": "P4E 10號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 11, "name": "P4E 11號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 12, "name": "P4E 12號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 13, "name": "P4E 13號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 14, "name": "P4E 14號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 15, "name": "P4E 15號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 16, "name": "P4E 16號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 17, "name": "P4E 17號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 18, "name": "P4E 18號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 19, "name": "P4E 19號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 20, "name": "P4E 20號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 21, "name": "P4E 21號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 22, "name": "P4E 22號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 23, "name": "P4E 23號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 24, "name": "P4E 24號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 25, "name": "P4E 25號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 26, "name": "P4E 26號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 27, "name": "P4E 27號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 28, "name": "P4E 28號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 29, "name": "P4E 29號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 30, "name": "P4E 30號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 31, "name": "P4E 31號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 32, "name": "P4E 32號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 33, "name": "P4E 33號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4E", "num": 34, "name": "P4E 34號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 1, "name": "P4F 01號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 2, "name": "P4F 02號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 3, "name": "P4F 03號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 4, "name": "P4F 04號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 5, "name": "P4F 05號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 6, "name": "P4F 06號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 7, "name": "P4F 07號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 8, "name": "P4F 08號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 9, "name": "P4F 09號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 10, "name": "P4F 10號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 11, "name": "P4F 11號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 12, "name": "P4F 12號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 13, "name": "P4F 13號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 14, "name": "P4F 14號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 15, "name": "P4F 15號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 16, "name": "P4F 16號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 17, "name": "P4F 17號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 18, "name": "P4F 18號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 19, "name": "P4F 19號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 20, "name": "P4F 20號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 21, "name": "P4F 21號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 22, "name": "P4F 22號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 23, "name": "P4F 23號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 24, "name": "P4F 24號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 25, "name": "P4F 25號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 26, "name": "P4F 26號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 27, "name": "P4F 27號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 28, "name": "P4F 28號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 29, "name": "P4F 29號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 30, "name": "P4F 30號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 31, "name": "P4F 31號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 32, "name": "P4F 32號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 33, "name": "P4F 33號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4F", "num": 34, "name": "P4F 34號", "score": 0, "kills": 0, "max_score": 0, "title": "🥉【新手訓練家】", "last_time": "--"}, {"cls": "P4A", "num": 36, "name": "P4A 36號", "score": 5, "kills": 0, "max_score": 5, "title": "🥉【新手訓練家】", "last_time": "2026-09-23 14:13:29"}], "aux_dataset": [{"code": "日", "key": "A", "category": "哲理類", "aux_list": ["曰"], "examples": "明、早、最、星、普"}, {"code": "月", "key": "B", "category": "哲理類", "aux_list": ["爫", "夕", "冂", "冖"], "examples": "朋、受、同、名、然、采"}, {"code": "金", "key": "C", "category": "哲理類", "aux_list": ["八", "丷", "儿"], "examples": "錯、分、益、兒、公、曾"}, {"code": "木", "key": "D", "category": "哲理類", "aux_list": ["寸", "才", "十"], "examples": "李、村、材、導、柴"}, {"code": "水", "key": "E", "category": "哲理類", "aux_list": ["氵", "又", "氺"], "examples": "冰、江、友、取、求、泉"}, {"code": "火", "key": "F", "category": "哲理類", "aux_list": ["灬", "⺌", "小"], "examples": "伙、焦、堂、尖、炎、照"}, {"code": "土", "key": "G", "category": "哲理類", "aux_list": ["士"], "examples": "地、吉、志、社、城"}, {"code": "竹", "key": "H", "category": "筆畫類", "aux_list": ["丿", "⺮"], "examples": "竹、笑、自、白、生、毛"}, {"code": "戈", "key": "I", "category": "筆畫類", "aux_list": ["丶", "厶", "广"], "examples": "找、主、台、府、應、底"}, {"code": "十", "key": "J", "category": "筆畫類", "aux_list": ["宀", "穴"], "examples": "汁、安、空、家、針、究"}, {"code": "大", "key": "K", "category": "筆畫類", "aux_list": ["乂", "ナ", "疒", "犭"], "examples": "天、病、左、狗、痛、猛"}, {"code": "中", "key": "L", "category": "筆畫類", "aux_list": ["丨", "亅", "川", "衤"], "examples": "巾、川、被、初、申、州"}, {"code": "一", "key": "M", "category": "筆畫類", "aux_list": ["厂", "工", "刁"], "examples": "旦、原、巧、石、可、刁"}, {"code": "弓", "key": "N", "category": "筆畫類", "aux_list": ["フ", "勹", "ク", "乙", "ㄋ", "⺄"], "examples": "引、句、包、乙、乃、風、弱"}, {"code": "人", "key": "O", "category": "人體類", "aux_list": ["亻", "入", "𠆢"], "examples": "你、他、合、內、全、休"}, {"code": "心", "key": "P", "category": "人體類", "aux_list": ["忄", "匕", "七"], "examples": "快、情、北、七、化、怨"}, {"code": "手", "key": "Q", "category": "人體類", "aux_list": ["扌", "龵"], "examples": "打、提、拜、看、拳、持"}, {"code": "口", "key": "R", "category": "人體類", "aux_list": ["口"], "examples": "唱、叫、品、器、味、台"}, {"code": "尸", "key": "S", "category": "字形類", "aux_list": ["コ", "匚", "阝", "卩"], "examples": "居、局、區、巨、都、節"}, {"code": "廿", "key": "T", "category": "字形類", "aux_list": ["艹", "龷"], "examples": "花、草、共、黃、茶、英"}, {"code": "山", "key": "U", "category": "字形類", "aux_list": ["凵", "屮", "乚"], "examples": "出、歲、凶、幽、逆、岳"}, {"code": "女", "key": "V", "category": "字形類", "aux_list": ["ㄑ", "巛", "女"], "examples": "好、如、巡、巢、委、妹"}, {"code": "田", "key": "W", "category": "字形類", "aux_list": ["毌"], "examples": "男、畏、果、思、甲、申、貫"}, {"code": "卜", "key": "Y", "category": "字形類", "aux_list": ["亠", "辶", "冫"], "examples": "外、高、這、道、冰、交"}]};
     
     let activeTab = 'top40';
     let currentClass = 'P4A';
@@ -2375,20 +2887,24 @@
           <div class="podium-time">⏱️ ${top3[2].date.replace('2026-', '')}</div>
         </div>
       `;
-      
-            // Rest list (Rank 4 to 40) with ZERO DUPLICATES across all 37 students!
-      const restPool = DATA.pokemon_pool.slice(3); // 88 available Pokemon
+
+      // Render rank 4-40 (其中第 4 至 10 名配有璀璨閃爍光環與 TOP 10 榮譽特效)
+      const restPool = DATA.pokemon_pool.slice(3);
       const listArea = document.getElementById('top40-list');
       listArea.innerHTML = rest.map((s, idx) => {
         const pm = restPool[idx % restPool.length];
+        const isElite = (s.rank >= 4 && s.rank <= 10);
         return `
-          <div class="rank-card" data-student="${s.cls}-${s.num}-${s.name}">
+          <div class="rank-card ${isElite ? 'rank-card-elite-flash' : ''}" data-student="${s.cls}-${s.num}-${s.name}">
             <div class="rank-left">
               <div class="rank-poke-avatar" style="background:${pm.color}; border-color:${pm.border};" title="${pm.name}">
                 <img class="rank-poke-img" src="${pm.img}" alt="${pm.name}" onerror="handleRankImgError(this, '${pm.icon || '⚡'}')">
               </div>
               <div>
-                <div class="st-name">#${s.rank} ${s.name} <span class="st-poke-tag">${pm.name}</span></div>
+                <div class="st-name">
+                  #${s.rank} ${s.name} <span class="st-poke-tag">${pm.name}</span>
+                  ${isElite ? '<span class="badge-elite-top10">✨ TOP 10 菁英</span>' : ''}
+                </div>
                 <div class="st-class">${s.cls} · ${s.num}號 · 夥伴：${pm.name} (${pm.tag})</div>
               </div>
             </div>
@@ -2417,15 +2933,36 @@
       
       container.innerHTML = students.map((s, idx) => {
         const pm = DATA.pokemon_pool[(classOffset + idx) % DATA.pokemon_pool.length];
-        const medal = idx === 0 ? '🥇 ' : (idx === 1 ? '🥈 ' : (idx === 2 ? '🥉 ' : ''));
+        let medal = '';
+        let cardClass = 'rank-card';
+        let honorBadge = '';
+
+        // 各班前 10 名榮譽榜：前 3 名配置冠軍、亞軍、季軍專屬流光閃爍特效
+        if (idx === 0) {
+          medal = '🥇 ';
+          cardClass += ' rank-card-class-champion';
+          honorBadge = '<span class="badge-class-honor gold">👑 班級冠軍</span>';
+        } else if (idx === 1) {
+          medal = '🥈 ';
+          cardClass += ' rank-card-class-runnerup';
+          honorBadge = '<span class="badge-class-honor silver">🥈 班級亞軍</span>';
+        } else if (idx === 2) {
+          medal = '🥉 ';
+          cardClass += ' rank-card-class-third';
+          honorBadge = '<span class="badge-class-honor bronze">🥉 班級季軍</span>';
+        }
+
         return `
-          <div class="rank-card" data-student="${currentClass}-${s.num}-${s.name}">
+          <div class="${cardClass}" data-student="${currentClass}-${s.num}-${s.name}">
             <div class="rank-left">
               <div class="rank-poke-avatar" style="background:${pm.color}; border-color:${pm.border};" title="${pm.name}">
                 <img class="rank-poke-img" src="${pm.img}" alt="${pm.name}" onerror="handleRankImgError(this, '${pm.icon || '⚡'}')">
               </div>
               <div>
-                <div class="st-name">${medal}#${s.rank} ${s.name} <span class="st-poke-tag">${pm.name}</span></div>
+                <div class="st-name">
+                  ${medal}#${s.rank} ${s.name} <span class="st-poke-tag">${pm.name}</span>
+                  ${honorBadge}
+                </div>
                 <div class="st-class">${currentClass} · ${s.num}號 · 夥伴：${pm.name} (${pm.tag})</div>
               </div>
             </div>
@@ -2751,6 +3288,16 @@
       document.querySelectorAll('.arena-speed-btn').forEach(b => b.classList.remove('active'));
       const activeBtn = document.getElementById(activeBtnId);
       if (activeBtn) activeBtn.classList.add('active');
+
+      let tip = '';
+      if (speed > 1.2) {
+        tip = '⚡ 切換為【敏捷速度】：精靈球高速遊行，答對享有 1.4x (+40%) 速度積分加成！';
+      } else if (speed === 0.0) {
+        tip = '⏸️ 切換為【定點輔助】：精靈球靜止不動，簡易模式得分為 0.6x 折減。';
+      } else {
+        tip = '🟢 切換為【悠閒模式】：標準遊行速度，答對獲取 1.0x 標準分數。';
+      }
+      showPassToast(tip);
     }
 
     // 8. 載入當前關卡 (支援三大模式動態切換，模式2支援隨機1-3個答案)
@@ -3231,7 +3778,22 @@
         comboCount++;
         sessionCorrectCount++;
 
-        let roundEarned = baseScore;
+        // 🎯 游行速度不同選擇對得分的影響 (定點最容易得分最低，敏捷最高)
+        let speedMultiplier = 1.0;
+        let speedNotice = '';
+        if (wanderingSpeedMultiplier > 1.2) {
+          speedMultiplier = 1.4; // 敏捷模式獎勵 +40%
+          speedNotice = '⚡敏捷1.4x';
+        } else if (wanderingSpeedMultiplier === 0.0) {
+          speedMultiplier = 0.6; // 定點簡易模式扣減至 60%
+          speedNotice = '⏸️定點0.6x';
+        } else {
+          speedMultiplier = 1.0; // 悠閒標準模式 100%
+          speedNotice = '🟢悠閒1.0x';
+        }
+
+        let roundEarned = Math.max(1, Math.round(baseScore * speedMultiplier));
+
         let comboBonus = 0;
         if (comboCount === 2) comboBonus = 2;
         else if (comboCount === 3) comboBonus = 4;
@@ -3389,73 +3951,128 @@
     }
 
     function renderLeaderboardTable() {
+      // 1. 雙軌智能合併：整合 Google 試算表最新真實數據與本地 localStorage
       const allMap = {};
 
+      // 載入 26-27_P4_錯字討伐小遊戲積分記錄表 全級 208 名學生最新動態數據
+      if (DATA.benchmark_leaderboard && Array.isArray(DATA.benchmark_leaderboard)) {
+        DATA.benchmark_leaderboard.forEach(item => {
+          allMap[`${item.cls}_${item.num}`] = {
+            cls: item.cls,
+            num: item.num,
+            name: `${item.cls} ${(item.num < 10 ? '0' : '') + item.num}號`,
+            score: item.score || 0,
+            kills: item.kills || 0,
+            title: item.title || '🥉【新手訓練家】'
+          };
+        });
+      }
+
+      // 合併本機 localStorage 產生的最新成績
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.startsWith('p4_score_')) {
           const parts = key.replace('p4_score_', '').split('_');
           const cls = parts[0];
-          const num = parseInt(parts[1]);
+          const num = parseInt(parts[1], 10);
           try {
             const parsed = JSON.parse(SafeStorage.getItem(key));
-            if (parsed && parsed.totalScore > 0) {
-              let name = `${cls} ${num}號`;
-              if (!CONFIG.GITHUB_PRIVACY_MODE && DATA.roster && DATA.roster[cls] && DATA.roster[cls][num]) {
-                name = DATA.roster[cls][num];
+            if (parsed && typeof parsed.totalScore === 'number') {
+              const mapKey = `${cls}_${num}`;
+              const cur = allMap[mapKey];
+              const localScore = parsed.totalScore;
+              const localKills = parsed.kills || 0;
+              const { currentTier } = evalTierAndSkills(localScore);
+              if (!cur || localScore > cur.score) {
+                allMap[mapKey] = {
+                  cls, num,
+                  name: `${cls} ${(num < 10 ? '0' : '') + num}號`,
+                  score: localScore,
+                  kills: Math.max(localKills, cur ? cur.kills : 0),
+                  title: currentTier.title
+                };
               }
-              const { currentTier } = evalTierAndSkills(parsed.totalScore);
-              allMap[`${cls}_${num}`] = {
-                cls, num, name,
-                score: parsed.totalScore,
-                kills: parsed.kills,
-                title: currentTier.title
-              };
             }
           } catch(e) {}
         }
       }
 
-      let list = Object.values(allMap);
-      list.sort((a, b) => b.score - a.score);
-      list.forEach((item, idx) => item.rank = idx + 1);
+      // 2. 生成全級總榜排序並計算「全級名次」
+      const fullList = Object.values(allMap);
+      fullList.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        if (b.kills !== a.kills) return b.kills - a.kills;
+        if (a.cls !== b.cls) return a.cls.localeCompare(b.cls);
+        return a.num - b.num;
+      });
+      fullList.forEach((item, idx) => {
+        item.overallRank = idx + 1;
+      });
 
+      // 3. 生成各班專屬榜單並精確計算「班內名次」
+      const classGroups = {};
+      ['P4A', 'P4B', 'P4C', 'P4D', 'P4E', 'P4F'].forEach(c => {
+        classGroups[c] = fullList.filter(s => s.cls === c);
+        classGroups[c].forEach((item, idx) => {
+          item.classRank = idx + 1;
+        });
+      });
+
+      // 4. 更新頂部「我的個人戰報」
       if (currentStudent) {
-        const myStats = getStudentStats(currentStudent.cls, currentStudent.num);
-        const { currentTier } = evalTierAndSkills(myStats.totalScore);
-        const me = list.find(s => s.cls === currentStudent.cls && s.num === currentStudent.num);
+        const myKey = `${currentStudent.cls}_${currentStudent.num}`;
+        const myEntry = allMap[myKey] || {
+          cls: currentStudent.cls,
+          num: currentStudent.num,
+          name: `${currentStudent.cls} ${(currentStudent.num < 10 ? '0' : '') + currentStudent.num}號`,
+          score: 0,
+          kills: 0,
+          overallRank: fullList.length,
+          classRank: (classGroups[currentStudent.cls] || []).length
+        };
+        const { currentTier } = evalTierAndSkills(myEntry.score);
 
-        document.getElementById('lb-my-name').textContent = `${currentStudent.cls} ${currentStudent.num}號 ${currentStudent.name}`;
+        document.getElementById('lb-my-name').textContent = myEntry.name;
         document.getElementById('lb-my-title').textContent = `當前境界：${currentTier.title}`;
-        document.getElementById('lb-my-score').textContent = `${myStats.totalScore.toLocaleString()} 分`;
+        document.getElementById('lb-my-score').textContent = `${myEntry.score.toLocaleString()} 分`;
         document.getElementById('lb-my-badge').textContent = currentTier.badge;
-        document.getElementById('lb-my-rank').textContent = me ? `第 ${me.rank} 名` : '尚無排名';
+
+        if (currentLeaderboardFilter === 'ALL') {
+          document.getElementById('lb-my-rank').innerHTML = `<span style="color:#B45309; font-weight:900;">全級第 ${myEntry.overallRank} 名</span> <span style="font-size:12px;color:#64748B;">(全級共 ${fullList.length} 人)</span>`;
+        } else {
+          const clsList = classGroups[currentLeaderboardFilter] || [];
+          if (currentStudent.cls === currentLeaderboardFilter) {
+            document.getElementById('lb-my-rank').innerHTML = `<span style="color:#2563EB; font-weight:900;">${currentLeaderboardFilter} 班內第 ${myEntry.classRank} 名</span> <span style="font-size:12px;color:#64748B;">(班共 ${clsList.length} 人)</span>`;
+          } else {
+            document.getElementById('lb-my-rank').innerHTML = `<span style="color:#64748B;">原班 (${currentStudent.cls}) 第 ${myEntry.classRank} 名</span> <span style="font-size:11px;color:#94A3B8;">(正在瀏覽 ${currentLeaderboardFilter})</span>`;
+          }
+        }
       }
 
-      if (currentLeaderboardFilter !== 'ALL') {
-        list = list.filter(s => s.cls === currentLeaderboardFilter);
-      }
-
+      // 5. 渲染表格列表 (全級前 20 名 / 各班前 15 名)
       const tbody = document.getElementById('leaderboard-tbody');
-      if (list.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="7" style="padding: 26px; text-align: center; color: #64748B; font-weight: 800; font-size: 14px;">
-              🎮 尚無同學進行錯字討伐，快成為全級第一位破關先鋒吧！
-            </td>
-          </tr>
-        `;
-        return;
+      const isClassFilter = currentLeaderboardFilter !== 'ALL';
+      const limit = isClassFilter ? 15 : 20; // 班內前 15 名，全級前 20 名
+      const sourceList = isClassFilter ? (classGroups[currentLeaderboardFilter] || []) : fullList;
+      const displayList = sourceList.slice(0, limit);
+
+      // 檢查當前同學是否已經在前 N 名中
+      let myInDisplay = false;
+      if (currentStudent) {
+        if (!isClassFilter || currentStudent.cls === currentLeaderboardFilter) {
+          myInDisplay = displayList.some(s => s.cls === currentStudent.cls && s.num === currentStudent.num);
+        }
       }
 
-      tbody.innerHTML = list.slice(0, 30).map(s => {
-        const medal = s.rank === 1 ? '🥇 1' : s.rank === 2 ? '🥈 2' : s.rank === 3 ? '🥉 3' : `${s.rank}`;
+      let rowsHtml = displayList.map(s => {
+        const rankNum = isClassFilter ? s.classRank : s.overallRank;
+        const medal = rankNum === 1 ? '🥇 1' : rankNum === 2 ? '🥈 2' : rankNum === 3 ? '🥉 3' : `${rankNum}`;
         const isMe = currentStudent && s.cls === currentStudent.cls && s.num === currentStudent.num;
         return `
-          <tr style="${isMe ? 'background: #FEF3C7; font-weight: bold;' : ''}">
+          <tr style="${isMe ? 'background: #FEF3C7; font-weight: bold; border-left: 4px solid #D97706;' : ''}">
             <td style="padding: 7px; text-align: center; font-weight: 800; color: #1E3A8A;">${medal}</td>
             <td style="padding: 7px; text-align: center;">${s.cls}</td>
-            <td style="padding: 7px; text-align: center;">${s.num}</td>
+            <td style="padding: 7px; text-align: center;">${(s.num < 10 ? '0' : '') + s.num}號</td>
             <td style="padding: 7px; text-align: center; font-weight: 800;">${s.name} ${isMe ? '⭐(我)' : ''}</td>
             <td style="padding: 7px; text-align: center; font-size: 11px;">${s.title}</td>
             <td style="padding: 7px; text-align: center; font-weight: 900; color: #D97706;">${s.score.toLocaleString()}</td>
@@ -3463,6 +4080,36 @@
           </tr>
         `;
       }).join('');
+
+      // 若當前同學未進入榜單（未進入全級前20或班級前15），在底端追加專屬激勵行
+      if (currentStudent && !myInDisplay) {
+        const myKey = `${currentStudent.cls}_${currentStudent.num}`;
+        const myEntry = allMap[myKey];
+        if (myEntry && (!isClassFilter || currentStudent.cls === currentLeaderboardFilter)) {
+          const myRank = isClassFilter ? myEntry.classRank : myEntry.overallRank;
+          const cutoffRank = isClassFilter ? 15 : 20;
+          const targetStudent = sourceList[cutoffRank - 1];
+          const gap = targetStudent ? Math.max(0, targetStudent.score - myEntry.score + 10) : 0;
+          rowsHtml += `
+            <tr style="background: #FFFBEB; border-top: 2px dashed #D97706; font-weight: bold;">
+              <td style="padding: 9px; text-align: center; font-weight: 900; color: #B45309;">第 ${myRank} 名</td>
+              <td style="padding: 9px; text-align: center;">${myEntry.cls}</td>
+              <td style="padding: 9px; text-align: center;">${(myEntry.num < 10 ? '0' : '') + myEntry.num}號</td>
+              <td style="padding: 9px; text-align: center; color: #B45309; font-weight: 900;">
+                ${myEntry.name} ⭐ (我的目前排名)
+                <div style="font-size: 11px; font-weight: 600; color: #D97706; margin-top: 2px;">
+                  ⚡ 距離進榜 (第${cutoffRank}名) 還差 ${gap.toLocaleString()} 分，立即開戰追趕！
+                </div>
+              </td>
+              <td style="padding: 9px; text-align: center; font-size: 11px;">${myEntry.title}</td>
+              <td style="padding: 9px; text-align: center; font-weight: 900; color: #D97706;">${myEntry.score.toLocaleString()}</td>
+              <td style="padding: 9px; text-align: center;">${myEntry.kills} 隻</td>
+            </tr>
+          `;
+        }
+      }
+
+      tbody.innerHTML = rowsHtml;
     }
 
     function exportLeaderboardCSV() {
