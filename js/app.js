@@ -114,6 +114,10 @@ async function fetchCloudLeaderboard(silent = false) {
 
       renderLeaderboardTable();
       renderSpeedLeaderboardTable();
+      try { renderTop40(); } catch(e){}
+      try { renderClassBarCharts(); } catch(e){}
+      try { renderClassCards(); } catch(e){}
+      try { renderPerfectScorers(); } catch(e){}
 
       lastCloudSyncTime = new Date();
       if (!silent) showPassToast('⚡ 雲端試算表最新榮譽榜已即時同步！');
@@ -178,9 +182,12 @@ const SafeStorage = {
 
     ;
     
+    // =========================================================================
+    // 🎮 全域遊戲狀態變數集中顯式宣告 (嚴格防止 ReferenceError)
+    // =========================================================================
     let activeTab = 'top40';
     let currentLeaderboardType = 'combat';
-        let speedLeaderboardWeek = 'w5_hw1';
+    let speedLeaderboardWeek = 'w5_hw1';
     let speedLeaderboardWordCount = 10;
     let currentSpeedWeek = 'w5_hw1';
     let currentSpeedWordCount = 10;
@@ -188,6 +195,20 @@ const SafeStorage = {
     let currentClass = 'P4A';
     let kioskInterval = null;
     let isKiosk = false;
+    let speedWordList = [];
+    let speedWordIdx = 0;
+    let speedInputCodes = [];
+    let speedStartTime = null;
+    let speedTimerInterval = null;
+    let speedPenaltySeconds = 0.0;
+    let speedMistakes = 0;
+    let speedTotalKeys = 0;
+    let speedCorrectKeys = 0;
+    let speedHintTimer = null;
+    let speedActive = false;
+    let speedWordReadyForSpace = false;
+    let options = [];
+    let roundMistakeCount = 0;
 
     // Confetti Engine
     function burstConfetti() {
@@ -255,21 +276,31 @@ const SafeStorage = {
     // Tab Switching
     function switchTab(tabId) {
       activeTab = tabId;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        const onclick = b.getAttribute('onclick') || '';
+        b.classList.toggle('active', onclick.includes(tabId));
+      });
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      
-      const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
-      if (targetBtn) targetBtn.classList.add('active');
       
       const targetPanel = document.getElementById('panel-' + tabId);
       if (targetPanel) targetPanel.classList.add('active');
       
-      if (tabId === 'game') {
+      if (tabId === 'top40') {
+        try { renderTop40(); } catch(e){ console.error(e); }
+        try { renderClassBarCharts(); } catch(e){ console.error(e); }
+      } else if (tabId === 'class') {
+        try { renderClassCards(); } catch(e){ console.error(e); }
+      } else if (tabId === 'perfect') {
+        try { renderPerfectScorers(); } catch(e){ console.error(e); }
+        try { renderClassBarCharts(); } catch(e){ console.error(e); }
+      } else if (tabId === 'game') {
         if (currentStudent) {
-          startNewSession();
+          try { startNewSession(); } catch(e){ console.error(e); }
         } else {
-          initLoginDropdowns();
+          try { initLoginDropdowns(); } catch(e){ console.error(e); }
         }
+      } else if (tabId === 'vocab') {
+        try { renderVocabTable(); } catch(e){ console.error(e); }
       }
     }
 
@@ -352,7 +383,17 @@ const SafeStorage = {
     }
 
     function renderTop40() {
-      const top3 = DATA.top40.slice(0, 3);
+      if (!DATA || !DATA.top40 || DATA.top40.length === 0) {
+        const podiumArea = document.getElementById('podium-area');
+        if (podiumArea) podiumArea.innerHTML = '<div style="text-align:center; padding:20px; color:#64748B; font-weight:800;">⏳ 榜單同步中，請稍候...</div>';
+        const listArea = document.getElementById('top40-list');
+        if (listArea) listArea.innerHTML = '<div style="text-align:center; padding:20px; color:#64748B;">目前暫無排行紀錄</div>';
+        return;
+      }
+      const top1 = DATA.top40[0] || { name: '訓練家', cls: 'P4', num: 1, total: 400, badges: 5, date: '' };
+      const top2 = DATA.top40[1] || { name: '訓練家', cls: 'P4', num: 2, total: 400, badges: 5, date: '' };
+      const top3_item = DATA.top40[2] || { name: '訓練家', cls: 'P4', num: 3, total: 400, badges: 5, date: '' };
+      const top3 = [top1, top2, top3_item];
       const rest = DATA.top40.slice(3);
       
       // Podium with Pikachu, Charmander, Bulbasaur
@@ -424,7 +465,12 @@ const SafeStorage = {
 
     function renderClassCards() {
       const container = document.getElementById('class-cards');
-      const students = DATA.class_top10[currentClass] || [];
+      if (!container) return;
+      const students = (DATA && DATA.class_top10 && DATA.class_top10[currentClass]) ? DATA.class_top10[currentClass] : [];
+      if (students.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748B; font-weight:800;">目前該班暫無排行紀錄</div>';
+        return;
+      }
       const classOffset = ['P4A', 'P4B', 'P4C', 'P4D', 'P4E', 'P4F'].indexOf(currentClass) * 14;
       
       container.innerHTML = students.map((s, idx) => {
@@ -474,11 +520,12 @@ const SafeStorage = {
     // Render Tab 3: Perfect Scorers with Random Pokemon Avatars
         function renderPerfectScorers() {
       const container = document.getElementById('perfect-class-groups');
+      if (!container) return;
       const classes = ['P4A', 'P4B', 'P4C', 'P4D', 'P4E', 'P4F'];
       let globalCounter = 0;
       
       container.innerHTML = classes.map(cls => {
-        const members = DATA.perfect_students[cls] || [];
+        const members = (DATA && DATA.perfect_students && DATA.perfect_students[cls]) ? DATA.perfect_students[cls] : [];
         return `
           <div style="margin-bottom: 22px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
@@ -620,7 +667,7 @@ const SafeStorage = {
     // 1. 初始化學號下拉選單 (1 至 36)
     function initLoginDropdowns() {
       const numSelect = document.getElementById('login-num-select');
-      if (numSelect && numSelect.options.length === 0) {
+      if (numSelect && (!numSelect.options || numSelect.options.length === 0)) {
         let opts = '';
         for (let i = 1; i <= 36; i++) {
           opts += `<option value="${i}">${i} 號</option>`;
@@ -805,6 +852,98 @@ const SafeStorage = {
     }
 
     // 7. 開啟新一輪 5 關挑戰
+    
+    // =========================================================================
+    // 🛠️ 輔助工具函式與設定變更監聽
+    // =========================================================================
+    function loadStudentProfile() {
+      if (!currentStudent) return;
+      try {
+        const stats = getStudentStats(currentStudent.cls, currentStudent.num);
+        const { currentTier, unlockedSkills } = evalTierAndSkills(stats.totalScore);
+        activeSkills = unlockedSkills;
+
+        const badgeEl = document.getElementById("trainer-current-badge");
+        const nameEl = document.getElementById("trainer-display-name");
+        const titleEl = document.getElementById("trainer-display-title");
+        const scoreEl = document.getElementById("trainer-display-score");
+        const killsEl = document.getElementById("trainer-display-kills");
+
+        if (badgeEl) badgeEl.textContent = currentTier.badge;
+        if (nameEl) nameEl.textContent = currentStudent.cls + " " + currentStudent.num + "號 " + currentStudent.name;
+        if (titleEl) titleEl.textContent = currentTier.title;
+        if (scoreEl) scoreEl.textContent = stats.totalScore.toLocaleString();
+        if (killsEl) killsEl.textContent = stats.kills;
+      } catch(e) {
+        console.warn("loadStudentProfile error:", e);
+      }
+    }
+
+    function calculateEffectiveSpeedTime(rawTime, mistakes, accuracy, wordCount) {
+      const keyPenalty = mistakes * 0.3;
+      const baseFactor = (wordCount === 20) ? 30.0 : 15.0;
+      const accRatio = Math.max(0, Math.min(100, accuracy)) / 100;
+      const accPenalty = Math.round(baseFactor * (1 - Math.pow(accRatio, 2)) * 100) / 100;
+      const bonus = (accuracy >= 100) ? ((wordCount === 20) ? 2.0 : 1.0) : 0.0;
+      const effectiveTime = parseFloat((rawTime + keyPenalty + accPenalty - bonus).toFixed(2));
+      return {
+        keyPenalty: parseFloat(keyPenalty.toFixed(2)),
+        accPenalty: parseFloat(accPenalty.toFixed(2)),
+        bonus: parseFloat(bonus.toFixed(2)),
+        effectiveTime: Math.max(1.0, effectiveTime)
+      };
+    }
+
+    function handlePodiumImgError(el, icon) {
+      if (el) el.outerHTML = "<div class=\"podium-pokemon-icon\">" + icon + "</div>";
+    }
+
+    function handleRankImgError(el, icon) {
+      if (el) el.outerHTML = icon || "⚡";
+    }
+
+    function onSpeedSettingChange() {
+      const wcSelect = document.getElementById("speed-word-count-select");
+      const wkSelect = document.getElementById("speed-ready-week-select");
+      if (wcSelect) currentSpeedWordCount = parseInt(wcSelect.value, 10) || 10;
+      if (wkSelect) currentSpeedWeek = wkSelect.value || "w5_hw1";
+    }
+
+    function toggleSpeedPracticeMode() {
+      isSpeedPracticeMode = !isSpeedPracticeMode;
+      const btn = document.getElementById("speed-mode-toggle-btn");
+      if (btn) {
+        if (isSpeedPracticeMode) {
+          btn.innerHTML = "💡 練習模式 (全程字根可見)";
+          btn.style.color = "#34D399";
+          btn.style.borderColor = "#10B981";
+          btn.style.background = "#0F172A";
+        } else {
+          btn.innerHTML = "⚔️ 競技排位賽 (停頓3秒提燈)";
+          btn.style.color = "#FDE047";
+          btn.style.borderColor = "#FACC15";
+          btn.style.background = "#0F172A";
+        }
+      }
+      if (speedActive && typeof renderSpeedTargetWord === "function") {
+        renderSpeedTargetWord();
+      }
+    }
+
+    function triggerSkillToast(icon, text) {
+      const toast = document.getElementById("skill-toast");
+      const iconEl = document.getElementById("skill-toast-icon");
+      const textEl = document.getElementById("skill-toast-text");
+      if (iconEl) iconEl.textContent = icon;
+      if (textEl) textEl.textContent = text;
+      if (toast) {
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2600);
+      }
+    }
+
     function startNewSession() {
       if (autoNextTimer) { clearTimeout(autoNextTimer); autoNextTimer = null; }
       gameStage = 1;
@@ -1842,23 +1981,32 @@ const SafeStorage = {
 
     // Immediate Confetti and Render on Load
     window.addEventListener('DOMContentLoaded', () => {
-      initLoginDropdowns();
+      try { initLoginDropdowns(); } catch(e){ console.error('initLoginDropdowns error:', e); }
       const savedStudent = SafeStorage.getItem('p4_active_student');
       if (savedStudent) {
         try {
           currentStudent = JSON.parse(savedStudent);
-          document.getElementById('identity-section').style.display = 'none';
-          document.getElementById('battle-section').style.display = 'block';
+          const idSec = document.getElementById('identity-section');
+          const batSec = document.getElementById('battle-section');
+          if (idSec) idSec.style.display = 'none';
+          if (batSec) batSec.style.display = 'block';
           loadStudentProfile();
         } catch(e) {}
       }
 
-      renderTop40();
-      renderClassBarCharts();
-      renderClassCards();
-      renderPerfectScorers();
-      renderVocabTable();
-      setTimeout(burstConfetti, 350);
+      try { renderTop40(); } catch(e){ console.error('renderTop40 error:', e); }
+      try { renderClassBarCharts(); } catch(e){ console.error('renderClassBarCharts error:', e); }
+      try { renderClassCards(); } catch(e){ console.error('renderClassCards error:', e); }
+      try { renderPerfectScorers(); } catch(e){ console.error('renderPerfectScorers error:', e); }
+      try { renderVocabTable(); } catch(e){ console.error('renderVocabTable error:', e); }
+      try { setTimeout(burstConfetti, 350); } catch(e){}
+
+      // 背景靜默連線 Google Apps Script 雲端天梯 (不阻塞畫面)
+      try {
+        if (typeof fetchCloudLeaderboard === 'function') {
+          fetchCloudLeaderboard(true);
+        }
+      } catch(e) {}
     });
   
     // =========================================================================
@@ -1994,8 +2142,11 @@ const SafeStorage = {
       if (speedTimerInterval) clearInterval(speedTimerInterval);
       if (speedHintTimer) clearTimeout(speedHintTimer);
 
-      const bank = MODE2_WEEKLY_BANKS[currentSpeedWeek] || MODE2_WEEKLY_BANKS["w3"];
-      const rawWords = [...bank.words];
+      const allBanks = (typeof MODE2_WEEKLY_BANKS === "object" && MODE2_WEEKLY_BANKS) ? MODE2_WEEKLY_BANKS : {};
+      const bank = allBanks[currentSpeedWeek] || allBanks["w5_hw1"] || Object.values(allBanks)[0] || { words: [] };
+      const rawWords = (bank && Array.isArray(bank.words) && bank.words.length > 0) ? [...bank.words] : [
+        { char: "明", codes: ["日", "月"], keys: ["A", "B"], full: "日月 (AB)", secret: "速成首碼【日】(A) ＋ 尾碼【月】(B)" }
+      ];
       const shuffled = [...rawWords].sort(() => Math.random() - 0.5);
       speedWordList = shuffled.slice(0, currentSpeedWordCount);
 
