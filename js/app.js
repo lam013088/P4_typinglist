@@ -89,8 +89,8 @@ async function fetchCloudLeaderboard(silent = false) {
           };
         });
       }
-      if (data.speedLeaderboard || data.speedRecords) {
-        DATA.cloud_speed_records = data.speedLeaderboard || data.speedRecords;
+      if (data.speedLeaderboard || data.speedByWeek || data.speedRecords) {
+        DATA.cloud_speed_records = data.speedLeaderboard || data.speedByWeek || data.speedRecords;
       }
       if (Array.isArray(data.top40) && data.top40.length > 0) {
         DATA.top40 = data.top40;
@@ -1056,7 +1056,7 @@ const SafeStorage = {
         setupWanderingOrbs(fisherYatesShuffle(options));
 
       } else if (currentGameMode === 'aux') {
-        // 模式 2：輔助字型大抓寶 (倉頡主字母 -> 找出對應輔助字型，隨機 1-3 個選項答案)
+        // 模式 2：輔助字型大抓寶 (速成主字母 -> 找出對應輔助字型，隨機 1-3 個選項答案)
         document.getElementById('monster-icon').textContent = '🔮';
 
         const randIdx = Math.floor(Math.random() * DATA.aux_dataset.length);
@@ -1065,30 +1065,73 @@ const SafeStorage = {
         document.getElementById('target-sub-hint').textContent = `類別：${currentQuiz.category} ｜ 鍵盤鍵位：${currentQuiz.key}`;
 
         // 答案個數：隨機 1-3 個 (不超過該字擁有的輔助字型總數)
-        const maxAvailable = currentQuiz.aux_list.length;
+        const maxAvailable = (currentQuiz.aux_list && currentQuiz.aux_list.length > 0) ? currentQuiz.aux_list.length : 1;
         const targetCount = Math.min(Math.floor(Math.random() * 3) + 1, maxAvailable);
 
         const shuffledAux = fisherYatesShuffle([...currentQuiz.aux_list]);
-        const targetAuxList = shuffledAux.slice(0, Math.min(shuffledAux.length, 1 + Math.floor(Math.random() * 3)));
-        targetAuxCount = targetAuxList.length;
+        const targetAuxList = shuffledAux.slice(0, targetCount);
+        currentQuiz.targetAuxList = targetAuxList;
+        currentQuiz.caughtAuxList = [];
+
+        slotFirst.style.display = 'flex';
+        slotFirst.className = 'code-slot';
+        valFirst.textContent = '？';
+
+        if (targetCount === 1) {
+          if (labelFirst) labelFirst.textContent = '🎯 捕捉目標輔助字型';
+          slotLast.style.display = 'none';
+          if (slotThird) slotThird.style.display = 'none';
+          document.getElementById('game-prompt').textContent = `請在原野中找出屬於速成主字母【 ${currentQuiz.code} 】(${currentQuiz.key}鍵) 的輔助字型精靈球！`;
+        } else if (targetCount === 2) {
+          if (labelFirst) labelFirst.textContent = '🎯 目標輔助字型 ①';
+          slotLast.style.display = 'flex';
+          slotLast.className = 'code-slot';
+          valLast.textContent = '？';
+          if (labelLast) labelLast.textContent = '🎯 目標輔助字型 ②';
+          if (slotThird) slotThird.style.display = 'none';
+          document.getElementById('game-prompt').textContent = `【 ${currentQuiz.code} 】有多個輔助字型！請在原野中找出 2 個對應的精靈球！(已捕獲 0/2)`;
+        } else if (targetCount === 3) {
+          if (labelFirst) labelFirst.textContent = '🎯 目標輔助字型 ①';
+          slotLast.style.display = 'flex';
+          slotLast.className = 'code-slot';
+          valLast.textContent = '？';
+          if (labelLast) labelLast.textContent = '🎯 目標輔助字型 ②';
+          if (slotThird) {
+            slotThird.style.display = 'flex';
+            slotThird.className = 'code-slot';
+            valThird.textContent = '？';
+            if (labelThird) labelThird.textContent = '🎯 目標輔助字型 ③';
+          }
+          document.getElementById('game-prompt').textContent = `【 ${currentQuiz.code} 】有多個輔助字型！請在原野中找出 3 個對應的精靈球！(已捕獲 0/3)`;
+        }
+        document.getElementById('game-prompt').style.color = '#7C3AED';
 
         options = [];
-        targetAuxList.forEach((aItem, aIdx) => {
+        targetAuxList.forEach((auxChar, i) => {
           options.push({
-            code: aItem.char,
-            aux: aItem.char,
+            char: auxChar,
+            code: auxChar,
+            aux: auxChar,
+            parentCode: currentQuiz.code,
+            parentKey: currentQuiz.key,
             key: currentQuiz.key,
-            auxCode: currentQuiz.code,
             isCorrect: true,
-            orbId: `aux-corr-${aIdx}`
+            orbId: 'aux-correct-' + i
           });
         });
 
         let allOtherAux = [];
         DATA.aux_dataset.forEach(item => {
-          if (item.key !== currentQuiz.key && item.aux_list) {
-            item.aux_list.forEach(a => {
-              allOtherAux.push({ char: a.char, key: item.key, code: item.code });
+          if (item.code !== currentQuiz.code && item.aux_list) {
+            item.aux_list.forEach(ac => {
+              allOtherAux.push({
+                char: ac,
+                code: ac,
+                aux: ac,
+                parentCode: item.code,
+                parentKey: item.key,
+                key: item.key
+              });
             });
           }
         });
@@ -1096,15 +1139,17 @@ const SafeStorage = {
 
         let distCount = 0;
         while (options.length < 8 && allOtherAux.length > 0) {
-          const item = allOtherAux.pop();
+          const dist = allOtherAux.pop();
           distCount++;
           options.push({
-            code: item.char,
-            aux: item.char,
-            key: item.key,
-            auxCode: item.code,
+            char: dist.char,
+            code: dist.code,
+            aux: dist.aux,
+            parentCode: dist.parentCode,
+            parentKey: dist.parentKey,
+            key: dist.key,
             isCorrect: false,
-            orbId: `aux-dist-${distCount}`
+            orbId: 'aux-dist-' + distCount
           });
         }
         setupWanderingOrbs(fisherYatesShuffle(options));
@@ -1211,13 +1256,13 @@ const SafeStorage = {
         el.className = 'poke-orb';
         el.id = `orb-${idx}`;
 
-        let charHtml = opt.code || '';
+        let charHtml = opt.char || opt.code || '';
         if (currentGameMode === 'aux') {
           // 模式 2：輔助字型 (球內僅顯示輔助字型本身，絕不洩漏所屬字母或鍵位)
-          charHtml = opt.char;
+          charHtml = opt.char || opt.code || '';
         } else if (currentGameMode === 'letter') {
           // 模式 3：主字母 (球內僅顯示主字母本身，絕不洩漏對應英文字母鍵位)
-          charHtml = opt.code;
+          charHtml = opt.code || opt.char || '';
         }
 
         // ★ 純粹精靈球：絕無任何答案提示文字，100% 維持經典紅白雙色精靈球與中心發光按鈕
@@ -1340,30 +1385,34 @@ const SafeStorage = {
       } else if (currentGameMode === 'aux') {
         // 模式 2：輔助字型大抓寶 (支援隨機 1-3 個答案)
         if (orbObj.el.classList.contains('caught')) return;
+        const auxChar = orbObj.char || orbObj.code;
 
         if (orbObj.isCorrect) {
           orbObj.el.classList.add('caught');
-          if (!currentQuiz.caughtAuxList.includes(orbObj.char)) {
-            currentQuiz.caughtAuxList.push(orbObj.char);
+          if (!currentQuiz.caughtAuxList) currentQuiz.caughtAuxList = [];
+          if (!currentQuiz.targetAuxList) currentQuiz.targetAuxList = [auxChar];
+
+          if (!currentQuiz.caughtAuxList.includes(auxChar)) {
+            currentQuiz.caughtAuxList.push(auxChar);
             const count = currentQuiz.caughtAuxList.length;
             const targetTotal = currentQuiz.targetAuxList.length;
 
             if (count === 1) {
               document.getElementById('slot-first').className = 'code-slot filled';
-              document.getElementById('val-first').textContent = orbObj.char;
+              document.getElementById('val-first').textContent = auxChar;
             } else if (count === 2) {
               document.getElementById('slot-last').className = 'code-slot filled';
-              document.getElementById('val-last').textContent = orbObj.char;
+              document.getElementById('val-last').textContent = auxChar;
             } else if (count === 3) {
               const slotThird = document.getElementById('slot-third');
               if (slotThird) {
                 slotThird.className = 'code-slot filled';
-                document.getElementById('val-third').textContent = orbObj.char;
+                document.getElementById('val-third').textContent = auxChar;
               }
             }
 
             if (count < targetTotal) {
-              document.getElementById('game-prompt').innerHTML = `🎯 <span style="color:#2563EB;font-weight:900;">成功捕獲【${orbObj.char}】(${count}/${targetTotal})！快在原野中找出下一個！</span>`;
+              document.getElementById('game-prompt').innerHTML = `🎯 <span style="color:#2563EB;font-weight:900;">成功捕獲【${auxChar}】(${count}/${targetTotal})！快在原野中找出下一個！</span>`;
             } else {
               // 目標全部捕獲完成！
               checkAnswer();
@@ -1376,11 +1425,11 @@ const SafeStorage = {
           if (!roundShieldActive && shieldSkill && Math.random() < shieldSkill.rate) {
             roundShieldActive = true;
             triggerSkillToast('🛡️', '觸發【聖盾防護】！成功格擋失誤，保留連擊！');
-            document.getElementById('game-prompt').innerHTML = `🛡️ <span style="color:#2563EB;font-weight:900;">聖盾格擋成功！【${orbObj.char}】是【${orbObj.parentCode}】部，連擊保留，請再試！</span>`;
+            document.getElementById('game-prompt').innerHTML = `🛡️ <span style="color:#2563EB;font-weight:900;">聖盾格擋成功！【${auxChar}】是【${orbObj.parentCode || '其他'}】部，連擊保留，請再試！</span>`;
           } else {
             comboCount = 0;
             document.getElementById('game-combo-tag').textContent = `連擊：0 Hit`;
-            document.getElementById('game-prompt').innerHTML = `⚠️ <span style="color:#DC2626;font-weight:900;">捕捉錯誤！【${orbObj.char}】屬於【${orbObj.parentCode}】部！請繼續在原野中找出屬於【${currentQuiz.code}】的輔助字型！</span>`;
+            document.getElementById('game-prompt').innerHTML = `⚠️ <span style="color:#DC2626;font-weight:900;">捕捉錯誤！【${auxChar}】屬於【${orbObj.parentCode || '其他'}】部！請繼續找出屬於【${currentQuiz.code}】的輔助字型！</span>`;
           }
         }
 
@@ -2053,7 +2102,7 @@ const SafeStorage = {
           words: [
             { char: "明", codes: ["日", "月"], keys: ["A", "B"], full: "日月 (AB)" },
             { char: "鬼", codes: ["竹", "戈"], keys: ["H", "I"], full: "竹戈 (HI)" },
-            { char: "車", codes: ["十", "田", "十"], keys: ["J", "W", "J"], full: "十田十 (JWJ)" },
+            { char: "車", codes: ["十", "十"], keys: ["J", "J"], full: "十十 (JJ)" },
             { char: "東", codes: ["木", "田"], keys: ["D", "W"], full: "木田 (DW)" },
             { char: "門", codes: ["日", "弓"], keys: ["A", "N"], full: "日弓 (AN)" }
           ]
@@ -2520,10 +2569,17 @@ const SafeStorage = {
           }
         }
 
-        // 同步手速獎勵至四年級總分
-        let roundScore = Math.max(20, Math.round(150 - effectiveFinalTime * 2));
-        if (currentSpeedWordCount === 20) roundScore = Math.round(roundScore * 1.8);
-        saveStudentStats(currentStudent.cls, currentStudent.num, roundScore, false, 'speed');
+        // ⚡ 依照六年級標準規範：手速賽純秒數制 (非積分制，不累加至討伐總分)，將秒數精準同步至雲端與各周次功課
+        saveStudentStats(
+          currentStudent.cls,
+          currentStudent.num,
+          0,
+          true,
+          'speed',
+          effectiveFinalTime,
+          currentSpeedWordCount,
+          currentSpeedWeek
+        );
         loadStudentProfile();
       }
 
@@ -2646,9 +2702,18 @@ const SafeStorage = {
       });
 
       
-      // 3. 從雲端即時手速榜合併跨電腦成績
-      if (DATA.cloud_speed_records && Array.isArray(DATA.cloud_speed_records)) {
-        DATA.cloud_speed_records.forEach(cs => {
+      // 3. 從雲端即時手速榜合併跨電腦成績 (完全支援各周次獨立功課 speedByWeek 物件)
+      if (DATA.cloud_speed_records) {
+        let cloudList = [];
+        if (Array.isArray(DATA.cloud_speed_records)) {
+          cloudList = DATA.cloud_speed_records;
+        } else if (DATA.cloud_speed_records[speedLeaderboardWeek]) {
+          cloudList = DATA.cloud_speed_records[speedLeaderboardWeek];
+        } else if (speedLeaderboardWeek === 'ALL' && DATA.cloud_speed_records['overall']) {
+          cloudList = DATA.cloud_speed_records['overall'];
+        }
+
+        cloudList.forEach(cs => {
           const mapKey = `${cs.cls}_${cs.num}`;
           const time = cs.bestTime || cs.best10;
           if (time && typeof time === 'number' && time > 0 && time < 900) {
@@ -2665,6 +2730,7 @@ const SafeStorage = {
                 accuracy: cs.accuracy || 100,
                 accPenalty: cs.accPenalty || 0,
                 tier: cs.tier || getSpeedTier(time, 10),
+                weekKey: cs.weekKey || speedLeaderboardWeek,
                 hasRecord: true
               };
             }
