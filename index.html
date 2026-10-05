@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
+  <!-- ⚡ 外部自訂設定檔優先載入 (支援 GitHub 根目錄 config.js 與 js/config.js) -->
+  <script src="config.js" onerror="this.onerror=null;"></script>
+  <script src="js/config.js" onerror="this.onerror=null;"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>⚡ 四年級打字大師聯賽 · 寶可夢榮譽殿堂 🏆</title>
@@ -278,7 +281,7 @@
             </button>
             <button id="mode-tab-speed" class="mode-tab-btn" onclick="setGameMode('speed')">
               <div style="font-weight:900;"><span>⚡</span> 模式 4：速成極速手速賽</div>
-              <span class="mode-badge-pill">10字/20字 秒數天梯</span>
+              <span class="mode-badge-pill">10字極速秒數天梯</span>
             </button>
           </div>
 
@@ -333,8 +336,7 @@
                 <div style="text-align: left;">
                   <label style="display: block; font-size: 11.5px; font-weight: 800; color: #94A3B8; margin-bottom: 4px;">🎯 競速題量</label>
                   <select id="speed-word-count-select" onchange="onSpeedSettingChange()" style="background: #1E293B; color: #F8FAFC; border: 1.5px solid #475569; padding: 7px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer;">
-                    <option value="10" selected>⚡ 10 字極速挑戰 (核心短跑)</option>
-                    <option value="20">🔥 20 字極速挑戰 (全面耐力)</option>
+                    <option value="10" selected>⚡ 10 字極速挑戰 (標準短跑)</option>
                   </select>
                 </div>
 
@@ -565,17 +567,14 @@
     <div id="modal-leaderboard" class="custom-modal-overlay" onclick="if(event.target===this)closeModal('modal-leaderboard')">
       <div class="custom-modal-dialog custom-modal-lg">
         <div class="modal-header-flex" style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0 10px; margin-bottom: 10px; border-bottom: 2px dashed #E2E8F0;">
-          <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <span style="font-size: 24px;">📊</span>
             <h3 style="color: #1E3A8A; font-size: 19px; font-weight: 900; margin: 0;" id="lb-modal-main-title">🏆 四年級寶可夢速成討伐龍虎榜</h3>
+            <button type="button" onclick="fetchCloudLeaderboard(false)" style="background: #2563EB; color: #FFFFFF; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 4px rgba(37,99,235,0.18); transition: 0.2s;" title="同步 Google 雲端試算表最新全級天梯戰況">🔄 刷新雲端最新排名</button>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <button type="button" onclick="fetchCloudLeaderboard(false)" style="background: #2563EB; color: #FFFFFF; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 4px rgba(37,99,235,0.18); transition: 0.2s;" title="同步 Google 雲端試算表最新全級天梯戰況">🔄刷新排名</button>
-            <button class="modal-close-btn" onclick="closeModal('modal-leaderboard')">✕</button>
-          </div>
+          <button class="modal-close-btn" onclick="closeModal('modal-leaderboard')">✕</button>
         </div>
-
-        <!-- 我的個人戰報 -->
+<!-- 我的個人戰報 -->
         <div class="my-status-banner" id="lb-my-summary-card">
           <div style="display: flex; align-items: center; gap: 12px;">
             <div style="font-size: 36px;" id="lb-my-badge">🥉</div>
@@ -599,51 +598,50 @@
         <!-- 雙軌切換導航按鈕 -->
         <div class="lb-sub-nav-bar">
           <button id="lb-type-score" class="lb-sub-nav-btn active" onclick="switchLeaderboardType('score')">🏆 討伐累積總分榜</button>
-          <button id="lb-type-speed" class="lb-sub-nav-btn" onclick="switchLeaderboardType('speed')">⚡ 10字/20字極速手速榜</button>
+          <button id="lb-type-speed" class="lb-sub-nav-btn" onclick="switchLeaderboardType('speed')">⚡ 10字極速手速榜 (秒數升序)</button>
         </div>
 
-        <!-- ⚡ 手速榜專用子導航：題量與周次篩選器 (只在切換到手速榜時顯示) -->
-        <div id="speed-lb-sub-filters" style="display: none; margin-bottom: 12px;">
-          <div class="speed-lb-filter-row" style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
-            <span style="font-size: 13px; font-weight: 800; color: #1E3A8A;">🎯 競速題量：</span>
-            <button class="lb-sub-pill active" id="lb-wc-10" onclick="filterSpeedLeaderboardWordCount(10)">⚡ 10 字手速榜</button>
-            <button class="lb-sub-pill" id="lb-wc-20" onclick="filterSpeedLeaderboardWordCount(20)">🔥 20 字手速榜</button>
-          </div>
-          <div class="speed-lb-filter-row" style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;">
-            <span style="font-size: 13px; font-weight: 800; color: #1E3A8A;">📅 查閱周次手速天梯榜：</span>
-            <select id="speed-lb-week-select" onchange="filterSpeedLeaderboardWeek(this.value)" style="background: #FFFFFF; color: #0F172A; border: 2px solid #2563EB; padding: 7px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 800; cursor: pointer; outline: none; box-shadow: 0 2px 4px rgba(37,99,235,0.1);">
-              <optgroup label="🏆 全期生涯總覽">
-                <option value="ALL">🌟 全期個人最佳極速總榜 (生涯最佳)</option>
-              </optgroup>
-              <optgroup label="🔥 第 5 周 速成手速賽 (當前進行中)">
-                <option value="w5_hw1" selected>第5周功課1</option>
-                <option value="w5_hw2">第5周功課2</option>
-                <option value="w5_hw3">第5周功課3</option>
-                <option value="w5_hw4">第5周功課4</option>
-              </optgroup>
-              <optgroup label="📅 第 4 周 速成手速賽 (過往記錄)">
-                <option value="w4_hw1">第4周功課1</option>
-                <option value="w4_hw2">第4周功課2</option>
-                <option value="w4_hw3">第4周功課3</option>
-                <option value="w4_hw4">第4周功課4</option>
-              </optgroup>
-              <optgroup label="📅 第 3 周 速成手速賽 (過往記錄)">
-                <option value="w3_hw1">第3周功課1</option>
-                <option value="w3_hw2">第3周功課2</option>
-                <option value="w3_hw3">第3周功課3</option>
-                <option value="w3_hw4">第3周功課4</option>
-              </optgroup>
-              <optgroup label="📅 第 2 周 速成手速賽 (過往記錄)">
-                <option value="w2_hw1">第2周功課1</option>
-                <option value="w2_hw2">第2周功課2</option>
-                <option value="w2_hw3">第2周功課3</option>
-                <option value="w2_hw4">第2周功課4</option>
-              </optgroup>
-            </select>
+        <!-- ⚡ 手速榜專用子導航：全周次功課下拉選單 (四年級純 10 字秒數天梯) -->
+        <div id="speed-lb-sub-filters" style="display: none; margin-bottom: 12px; background: #F8FAFC; border: 1.5px solid #CBD5E1; padding: 10px 14px; border-radius: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 13px; font-weight: 800; color: #1E3A8A;">📅 查閱周次手速天梯榜：</span>
+              <select id="speed-lb-week-select" onchange="filterSpeedLeaderboardWeek(this.value)" style="background: #FFFFFF; color: #0F172A; border: 2px solid #2563EB; padding: 7px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 800; cursor: pointer; outline: none; box-shadow: 0 2px 4px rgba(37,99,235,0.1);">
+                <optgroup label="🏆 全期生涯總覽">
+                  <option value="ALL">🌟 全期個人最佳極速總榜 (生涯最佳)</option>
+                </optgroup>
+                <optgroup label="🔥 第 5 周 速成手速賽 (當前進行中)">
+                  <option value="w5_hw1" selected>第5周功課1</option>
+                  <option value="w5_hw2">第5周功課2</option>
+                  <option value="w5_hw3">第5周功課3</option>
+                  <option value="w5_hw4">第5周功課4</option>
+                </optgroup>
+                <optgroup label="📅 第 4 周 速成手速賽 (過往記錄)">
+                  <option value="w4_hw1">第4周功課1</option>
+                  <option value="w4_hw2">第4周功課2</option>
+                  <option value="w4_hw3">第4周功課3</option>
+                  <option value="w4_hw4">第4周功課4</option>
+                </optgroup>
+                <optgroup label="📅 第 3 周 速成手速賽 (過往記錄)">
+                  <option value="w3_hw1">第3周功課1</option>
+                  <option value="w3_hw2">第3周功課2</option>
+                  <option value="w3_hw3">第3周功課3</option>
+                  <option value="w3_hw4">第3周功課4</option>
+                </optgroup>
+                <optgroup label="📅 第 2 周 速成手速賽 (過往記錄)">
+                  <option value="w2_hw1">第2周功課1</option>
+                  <option value="w2_hw2">第2周功課2</option>
+                  <option value="w2_hw3">第2周功課3</option>
+                  <option value="w2_hw4">第2周功課4</option>
+                </optgroup>
+              </select>
+            </div>
+            <div style="font-size: 12px; color: #64748B;">
+              ⚡ 依 10 字等效耗時升序排序 (計入準確率加權罰時)
+            </div>
           </div>
         </div>
-
-        <!-- 班級篩選標籤 -->
+<!-- 班級篩選標籤 -->
         <div class="lb-filter-bar">
           <button class="lb-filter-btn active" onclick="filterLeaderboard('ALL')">全級總榜</button>
           <button class="lb-filter-btn" onclick="filterLeaderboard('P4A')">P4A</button>
