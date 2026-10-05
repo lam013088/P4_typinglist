@@ -1,31 +1,5 @@
-function updateSyncStatus(msg, isError = false) {
-  try {
-    const text = document.getElementById('lb-cloud-status');
-    const dot = document.getElementById('lb-cloud-dot');
-    if (text) {
-      text.textContent = msg;
-      text.style.color = isError ? '#DC2626' : (msg.includes('🟡') ? '#D97706' : (msg.includes('⏳') ? '#2563EB' : '#15803D'));
-    }
-    if (dot) {
-      if (isError) {
-        dot.style.background = '#EF4444';
-      } else if (msg.includes('✅') || msg.includes('已同步') || msg.includes('連動中')) {
-        dot.style.background = '#10B981';
-      } else if (msg.includes('⏳')) {
-        dot.style.background = '#3B82F6';
-      } else if (msg.includes('🟡')) {
-        dot.style.background = '#F59E0B';
-      } else {
-        dot.style.background = '#10B981';
-      }
-    }
-  } catch(e) {}
-}
-
 function inspectWebhookStatus() {
   const url = getGasWebhookUrl();
-  const statusEl = document.getElementById('lb-cloud-status');
-  const curStatus = statusEl ? statusEl.textContent : '未知';
   const lastSync = (typeof lastCloudSyncTime !== 'undefined' && lastCloudSyncTime) ? lastCloudSyncTime.toLocaleString() : '尚未成功連通';
   const msg = [
     '【雲端天梯連線診斷報告】',
@@ -33,10 +7,7 @@ function inspectWebhookStatus() {
     '1. 當前偵測到的 Webhook 網址:',
     url || '⚠️ (未讀取到，請確認 config.js 中的 GAS_WEBHOOK_URL 是否已填寫)',
     '',
-    '2. 最新同步狀態:',
-    curStatus,
-    '',
-    '3. 最後成功同步時間:',
+    '2. 最後成功同步時間:',
     lastSync,
     '',
     '💡 常見故障排除排查指南：',
@@ -48,181 +19,13 @@ function inspectWebhookStatus() {
 }
 
 function getGasWebhookUrl() {
-  // 1. URL 參數最高優先級 (例: ?gas=... 或 ?webhook=...)
-  // 支援教師一鍵分發直連網址給學生，打開即自動綁定，完全無需學生任何手動設定
-  try {
-    if (typeof window !== 'undefined' && window.location && window.location.search) {
-      const params = new URLSearchParams(window.location.search);
-      const paramUrl = params.get('gas') || params.get('webhook');
-      if (paramUrl && paramUrl.includes('script.google.com') && !paramUrl.includes('YourDeploymentIdHere')) {
-        SafeStorage.setItem('p4_custom_gas_url', paramUrl.trim());
-        return paramUrl.trim();
-      }
-    }
-  } catch(e) {}
-
-  // 2. 本地 SafeStorage 儲存之自訂 Webhook (教師或使用者在介面中設定一次即永久生效)
-  try {
-    const savedUrl = SafeStorage.getItem('p4_custom_gas_url');
-    if (savedUrl && savedUrl.includes('script.google.com') && !savedUrl.includes('YourDeploymentIdHere')) {
-      return savedUrl.trim();
-    }
-  } catch(e) {}
-
-  // 3. 全域設定物件 window.CONFIG 或 CONFIG (來自外部 config.js 或 js/config.js)
   if (typeof window !== 'undefined' && window.CONFIG && window.CONFIG.GAS_WEBHOOK_URL && !window.CONFIG.GAS_WEBHOOK_URL.includes('YourDeploymentIdHere')) {
     return window.CONFIG.GAS_WEBHOOK_URL.trim();
   }
   if (typeof CONFIG !== 'undefined' && CONFIG.GAS_WEBHOOK_URL && !CONFIG.GAS_WEBHOOK_URL.includes('YourDeploymentIdHere')) {
     return CONFIG.GAS_WEBHOOK_URL.trim();
   }
-
   return '';
-}
-
-// ⚙️ 雲端 Webhook 設定與連線診斷功能模組
-function openWebhookSettingsModal() {
-  const currentUrl = getGasWebhookUrl();
-  const inputEl = document.getElementById('webhook-url-input');
-  const statusEl = document.getElementById('webhook-status-display');
-  const testResultEl = document.getElementById('webhook-test-result');
-  const shareLinkInput = document.getElementById('webhook-share-link');
-
-  if (inputEl) {
-    inputEl.value = currentUrl || '';
-  }
-  if (testResultEl) {
-    testResultEl.style.display = 'none';
-    testResultEl.innerHTML = '';
-  }
-
-  if (statusEl) {
-    if (currentUrl) {
-      statusEl.innerHTML = '<span style="color:#059669; font-weight:800;">🟢 已配置 Webhook 網址</span> <span style="font-size:11.5px; color:#64748B;">(' + currentUrl.substring(0, 38) + '...)</span>';
-    } else {
-      statusEl.innerHTML = '<span style="color:#D97706; font-weight:800;">🟡 離線單機模式（尚未綁定雲端 Webhook 網址）</span>';
-    }
-  }
-
-  if (shareLinkInput && typeof window !== 'undefined' && window.location) {
-    if (currentUrl) {
-      const shareUrl = window.location.origin + window.location.pathname + '?webhook=' + encodeURIComponent(currentUrl);
-      shareLinkInput.value = shareUrl;
-    } else {
-      shareLinkInput.value = '請先填寫並儲存上方 Webhook 網址，即可生成學生直連免設定連結';
-    }
-  }
-
-  openModal('modal-webhook-settings');
-}
-
-async function saveWebhookSettings() {
-  const inputEl = document.getElementById('webhook-url-input');
-  const testResultEl = document.getElementById('webhook-test-result');
-  let url = inputEl ? inputEl.value.trim() : '';
-
-  if (!url) {
-    alert('請輸入有效的 Google Apps Script 網頁應用程式網址 (/exec 結尾)！');
-    return;
-  }
-
-  if (!url.startsWith('https://script.google.com/macros/s/') || !url.endsWith('/exec')) {
-    if (!confirm('提示：標準 Google Apps Script 網頁應用程式網址通常以「https://script.google.com/macros/s/」開頭並以「/exec」結尾。\n\n您輸入的網址可能不完整，是否仍要強制儲存？')) {
-      return;
-    }
-  }
-
-  SafeStorage.setItem('p4_custom_gas_url', url);
-  if (typeof window !== 'undefined') {
-    window.CONFIG = window.CONFIG || {};
-    window.CONFIG.GAS_WEBHOOK_URL = url;
-  }
-
-  showPassToast('✅ Webhook 網址已儲存至本機！正在驗證連線...');
-  if (testResultEl) {
-    testResultEl.style.display = 'block';
-    testResultEl.innerHTML = '<span style="color:#2563EB;">⏳ 正在連線驗證 Google 雲端試算表...</span>';
-  }
-
-  // 立即觸發補送離線成績與刷新天梯戰況
-  flushPendingUploads();
-  await fetchCloudLeaderboard(false);
-
-  // 刷新彈窗內狀態
-  openWebhookSettingsModal();
-}
-
-async function testWebhookConnection() {
-  const inputEl = document.getElementById('webhook-url-input');
-  const testResultEl = document.getElementById('webhook-test-result');
-  const url = (inputEl && inputEl.value.trim()) ? inputEl.value.trim() : getGasWebhookUrl();
-
-  if (!url) {
-    alert('尚未填寫 Webhook 網址，請先輸入網址！');
-    return;
-  }
-
-  if (testResultEl) {
-    testResultEl.style.display = 'block';
-    testResultEl.innerHTML = '<span style="color:#2563EB;">⏳ 正在發送 GET 請求測試雲端回應...</span>';
-  }
-
-  try {
-    const queryUrl = url + (url.includes('?') ? '&' : '?') + 'action=get_data&t=' + Date.now();
-    const res = await fetch(queryUrl, { method: 'GET' });
-    if (!res.ok) throw new Error('HTTP 狀態碼 ' + res.status);
-    const data = await res.json();
-    if (data && data.status === 'success') {
-      const stCount = data.combatLeaderboard ? data.combatLeaderboard.length : (data.totalStudents || 0);
-      const speedCount = (data.speedLeaderboard && Array.isArray(data.speedLeaderboard)) ? data.speedLeaderboard.length : 0;
-      testResultEl.innerHTML = [
-        '<div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:10px; color:#065F46; font-size:13px; text-align:left;">',
-        '  <strong>✅ 雲端連線完全正常！</strong><br>',
-        '  ・成功連通 Google 試算表 (最後更新: ' + (data.timestamp || '即時') + ')<br>',
-        '  ・全級名冊已載入：' + stCount + ' 位學生<br>',
-        '  ・手速天梯已記錄：' + speedCount + ' 筆手速成績<br>',
-        '  ・跨電腦同步狀態：已全面就緒！',
-        '</div>'
-      ].join('');
-    } else {
-      throw new Error(data && data.message ? data.message : '回傳格式異常');
-    }
-  } catch (err) {
-    testResultEl.innerHTML = [
-      '<div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:10px; color:#991B1B; font-size:13px; text-align:left;">',
-      '  <strong>🔴 連線測試失敗：</strong>' + err.message + '<br>',
-      '  <span style="font-size:11.5px; color:#B91C1C;">請檢查：1. Apps Script 部署設定中「誰可以存取」是否選為「任何人 (Anyone)」；2. 網址是否正確完整以 /exec 結尾。</span>',
-      '</div>'
-    ].join('');
-  }
-}
-
-function copyStudentShareLink() {
-  const shareLinkInput = document.getElementById('webhook-share-link');
-  if (!shareLinkInput || !shareLinkInput.value || shareLinkInput.value.includes('請先填寫')) {
-    alert('請先填寫並儲存上方 Webhook 網址！');
-    return;
-  }
-  shareLinkInput.select();
-  try {
-    navigator.clipboard.writeText(shareLinkInput.value);
-    showPassToast('📋 已複製學生直連網址！發送給學生即可自動連線');
-  } catch (e) {
-    document.execCommand('copy');
-    showPassToast('📋 已複製學生直連網址！');
-  }
-}
-
-function clearWebhookSettings() {
-  if (confirm('確定要清除本機儲存的自訂 Webhook 網址嗎？清除後系統將回退至離線單機模式。')) {
-    SafeStorage.removeItem('p4_custom_gas_url');
-    if (typeof window !== 'undefined' && window.CONFIG) {
-      window.CONFIG.GAS_WEBHOOK_URL = '';
-    }
-    showPassToast('已清除自訂 Webhook 設定');
-    openWebhookSettingsModal();
-    updateSyncStatus('🟡 離線單機模式', false);
-  }
 }
 
 // 📦 離線待補送佇列處理函式
@@ -263,41 +66,46 @@ let lastCloudSyncTime = null;
 
 async function sendReliableWebhook(payload) {
   const url = getGasWebhookUrl();
-  if (!url) {
-    try {
-      const rawPending = SafeStorage.getItem('p4_pending_uploads');
-      const queue = rawPending ? JSON.parse(rawPending) : [];
-      queue.push({ payload, time: Date.now() });
-      SafeStorage.setItem('p4_pending_uploads', JSON.stringify(queue.slice(-20)));
-    } catch(e) {}
-    return;
+  if (!url) return;
+
+  if (!payload.requestId) {
+    payload.requestId = generateRequestId();
   }
-  if (!payload.requestId) payload.requestId = generateRequestId();
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 6000);
+  let success = false;
+  // 🚀 即時重試機制：發生異常時進行 2 次重發嘗試 (間隔 1.2 秒)
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      if (attempt > 0) {
+        await new Promise(r => setTimeout(r, 1200));
+      }
+      await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      success = true;
+      break;
+    } catch (err) {
+      console.warn(`第 ${attempt + 1} 次雲端上傳嘗試失敗:`, err);
+    }
+  }
 
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      mode: 'no-cors',
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload),
-      signal: controller.signal
-    });
-    clearTimeout(timeoutId);
+  if (success) {
     setTimeout(() => {
       if (typeof fetchCloudLeaderboard === 'function') fetchCloudLeaderboard(true);
-    }, 1200);
-  } catch(err) {
-    clearTimeout(timeoutId);
-    console.warn('雲端上傳暫時失敗，已移入待補送清單:', err);
+    }, 1500);
+    setTimeout(() => {
+      flushPendingUploads();
+    }, 2000);
+  } else {
+    console.warn('雲端上傳暫時失敗，已安全移入待補送清單');
     try {
       const rawPending = SafeStorage.getItem('p4_pending_uploads');
       const queue = rawPending ? JSON.parse(rawPending) : [];
       queue.push({ payload, time: Date.now() });
-      SafeStorage.setItem('p4_pending_uploads', JSON.stringify(queue.slice(-20)));
+      SafeStorage.setItem('p4_pending_uploads', JSON.stringify(queue.slice(-30)));
     } catch(e) {}
   }
 }
@@ -306,9 +114,8 @@ async function fetchCloudLeaderboard(silent = false) {
   if (isFetchingCloudLeaderboard) return;
   const url = getGasWebhookUrl();
   if (!url) {
-    updateSyncStatus('🟡 離線單機模式 (未綁定雲端)', false);
     if (!silent) {
-      openWebhookSettingsModal();
+      showPassToast('🟡 本機離線模式：全級榮譽榜已就緒');
     }
     return;
   }
@@ -318,7 +125,7 @@ async function fetchCloudLeaderboard(silent = false) {
 
   try {
     isFetchingCloudLeaderboard = true;
-    if (!silent) updateSyncStatus('⏳ 正在同步 Google 雲端試算表最新榮譽榜...');
+    if (!silent) showPassToast('⏳ 正在同步 Google 雲端試算表最新榮譽榜...');
 
     await new Promise(r => setTimeout(r, Math.random() * 300));
 
@@ -335,15 +142,20 @@ async function fetchCloudLeaderboard(silent = false) {
           const pts = (typeof item.grandTotal === 'number') ? item.grandTotal : 
                       ((typeof item.score === 'number') ? item.score : (parseInt(item.totalScore, 10) || 0));
           const badge = item.badge || item.title || '🥉【新手訓練家】';
+          const time = item.lastTime || item.date || '';
           return {
             ...item,
             score: pts,
             grandTotal: pts,
+            total: pts,
             title: badge,
             badge: badge,
-            kills: (typeof item.kills === 'number') ? item.kills : 0
+            kills: (typeof item.kills === 'number') ? item.kills : 0,
+            date: time,
+            lastTime: time
           };
         });
+        DATA.top40 = DATA.benchmark_leaderboard.slice(0, 40);
       }
       if (data.speedLeaderboard || data.speedByWeek || data.speedRecords) {
         DATA.cloud_speed_records = data.speedLeaderboard || data.speedByWeek || data.speedRecords;
@@ -376,8 +188,6 @@ async function fetchCloudLeaderboard(silent = false) {
       try { renderPerfectScorers(); } catch(e){}
 
       lastCloudSyncTime = new Date();
-      const timeStr = lastCloudSyncTime.toLocaleTimeString('zh-HK', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      updateSyncStatus(`✅ 雲端已同步 (${timeStr})`, false);
       if (!silent) showPassToast('⚡ 雲端試算表最新榮譽榜已即時同步！');
     } else {
       throw new Error((data && data.message) ? data.message : '後端回傳格式非 success');
@@ -385,9 +195,7 @@ async function fetchCloudLeaderboard(silent = false) {
   } catch(err) {
     clearTimeout(timeoutId);
     console.warn('雲端載入提醒 (自動維持本機安全離線模式):', err);
-    const errMsg = (err.name === 'AbortError') ? '連線超時(>6s)' : (err.message || '權限或跨域阻擋');
-    updateSyncStatus(`🔴 同步失敗: ${errMsg}`, true);
-    if (!silent) showPassToast('⚠️ 雲端連線失敗: ' + errMsg);
+    if (!silent) showPassToast('⚠️ 雲端連線失敗: ' + (err.message || '權限或跨域阻擋'));
   } finally {
     isFetchingCloudLeaderboard = false;
   }
@@ -2850,22 +2658,18 @@ const SafeStorage = {
       const subFilters = document.getElementById('speed-lb-sub-filters');
       if (subFilters) {
         subFilters.style.display = (type === 'speed') ? 'block' : 'none';
+        const select = document.getElementById('speed-lb-week-select');
+        if (select && speedLeaderboardWeek) {
+          select.value = speedLeaderboardWeek;
+        }
       }
 
       const modalTitle = document.getElementById('lb-modal-main-title');
       if (modalTitle) {
-        modalTitle.textContent = (type === 'speed') ? '⚡ 四年級寶可夢速成手速天梯榜 (秒數升序)' : '🏆 四年級寶可夢速成討伐龍虎榜';
+        modalTitle.textContent = (type === 'speed') ? '⚡ 四年級寶可夢速成手速天梯榜 (10字秒數制)' : '🏆 四年級寶可夢速成討伐龍虎榜';
       }
 
       renderLeaderboardTable();
-    }
-
-    function filterSpeedLeaderboardWordCount(wc) {
-      speedLeaderboardWordCount = wc;
-      document.querySelectorAll('#speed-lb-sub-filters .lb-sub-pill[id^="lb-wc-"]').forEach(p => {
-        p.classList.toggle('active', p.id === `lb-wc-${wc}`);
-      });
-      renderSpeedLeaderboardTable();
     }
 
     function filterSpeedLeaderboardWeek(weekKey) {
@@ -2877,38 +2681,94 @@ const SafeStorage = {
       renderSpeedLeaderboardTable();
     }
 
-    // ⚡ 獨立速成手速天梯榜渲染函數 (秒數升序 ASC · 擊鍵準確率二次加權罰時已計入)
     function renderSpeedLeaderboardTable() {
+      // 1. 替換表頭為純 10 字秒數制各項指標 (11欄，完全對齊試算表與六年級規格)
+      const thead = document.querySelector('#modal-leaderboard thead tr');
+      if (thead) {
+        thead.innerHTML = `
+          <th>排名</th>
+          <th>班別</th>
+          <th>學號</th>
+          <th>訓練家代號</th>
+          <th>周次功課</th>
+          <th style="color:#0284C7;">⏱️ 10字等效耗時 (秒)</th>
+          <th>原始碼表耗時</th>
+          <th>擊鍵準確率</th>
+          <th>準確率加權罰時</th>
+          <th>等效中文字速</th>
+          <th>榮譽段位</th>
+        `;
+      }
+
+      const scoreLabel = document.getElementById('lb-my-score-label');
+      const rankLabel = document.getElementById('lb-my-rank-label');
+      if (scoreLabel) scoreLabel.textContent = '10字等效總耗時';
+      if (rankLabel) rankLabel.textContent = (currentLeaderboardFilter === 'ALL') ? '全級手速名次' : '班內手速名次';
+
+      const bankObj = (typeof MODE2_WEEKLY_BANKS === 'object' && MODE2_WEEKLY_BANKS) ? MODE2_WEEKLY_BANKS[speedLeaderboardWeek] : null;
+      const wkTitle = bankObj ? bankObj.title : (speedLeaderboardWeek === 'ALL' ? '全部周次 (生涯最佳)' : speedLeaderboardWeek);
+
       const allSpeedMap = {};
 
+      // 1. 初始化全級名冊 (預設全部未參賽，不入榜)
       if (DATA.benchmark_leaderboard && Array.isArray(DATA.benchmark_leaderboard)) {
         DATA.benchmark_leaderboard.forEach(item => {
+          let hasRec = false;
+          let timeVal = 9999.0;
+
+          if (item.weekly_speed && typeof item.weekly_speed[speedLeaderboardWeek] === 'number' && item.weekly_speed[speedLeaderboardWeek] > 0) {
+            timeVal = Number(item.weekly_speed[speedLeaderboardWeek]);
+            hasRec = true;
+          } else if (speedLeaderboardWeek === 'ALL') {
+            let best = 9999.0;
+            if (typeof item.best10 === 'number' && item.best10 > 0 && item.best10 < 900) {
+              best = item.best10;
+            }
+            if (item.weekly_speed && typeof item.weekly_speed === 'object') {
+              Object.values(item.weekly_speed).forEach(v => {
+                const numV = Number(v);
+                if (!isNaN(numV) && numV > 0 && numV < best) {
+                  best = numV;
+                }
+              });
+            }
+            if (best < 900) {
+              timeVal = best;
+              hasRec = true;
+            }
+          }
+
+          const cpmVal = (hasRec && timeVal > 0) ? Math.round(10 / (timeVal / 60)) : 0;
+          const tierVal = hasRec ? getSpeedTier(timeVal, 10) : '--';
+
           allSpeedMap[`${item.cls}_${item.num}`] = {
             cls: item.cls,
             num: item.num,
-            name: `${item.cls} ${(item.num < 10 ? '0' : '') + item.num}號`,
-            bestTime: 9999.0,
-            rawTime: 9999.0,
-            cpm: 0,
-            accuracy: 0,
+            name: item.name || `${item.cls} ${(item.num < 10 ? '0' : '') + item.num}號`,
+            bestTime: timeVal,
+            rawTime: timeVal,
+            cpm: cpmVal,
+            accuracy: 100,
             accPenalty: 0,
-            tier: '--',
-            hasRecord: false
+            tier: tierVal,
+            weekKey: speedLeaderboardWeek,
+            hasRecord: hasRec
           };
         });
       }
 
-      // 從 SafeStorage 讀取相符條件的學生速成手速紀錄
+      // 2. 從本地 SafeStorage 讀取該周次功課之真實手速紀錄 (優先採用本機最新最佳)
       const allKeys = SafeStorage.getAllKeys ? SafeStorage.getAllKeys() : [];
       allKeys.forEach(key => {
         if (key.startsWith('p4_speed_')) {
           const parts = key.replace('p4_speed_', '').split('_');
-          const cls = parts[0];
+          const cls = String(parts[0] || '').trim().toUpperCase();
           const num = parseInt(parts[1], 10);
+          if (!cls || isNaN(num) || num < 1 || num > 36) return;
           const recWc = parts[2] ? parseInt(parts[2], 10) : 10;
-          const recWk = parts.slice(3).join('_') || 'w4_hw1';
+          const recWk = parts.slice(3).join('_') || 'w5_hw1';
 
-          if (recWc !== speedLeaderboardWordCount) return;
+          if (recWc !== 10) return; // 四年級週次功課鎖定純 10 字
           if (speedLeaderboardWeek !== 'ALL' && recWk !== speedLeaderboardWeek) return;
 
           try {
@@ -2916,13 +2776,13 @@ const SafeStorage = {
             if (parsed && typeof parsed.bestTime === 'number' && parsed.bestTime > 0 && parsed.bestTime < 900) {
               const mapKey = `${cls}_${num}`;
               const time = parsed.bestTime;
-              const raw = parsed.rawTime || time;
+              const raw = (typeof parsed.rawTime === 'number') ? parsed.rawTime : time;
               const acc = (typeof parsed.accuracy === 'number') ? parsed.accuracy : 100;
-              const cpm = parsed.cpm || Math.round(recWc / (time / 60));
+              const cpm = parsed.cpm || Math.round(10 / (time / 60));
               const penalty = parsed.accPenalty || 0;
-              const tier = parsed.tier || getSpeedTier(time, recWc);
+              const tier = parsed.tier || getSpeedTier(time, 10);
 
-              if (!allSpeedMap[mapKey] || allSpeedMap[mapKey].bestTime > time) {
+              if (!allSpeedMap[mapKey] || !allSpeedMap[mapKey].hasRecord || allSpeedMap[mapKey].bestTime > time) {
                 allSpeedMap[mapKey] = {
                   cls, num,
                   name: `${cls} ${(num < 10 ? '0' : '') + num}號`,
@@ -2932,6 +2792,7 @@ const SafeStorage = {
                   accuracy: acc,
                   accPenalty: penalty,
                   tier: tier,
+                  weekKey: recWk,
                   hasRecord: true
                 };
               }
@@ -2940,40 +2801,34 @@ const SafeStorage = {
         }
       });
 
-      
-      // 3. 從雲端即時手速榜合併跨電腦成績 (完全支援各周次獨立功課 speedByWeek 物件)
+      // 3. 從雲端即時手速榜合併跨電腦成績 (純 10 字天梯)
       if (DATA.cloud_speed_records) {
         let cloudList = [];
         if (Array.isArray(DATA.cloud_speed_records)) {
           cloudList = DATA.cloud_speed_records;
         } else if (DATA.cloud_speed_records[speedLeaderboardWeek]) {
           cloudList = DATA.cloud_speed_records[speedLeaderboardWeek];
-        } else if (speedLeaderboardWeek === 'ALL') {
-          const overallKey = (speedLeaderboardWordCount === 20) ? 'overall_20' : 'overall_10';
-          cloudList = DATA.cloud_speed_records[overallKey] || DATA.cloud_speed_records['overall'] || [];
+        } else if (speedLeaderboardWeek === 'ALL' && DATA.cloud_speed_records['overall']) {
+          cloudList = DATA.cloud_speed_records['overall'];
         }
 
         cloudList.forEach(cs => {
           const mapKey = `${cs.cls}_${cs.num}`;
-          const rawTimeVal = (speedLeaderboardWordCount === 20) ? (cs.best20 !== undefined ? cs.best20 : cs.bestTime) : (cs.best10 !== undefined ? cs.best10 : cs.bestTime);
-          const time = parseFloat(rawTimeVal);
+          const time = parseFloat(cs.bestTime !== undefined ? cs.bestTime : cs.best10);
           if (!isNaN(time) && time > 0 && time < 900) {
             const curEntry = allSpeedMap[mapKey];
             if (!curEntry || !curEntry.hasRecord || curEntry.bestTime > time) {
-              const cpm = cs.cpm || Math.round(speedLeaderboardWordCount / (time / 60));
-              const rawTime = (typeof cs.rawTime === 'number' && !isNaN(cs.rawTime)) ? cs.rawTime : time;
-              const acc = (typeof cs.accuracy === 'number' && !isNaN(cs.accuracy)) ? cs.accuracy : 100;
-              const penalty = (typeof cs.accPenalty === 'number' && !isNaN(cs.accPenalty)) ? cs.accPenalty : 0;
+              const cpm = cs.cpm || Math.round(10 / (time / 60));
               allSpeedMap[mapKey] = {
                 cls: cs.cls,
                 num: cs.num,
                 name: cs.name || `${cs.cls} ${(cs.num < 10 ? '0' : '') + cs.num}號`,
                 bestTime: time,
-                rawTime: rawTime,
+                rawTime: (typeof cs.rawTime === 'number') ? cs.rawTime : time,
                 cpm: cpm,
-                accuracy: acc,
-                accPenalty: penalty,
-                tier: cs.tier || getSpeedTier(time, speedLeaderboardWordCount),
+                accuracy: (typeof cs.accuracy === 'number') ? cs.accuracy : 100,
+                accPenalty: (typeof cs.accPenalty === 'number') ? cs.accPenalty : 0,
+                tier: cs.tier || getSpeedTier(time, 10),
                 weekKey: cs.weekKey || speedLeaderboardWeek,
                 hasRecord: true
               };
@@ -2982,33 +2837,30 @@ const SafeStorage = {
         });
       }
 
-      const speedList = Object.values(allSpeedMap).filter(s => s.hasRecord);
+      // 4. 嚴格過濾：未參與本項手速遊戲者直接不入榜
+      const speedList = Object.values(allSpeedMap).filter(s => s.hasRecord && typeof s.bestTime === 'number' && s.bestTime < 900);
       speedList.sort((a, b) => {
         if (a.bestTime !== b.bestTime) return a.bestTime - b.bestTime;
         return b.accuracy - a.accuracy;
       });
       speedList.forEach((item, idx) => item.overallRank = idx + 1);
 
+      // 分班計算班內名次 (僅限有成績者)
       const classGroups = {};
       ['P4A', 'P4B', 'P4C', 'P4D', 'P4E', 'P4F'].forEach(c => {
         classGroups[c] = speedList.filter(s => s.cls === c);
         classGroups[c].forEach((item, idx) => item.classRank = idx + 1);
       });
 
+      // 5. 更新頂部我的個人戰報
       if (currentStudent) {
         const myKey = `${currentStudent.cls}_${currentStudent.num}`;
         const myEntry = allSpeedMap[myKey];
-        document.getElementById('lb-my-name').textContent = `${currentStudent.cls} ${(currentStudent.num < 10 ? '0' : '') + currentStudent.num}號`;
-        const bankObj = MODE2_WEEKLY_BANKS[speedLeaderboardWeek];
-        const wkTitle = bankObj ? bankObj.title : (speedLeaderboardWeek === 'ALL' ? '全部周次' : speedLeaderboardWeek);
-
-        const rankLabel = document.getElementById('lb-my-rank-label');
-        const scoreLabel = document.getElementById('lb-my-score-label');
-        if (rankLabel) rankLabel.textContent = '手速天梯名次';
-        if (scoreLabel) scoreLabel.textContent = '等效競賽總耗時';
+        const myNameEl = document.getElementById('lb-my-name');
+        if (myNameEl) myNameEl.textContent = `${currentStudent.cls} ${(currentStudent.num < 10 ? '0' : '') + currentStudent.num}號`;
 
         if (myEntry && myEntry.hasRecord) {
-          document.getElementById('lb-my-title').textContent = `分類：${speedLeaderboardWordCount}字賽 · ${wkTitle} ｜ 速成字速：${myEntry.cpm} 字/分`;
+          document.getElementById('lb-my-title').textContent = `分類：10字賽 · ${wkTitle} ｜ 速成字速：${myEntry.cpm} 字/分`;
           document.getElementById('lb-my-score').textContent = `${myEntry.bestTime.toFixed(2)} 秒 (準確率 ${myEntry.accuracy}%)`;
           document.getElementById('lb-my-badge').textContent = '⚡';
           if (currentLeaderboardFilter === 'ALL') {
@@ -3017,7 +2869,7 @@ const SafeStorage = {
             document.getElementById('lb-my-rank').innerHTML = `<span style="color:#2563EB;font-weight:900;">${currentLeaderboardFilter} 班內手速第 ${myEntry.classRank} 名</span>`;
           }
         } else {
-          document.getElementById('lb-my-title').textContent = `分類：${speedLeaderboardWordCount}字賽 · ${wkTitle}`;
+          document.getElementById('lb-my-title').textContent = `分類：10字賽 · ${wkTitle}`;
           document.getElementById('lb-my-score').textContent = '-- 秒';
           document.getElementById('lb-my-badge').textContent = '⏱️';
           document.getElementById('lb-my-rank').textContent = '尚無本組手速紀錄';
@@ -3028,30 +2880,12 @@ const SafeStorage = {
       const sourceList = isClassFilter ? (classGroups[currentLeaderboardFilter] || []) : speedList;
       const displayList = sourceList.slice(0, isClassFilter ? 15 : 20);
 
-      const thead = document.querySelector('#modal-leaderboard thead tr');
-      if (thead) {
-        thead.innerHTML = `
-          <th style="padding: 10px;">排名</th>
-          <th>班別</th>
-          <th>學號</th>
-          <th>訓練家代號</th>
-          <th>題量</th>
-          <th>周次功課</th>
-          <th>等效總耗時 (秒)</th>
-          <th>原始碼表</th>
-          <th>準確率</th>
-          <th>罰時</th>
-          <th>字速</th>
-          <th>榮譽段位</th>
-        `;
-      }
-
       const tbody = document.getElementById('leaderboard-tbody');
       if (!tbody) return;
       tbody.innerHTML = '';
 
       if (displayList.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;padding:24px;color:#94A3B8;">⚡ 尚無符合條件的手速紀錄，歡迎搶先挑戰！</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;padding:24px;color:#94A3B8;">⚡ 尚無符合條件的手速紀錄，歡迎搶先挑戰！</td></tr>`;
         return;
       }
 
@@ -3070,7 +2904,7 @@ const SafeStorage = {
           tr.style.fontWeight = 'bold';
         }
 
-        const bankObj = MODE2_WEEKLY_BANKS[item.weekKey || speedLeaderboardWeek];
+        const bankObj = (typeof MODE2_WEEKLY_BANKS === 'object' && MODE2_WEEKLY_BANKS) ? MODE2_WEEKLY_BANKS[item.weekKey || speedLeaderboardWeek] : null;
         const wkName = bankObj ? bankObj.title : (item.weekKey || speedLeaderboardWeek);
 
         tr.innerHTML = `
@@ -3078,10 +2912,9 @@ const SafeStorage = {
           <td><span class="st-poke-tag" style="background:#DBEAFE;color:#1E40AF;font-weight:800;">${item.cls}</span></td>
           <td style="font-weight:700;">${item.num}</td>
           <td style="font-weight:800;color:#1E293B;">${item.name}</td>
-          <td style="font-weight:700;color:#475569;">${speedLeaderboardWordCount}字</td>
-          <td style="font-weight:700;color:#64748B;">${wkName}</td>
+          <td style="font-size:12px;color:#475569;font-weight:700;">${wkName}</td>
           <td style="font-weight:900;color:#0284C7;font-size:15px;">⏱️ ${item.bestTime.toFixed(2)}s</td>
-          <td style="color:#64748B;">${item.rawTime.toFixed(2)}s</td>
+          <td style="color:#64748B;font-size:13px;">${item.rawTime.toFixed(2)}s</td>
           <td style="font-weight:800;color:${item.accuracy >= 95 ? '#10B981' : '#F59E0B'};">${item.accuracy}%</td>
           <td style="color:${item.accPenalty > 0 ? '#EF4444' : '#10B981'};font-size:12px;">+${item.accPenalty.toFixed(2)}s</td>
           <td style="font-weight:800;color:#D97706;">${item.cpm} 字/分</td>
@@ -3090,7 +2923,7 @@ const SafeStorage = {
         tbody.appendChild(tr);
       });
     }
-    
+
     // 頁面載入時依日期自動初始化手速字庫下拉選單與排行榜篩選器
     window.addEventListener('DOMContentLoaded', () => {
       initSpeedWeekDropdown();
