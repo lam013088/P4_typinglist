@@ -64,13 +64,14 @@ function evalTierAndSkills(score) {
 /**
  * 手速賽秒數段位評定
  */
-function getSpeedTier(sec) {
-  if (sec <= 12.0) return '⚡ 神速天王';
-  if (sec <= 16.0) return '👑 鍵盤宗師';
-  if (sec <= 22.0) return '🔥 疾風射手';
-  if (sec <= 30.0) return '💎 靈動遊俠';
-  if (sec <= 42.0) return '🥇 穩健獵人';
-  if (sec <= 60.0) return '🥈 見習學徒';
+function getSpeedTier(sec, wordCount) {
+  const multiplier = (wordCount === 20) ? 2.0 : 1.0;
+  if (sec <= 12.0 * multiplier) return '⚡ 神速天王';
+  if (sec <= 16.0 * multiplier) return '👑 鍵盤宗師';
+  if (sec <= 22.0 * multiplier) return '🔥 疾風射手';
+  if (sec <= 30.0 * multiplier) return '💎 靈動遊俠';
+  if (sec <= 42.0 * multiplier) return '🥇 穩健獵人';
+  if (sec <= 60.0 * multiplier) return '🥈 見習學徒';
   return '🥉 新手訓練家';
 }
 

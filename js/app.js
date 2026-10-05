@@ -1,12 +1,257 @@
+function updateSyncStatus(msg, isError = false) {
+  try {
+    const text = document.getElementById('lb-cloud-status');
+    const dot = document.getElementById('lb-cloud-dot');
+    if (text) {
+      text.textContent = msg;
+      text.style.color = isError ? '#DC2626' : (msg.includes('🟡') ? '#D97706' : (msg.includes('⏳') ? '#2563EB' : '#15803D'));
+    }
+    if (dot) {
+      if (isError) {
+        dot.style.background = '#EF4444';
+      } else if (msg.includes('✅') || msg.includes('已同步') || msg.includes('連動中')) {
+        dot.style.background = '#10B981';
+      } else if (msg.includes('⏳')) {
+        dot.style.background = '#3B82F6';
+      } else if (msg.includes('🟡')) {
+        dot.style.background = '#F59E0B';
+      } else {
+        dot.style.background = '#10B981';
+      }
+    }
+  } catch(e) {}
+}
+
+function inspectWebhookStatus() {
+  const url = getGasWebhookUrl();
+  const statusEl = document.getElementById('lb-cloud-status');
+  const curStatus = statusEl ? statusEl.textContent : '未知';
+  const lastSync = (typeof lastCloudSyncTime !== 'undefined' && lastCloudSyncTime) ? lastCloudSyncTime.toLocaleString() : '尚未成功連通';
+  const msg = [
+    '【雲端天梯連線診斷報告】',
+    '',
+    '1. 當前偵測到的 Webhook 網址:',
+    url || '⚠️ (未讀取到，請確認 config.js 中的 GAS_WEBHOOK_URL 是否已填寫)',
+    '',
+    '2. 最新同步狀態:',
+    curStatus,
+    '',
+    '3. 最後成功同步時間:',
+    lastSync,
+    '',
+    '💡 常見故障排除排查指南：',
+    '・若顯示連線失敗或超時：請確認 Apps Script 部署設定中的「誰可以存取」是否選為「任何人 (Anyone)」，若選成「只有我」會被 Google 權限阻擋。',
+    '・若網址結尾為 /dev，請改為正式發布的 /exec 結尾網址。',
+    '・若修改了 GitHub 的 config.js，GitHub Pages 通常需 1~2 分鐘編譯，請按 Ctrl+F5 強制重新整理。'
+  ].join(String.fromCharCode(10));
+  alert(msg);
+}
 
 function getGasWebhookUrl() {
+  // 1. URL 參數最高優先級 (例: ?gas=... 或 ?webhook=...)
+  // 支援教師一鍵分發直連網址給學生，打開即自動綁定，完全無需學生任何手動設定
+  try {
+    if (typeof window !== 'undefined' && window.location && window.location.search) {
+      const params = new URLSearchParams(window.location.search);
+      const paramUrl = params.get('gas') || params.get('webhook');
+      if (paramUrl && paramUrl.includes('script.google.com') && !paramUrl.includes('YourDeploymentIdHere')) {
+        SafeStorage.setItem('p4_custom_gas_url', paramUrl.trim());
+        return paramUrl.trim();
+      }
+    }
+  } catch(e) {}
+
+  // 2. 本地 SafeStorage 儲存之自訂 Webhook (教師或使用者在介面中設定一次即永久生效)
+  try {
+    const savedUrl = SafeStorage.getItem('p4_custom_gas_url');
+    if (savedUrl && savedUrl.includes('script.google.com') && !savedUrl.includes('YourDeploymentIdHere')) {
+      return savedUrl.trim();
+    }
+  } catch(e) {}
+
+  // 3. 全域設定物件 window.CONFIG 或 CONFIG (來自外部 config.js 或 js/config.js)
   if (typeof window !== 'undefined' && window.CONFIG && window.CONFIG.GAS_WEBHOOK_URL && !window.CONFIG.GAS_WEBHOOK_URL.includes('YourDeploymentIdHere')) {
-    return window.CONFIG.GAS_WEBHOOK_URL;
+    return window.CONFIG.GAS_WEBHOOK_URL.trim();
   }
   if (typeof CONFIG !== 'undefined' && CONFIG.GAS_WEBHOOK_URL && !CONFIG.GAS_WEBHOOK_URL.includes('YourDeploymentIdHere')) {
-    return CONFIG.GAS_WEBHOOK_URL;
+    return CONFIG.GAS_WEBHOOK_URL.trim();
   }
+
   return '';
+}
+
+// ⚙️ 雲端 Webhook 設定與連線診斷功能模組
+function openWebhookSettingsModal() {
+  const currentUrl = getGasWebhookUrl();
+  const inputEl = document.getElementById('webhook-url-input');
+  const statusEl = document.getElementById('webhook-status-display');
+  const testResultEl = document.getElementById('webhook-test-result');
+  const shareLinkInput = document.getElementById('webhook-share-link');
+
+  if (inputEl) {
+    inputEl.value = currentUrl || '';
+  }
+  if (testResultEl) {
+    testResultEl.style.display = 'none';
+    testResultEl.innerHTML = '';
+  }
+
+  if (statusEl) {
+    if (currentUrl) {
+      statusEl.innerHTML = '<span style="color:#059669; font-weight:800;">🟢 已配置 Webhook 網址</span> <span style="font-size:11.5px; color:#64748B;">(' + currentUrl.substring(0, 38) + '...)</span>';
+    } else {
+      statusEl.innerHTML = '<span style="color:#D97706; font-weight:800;">🟡 離線單機模式（尚未綁定雲端 Webhook 網址）</span>';
+    }
+  }
+
+  if (shareLinkInput && typeof window !== 'undefined' && window.location) {
+    if (currentUrl) {
+      const shareUrl = window.location.origin + window.location.pathname + '?webhook=' + encodeURIComponent(currentUrl);
+      shareLinkInput.value = shareUrl;
+    } else {
+      shareLinkInput.value = '請先填寫並儲存上方 Webhook 網址，即可生成學生直連免設定連結';
+    }
+  }
+
+  openModal('modal-webhook-settings');
+}
+
+async function saveWebhookSettings() {
+  const inputEl = document.getElementById('webhook-url-input');
+  const testResultEl = document.getElementById('webhook-test-result');
+  let url = inputEl ? inputEl.value.trim() : '';
+
+  if (!url) {
+    alert('請輸入有效的 Google Apps Script 網頁應用程式網址 (/exec 結尾)！');
+    return;
+  }
+
+  if (!url.startsWith('https://script.google.com/macros/s/') || !url.endsWith('/exec')) {
+    if (!confirm('提示：標準 Google Apps Script 網頁應用程式網址通常以「https://script.google.com/macros/s/」開頭並以「/exec」結尾。\n\n您輸入的網址可能不完整，是否仍要強制儲存？')) {
+      return;
+    }
+  }
+
+  SafeStorage.setItem('p4_custom_gas_url', url);
+  if (typeof window !== 'undefined') {
+    window.CONFIG = window.CONFIG || {};
+    window.CONFIG.GAS_WEBHOOK_URL = url;
+  }
+
+  showPassToast('✅ Webhook 網址已儲存至本機！正在驗證連線...');
+  if (testResultEl) {
+    testResultEl.style.display = 'block';
+    testResultEl.innerHTML = '<span style="color:#2563EB;">⏳ 正在連線驗證 Google 雲端試算表...</span>';
+  }
+
+  // 立即觸發補送離線成績與刷新天梯戰況
+  flushPendingUploads();
+  await fetchCloudLeaderboard(false);
+
+  // 刷新彈窗內狀態
+  openWebhookSettingsModal();
+}
+
+async function testWebhookConnection() {
+  const inputEl = document.getElementById('webhook-url-input');
+  const testResultEl = document.getElementById('webhook-test-result');
+  const url = (inputEl && inputEl.value.trim()) ? inputEl.value.trim() : getGasWebhookUrl();
+
+  if (!url) {
+    alert('尚未填寫 Webhook 網址，請先輸入網址！');
+    return;
+  }
+
+  if (testResultEl) {
+    testResultEl.style.display = 'block';
+    testResultEl.innerHTML = '<span style="color:#2563EB;">⏳ 正在發送 GET 請求測試雲端回應...</span>';
+  }
+
+  try {
+    const queryUrl = url + (url.includes('?') ? '&' : '?') + 'action=get_data&t=' + Date.now();
+    const res = await fetch(queryUrl, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP 狀態碼 ' + res.status);
+    const data = await res.json();
+    if (data && data.status === 'success') {
+      const stCount = data.combatLeaderboard ? data.combatLeaderboard.length : (data.totalStudents || 0);
+      const speedCount = (data.speedLeaderboard && Array.isArray(data.speedLeaderboard)) ? data.speedLeaderboard.length : 0;
+      testResultEl.innerHTML = [
+        '<div style="background:#ECFDF5; border:1.5px solid #10B981; border-radius:10px; padding:10px; color:#065F46; font-size:13px; text-align:left;">',
+        '  <strong>✅ 雲端連線完全正常！</strong><br>',
+        '  ・成功連通 Google 試算表 (最後更新: ' + (data.timestamp || '即時') + ')<br>',
+        '  ・全級名冊已載入：' + stCount + ' 位學生<br>',
+        '  ・手速天梯已記錄：' + speedCount + ' 筆手速成績<br>',
+        '  ・跨電腦同步狀態：已全面就緒！',
+        '</div>'
+      ].join('');
+    } else {
+      throw new Error(data && data.message ? data.message : '回傳格式異常');
+    }
+  } catch (err) {
+    testResultEl.innerHTML = [
+      '<div style="background:#FEF2F2; border:1.5px solid #EF4444; border-radius:10px; padding:10px; color:#991B1B; font-size:13px; text-align:left;">',
+      '  <strong>🔴 連線測試失敗：</strong>' + err.message + '<br>',
+      '  <span style="font-size:11.5px; color:#B91C1C;">請檢查：1. Apps Script 部署設定中「誰可以存取」是否選為「任何人 (Anyone)」；2. 網址是否正確完整以 /exec 結尾。</span>',
+      '</div>'
+    ].join('');
+  }
+}
+
+function copyStudentShareLink() {
+  const shareLinkInput = document.getElementById('webhook-share-link');
+  if (!shareLinkInput || !shareLinkInput.value || shareLinkInput.value.includes('請先填寫')) {
+    alert('請先填寫並儲存上方 Webhook 網址！');
+    return;
+  }
+  shareLinkInput.select();
+  try {
+    navigator.clipboard.writeText(shareLinkInput.value);
+    showPassToast('📋 已複製學生直連網址！發送給學生即可自動連線');
+  } catch (e) {
+    document.execCommand('copy');
+    showPassToast('📋 已複製學生直連網址！');
+  }
+}
+
+function clearWebhookSettings() {
+  if (confirm('確定要清除本機儲存的自訂 Webhook 網址嗎？清除後系統將回退至離線單機模式。')) {
+    SafeStorage.removeItem('p4_custom_gas_url');
+    if (typeof window !== 'undefined' && window.CONFIG) {
+      window.CONFIG.GAS_WEBHOOK_URL = '';
+    }
+    showPassToast('已清除自訂 Webhook 設定');
+    openWebhookSettingsModal();
+    updateSyncStatus('🟡 離線單機模式', false);
+  }
+}
+
+// 📦 離線待補送佇列處理函式
+async function flushPendingUploads() {
+  const url = getGasWebhookUrl();
+  if (!url) return;
+  try {
+    const rawPending = SafeStorage.getItem('p4_pending_uploads');
+    if (!rawPending) return;
+    const queue = JSON.parse(rawPending);
+    if (!Array.isArray(queue) || queue.length === 0) return;
+
+    SafeStorage.removeItem('p4_pending_uploads');
+    for (const item of queue) {
+      if (item && item.payload) {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          cache: 'no-cache',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(item.payload)
+        }).catch(err => console.warn('補送失敗:', err));
+        await new Promise(r => setTimeout(r, 400));
+      }
+    }
+    console.log('✅ 已完成離線紀錄補送');
+  } catch (e) {
+    console.warn('處理補送佇列異常:', e);
+  }
 }
 
 function generateRequestId() {
@@ -18,7 +263,15 @@ let lastCloudSyncTime = null;
 
 async function sendReliableWebhook(payload) {
   const url = getGasWebhookUrl();
-  if (!url) return;
+  if (!url) {
+    try {
+      const rawPending = SafeStorage.getItem('p4_pending_uploads');
+      const queue = rawPending ? JSON.parse(rawPending) : [];
+      queue.push({ payload, time: Date.now() });
+      SafeStorage.setItem('p4_pending_uploads', JSON.stringify(queue.slice(-20)));
+    } catch(e) {}
+    return;
+  }
   if (!payload.requestId) payload.requestId = generateRequestId();
 
   const controller = new AbortController();
@@ -53,7 +306,10 @@ async function fetchCloudLeaderboard(silent = false) {
   if (isFetchingCloudLeaderboard) return;
   const url = getGasWebhookUrl();
   if (!url) {
-    if (!silent) showPassToast('🟡 離線模式：全級榮譽榜已就緒');
+    updateSyncStatus('🟡 離線單機模式 (未綁定雲端)', false);
+    if (!silent) {
+      openWebhookSettingsModal();
+    }
     return;
   }
 
@@ -62,7 +318,7 @@ async function fetchCloudLeaderboard(silent = false) {
 
   try {
     isFetchingCloudLeaderboard = true;
-    if (!silent) showPassToast('⏳ 正在同步 Google 雲端試算表最新榮譽榜...');
+    if (!silent) updateSyncStatus('⏳ 正在同步 Google 雲端試算表最新榮譽榜...');
 
     await new Promise(r => setTimeout(r, Math.random() * 300));
 
@@ -120,6 +376,8 @@ async function fetchCloudLeaderboard(silent = false) {
       try { renderPerfectScorers(); } catch(e){}
 
       lastCloudSyncTime = new Date();
+      const timeStr = lastCloudSyncTime.toLocaleTimeString('zh-HK', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      updateSyncStatus(`✅ 雲端已同步 (${timeStr})`, false);
       if (!silent) showPassToast('⚡ 雲端試算表最新榮譽榜已即時同步！');
     } else {
       throw new Error((data && data.message) ? data.message : '後端回傳格式非 success');
@@ -127,7 +385,9 @@ async function fetchCloudLeaderboard(silent = false) {
   } catch(err) {
     clearTimeout(timeoutId);
     console.warn('雲端載入提醒 (自動維持本機安全離線模式):', err);
-    if (!silent) showPassToast('⚠️ 雲端連線失敗: ' + (err.message || '權限或跨域阻擋'));
+    const errMsg = (err.name === 'AbortError') ? '連線超時(>6s)' : (err.message || '權限或跨域阻擋');
+    updateSyncStatus(`🔴 同步失敗: ${errMsg}`, true);
+    if (!silent) showPassToast('⚠️ 雲端連線失敗: ' + errMsg);
   } finally {
     isFetchingCloudLeaderboard = false;
   }
@@ -1656,6 +1916,7 @@ const SafeStorage = {
       if (e.key === 'Escape' || e.keyCode === 27) {
         closeModal('modal-skills');
         closeModal('modal-leaderboard');
+        closeModal('modal-webhook-settings');
         const confirmModal = document.getElementById('modal-confirm');
         if (confirmModal) confirmModal.style.display = 'none';
       }
@@ -2694,20 +2955,24 @@ const SafeStorage = {
 
         cloudList.forEach(cs => {
           const mapKey = `${cs.cls}_${cs.num}`;
-          const time = (speedLeaderboardWordCount === 20) ? (cs.best20 || cs.bestTime) : (cs.best10 || cs.bestTime);
-          if (time && typeof time === 'number' && time > 0 && time < 900) {
+          const rawTimeVal = (speedLeaderboardWordCount === 20) ? (cs.best20 !== undefined ? cs.best20 : cs.bestTime) : (cs.best10 !== undefined ? cs.best10 : cs.bestTime);
+          const time = parseFloat(rawTimeVal);
+          if (!isNaN(time) && time > 0 && time < 900) {
             const curEntry = allSpeedMap[mapKey];
             if (!curEntry || !curEntry.hasRecord || curEntry.bestTime > time) {
               const cpm = cs.cpm || Math.round(speedLeaderboardWordCount / (time / 60));
+              const rawTime = (typeof cs.rawTime === 'number' && !isNaN(cs.rawTime)) ? cs.rawTime : time;
+              const acc = (typeof cs.accuracy === 'number' && !isNaN(cs.accuracy)) ? cs.accuracy : 100;
+              const penalty = (typeof cs.accPenalty === 'number' && !isNaN(cs.accPenalty)) ? cs.accPenalty : 0;
               allSpeedMap[mapKey] = {
                 cls: cs.cls,
                 num: cs.num,
                 name: cs.name || `${cs.cls} ${(cs.num < 10 ? '0' : '') + cs.num}號`,
                 bestTime: time,
-                rawTime: cs.rawTime || time,
+                rawTime: rawTime,
                 cpm: cpm,
-                accuracy: cs.accuracy || 100,
-                accPenalty: cs.accPenalty || 0,
+                accuracy: acc,
+                accPenalty: penalty,
                 tier: cs.tier || getSpeedTier(time, speedLeaderboardWordCount),
                 weekKey: cs.weekKey || speedLeaderboardWeek,
                 hasRecord: true
