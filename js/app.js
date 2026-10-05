@@ -155,13 +155,15 @@ async function fetchCloudLeaderboard(silent = false) {
             lastTime: time
           };
         });
-        DATA.top40 = DATA.benchmark_leaderboard.slice(0, 40);
+        // ⚠️ 嚴格遵循規範：全級前40名龍虎榜（Tab 1）為第 5 周功課 1-4 成績榜（來源是 26-27_四年級_每周打字積分記錄檔案）
+        // 排名條件為功課1-4總分(最高400分)及交齊時間，絕不能以錯字討伐魔王積分 (combatLeaderboard) 作為排名條件！
       }
       if (data.speedLeaderboard || data.speedByWeek || data.speedRecords) {
         DATA.cloud_speed_records = data.speedLeaderboard || data.speedByWeek || data.speedRecords;
       }
-      if (Array.isArray(data.top40) && data.top40.length > 0) {
-        DATA.top40 = data.top40;
+      // 僅在雲端明確提供 homeworkTop40 時才更新 DATA.top40，嚴禁使用 combatLeaderboard 覆蓋
+      if (Array.isArray(data.homeworkTop40) && data.homeworkTop40.length > 0) {
+        DATA.top40 = data.homeworkTop40;
       }
       if (data.class_top10) DATA.class_top10 = data.class_top10;
       if (data.perfect_students) DATA.perfect_students = data.perfect_students;
