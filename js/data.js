@@ -11905,15 +11905,15 @@ const MODE2_WEEKLY_BANKS = {
       }
     ]
   },
-  "w5_hw1": {
-    "key": "w5_hw1",
-    "week": "w5",
-    "weekName": "第5周",
+  "w6_hw1": {
+    "key": "w6_hw1",
+    "week": "w6",
+    "weekName": "第6周",
     "hwName": "功課1",
-    "title": "第5周功課1",
-    "dateRange": "28/09/2026 12:00 AM - 04/10/2026 11:30 PM",
-    "startDate": "2026-09-28T00:00:00+08:00",
-    "endDate": "2026-10-04T23:30:00+08:00",
+    "title": "第6周功課1",
+    "dateRange": "05/10/2026 7:00 AM - 11/10/2026 11:30 PM",
+    "startDate": "2026-10-05T07:00:00+08:00",
+    "endDate": "2026-10-11T23:30:00+08:00",
     "words": [
       {
         "char": "刺",
@@ -12617,15 +12617,15 @@ const MODE2_WEEKLY_BANKS = {
       }
     ]
   },
-  "w5_hw2": {
-    "key": "w5_hw2",
-    "week": "w5",
-    "weekName": "第5周",
+  "w6_hw2": {
+    "key": "w6_hw2",
+    "week": "w6",
+    "weekName": "第6周",
     "hwName": "功課2",
-    "title": "第5周功課2",
-    "dateRange": "28/09/2026 12:00 AM - 04/10/2026 11:30 PM",
-    "startDate": "2026-09-28T00:00:00+08:00",
-    "endDate": "2026-10-04T23:30:00+08:00",
+    "title": "第6周功課2",
+    "dateRange": "05/10/2026 7:00 AM - 11/10/2026 11:30 PM",
+    "startDate": "2026-10-05T07:00:00+08:00",
+    "endDate": "2026-10-11T23:30:00+08:00",
     "words": [
       {
         "char": "身",
@@ -13329,15 +13329,15 @@ const MODE2_WEEKLY_BANKS = {
       }
     ]
   },
-  "w5_hw3": {
-    "key": "w5_hw3",
-    "week": "w5",
-    "weekName": "第5周",
+  "w6_hw3": {
+    "key": "w6_hw3",
+    "week": "w6",
+    "weekName": "第6周",
     "hwName": "功課3",
-    "title": "第5周功課3",
-    "dateRange": "28/09/2026 12:00 AM - 04/10/2026 11:30 PM",
-    "startDate": "2026-09-28T00:00:00+08:00",
-    "endDate": "2026-10-04T23:30:00+08:00",
+    "title": "第6周功課3",
+    "dateRange": "05/10/2026 7:00 AM - 11/10/2026 11:30 PM",
+    "startDate": "2026-10-05T07:00:00+08:00",
+    "endDate": "2026-10-11T23:30:00+08:00",
     "words": [
       {
         "char": "業",
@@ -14041,15 +14041,15 @@ const MODE2_WEEKLY_BANKS = {
       }
     ]
   },
-  "w5_hw4": {
-    "key": "w5_hw4",
-    "week": "w5",
-    "weekName": "第5周",
+  "w6_hw4": {
+    "key": "w6_hw4",
+    "week": "w6",
+    "weekName": "第6周",
     "hwName": "功課4",
-    "title": "第5周功課4",
-    "dateRange": "28/09/2026 12:00 AM - 04/10/2026 11:30 PM",
-    "startDate": "2026-09-28T00:00:00+08:00",
-    "endDate": "2026-10-04T23:30:00+08:00",
+    "title": "第6周功課4",
+    "dateRange": "05/10/2026 7:00 AM - 11/10/2026 11:30 PM",
+    "startDate": "2026-10-05T07:00:00+08:00",
+    "endDate": "2026-10-11T23:30:00+08:00",
     "words": [
       {
         "char": "亡",

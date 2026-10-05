@@ -1,6 +1,6 @@
 /**
  * =========================================================================
- * ⚙️ CONFIG.JS - 四年級速成打字系統全域設定與段位常數
+ * ⚙️ CONFIG.JS - 系統全域設定、段位與技能樹常數
  * 🤖 部署與跨電腦即時連動指南：
  *    - GAS_WEBHOOK_URL：請在此填入 Google Apps Script 網頁應用程式部署網址
  *    - GITHUB_PRIVACY_MODE：發布至 GitHub 時設為 true (去識別化純學號)
@@ -17,29 +17,28 @@ if (!window.CONFIG.GAS_WEBHOOK_URL || window.CONFIG.GAS_WEBHOOK_URL.includes('Yo
     }
   } catch(e) {}
   if (!window.CONFIG.GAS_WEBHOOK_URL || window.CONFIG.GAS_WEBHOOK_URL.includes('YourDeploymentIdHere')) {
-    window.CONFIG.GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyeDwTwNtWzEJqbQ3jyZKiiMBoA6l8ItgsgErRiW2wmZ45Lsm2jeeWDGSjtYnpmSXrJ/exec';
+    window.CONFIG.GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxW0MXzXSPx5A4O3osfON96kGESZNAqQ7xiihp_RLKDc6VzXhYskOkUZGmw31Cu6jbL/exec';
   }
 }
 if (typeof window.CONFIG.GITHUB_PRIVACY_MODE === 'undefined') {
   window.CONFIG.GITHUB_PRIVACY_MODE = true;
 }
 if (typeof window.CONFIG.VERSION === 'undefined') {
-  window.CONFIG.VERSION = '2026.09.30-p4-modular-v1.2';
+  window.CONFIG.VERSION = '2026.09.30-modular-v1.1';
 }
 var CONFIG = window.CONFIG;
 
 // 🌟 段位稱號門檻對照表 (0 ~ 5,000分以上)
 window.TIERS = window.TIERS || [
   { min: 0, title: "新手訓練家", badge: "🥉", color: "#B45309", bg: "#FEF3C7" },
-  { min: 50, title: "字根見習生", badge: "🥈", color: "#475569", bg: "#F1F5F9" },
-  { min: 150, title: "鍵影遊俠", badge: "🥇", color: "#1D4ED8", bg: "#EFF6FF" },
-  { min: 350, title: "速成道館館主", badge: "💎", color: "#7C3AED", bg: "#F5F3FF" },
-  { min: 700, title: "魔王討伐大將", badge: "🔥", color: "#C2410C", bg: "#FFF7ED" },
-  { min: 1200, title: "疾風奧義宗師", badge: "⚡", color: "#B91C1C", bg: "#FEF2F2" },
-  { min: 2000, title: "傳奇鍵王大師", badge: "👑", color: "#047857", bg: "#ECFDF5" },
-  { min: 3500, title: "無雙神域殿堂至尊", badge: "🌌", color: "#4C1D95", bg: "#F3E8FF" }
+  { min: 50, title: "見習訓練家", badge: "🥈", color: "#475569", bg: "#F1F5F9" },
+  { min: 150, title: "原野遊俠", badge: "🥇", color: "#1D4ED8", bg: "#EFF6FF" },
+  { min: 300, title: "道館館主", badge: "⚡", color: "#7C3AED", bg: "#F5F3FF" },
+  { min: 600, title: "四大天王", badge: "🔥", color: "#C2410C", bg: "#FFF7ED" },
+  { min: 1200, title: "聯盟冠軍", badge: "🏆", color: "#B91C1C", bg: "#FEF2F2" },
+  { min: 2500, title: "傳奇大師", badge: "👑", color: "#047857", bg: "#ECFDF5" },
+  { min: 5000, title: "神域至尊", badge: "🌌", color: "#4C1D95", bg: "#F3E8FF" }
 ];
-var TIERS = window.TIERS;
 
 // ⚔️ 5大解鎖技能樹
 window.SKILLS = window.SKILLS || [
@@ -49,13 +48,14 @@ window.SKILLS = window.SKILLS || [
   { id: "chain", name: "極限連擊", desc: "連擊達 2 Hit 以上時，每次命中額外獎勵 +3 點連擊分！", reqPts: 1500, rate: 0.50 },
   { id: "divine", name: "神域天罰", desc: "擊破魔王時 20% 概率降下九天神雷，額外獎勵 +10 分！", reqPts: 3000, rate: 0.20 }
 ];
-var SKILLS = window.SKILLS;
 
 // 📅 每周排程時間表 (2026/2027學年上學期)
 window.SPEED_WEEK_SCHEDULES = window.SPEED_WEEK_SCHEDULES || [
-  { week: 'w2', name: '第 2 周', title: '【第2周】速成首尾二碼特訓 (9/7 - 9/13)', start: new Date('2026-09-07T00:00:00+08:00'), end: new Date('2026-09-13T23:59:59+08:00') },
-  { week: 'w3', name: '第 3 周', title: '【第 3 周】高頻易錯字速成攻防 (9/14 - 9/20)', start: new Date('2026-09-14T00:00:00+08:00'), end: new Date('2026-09-20T23:59:59+08:00') },
-  { week: 'w4', name: '第 4 周', title: '【第 4 周】期初實力排位激戰 (9/21 - 9/27)', start: new Date('2026-09-21T00:00:00+08:00'), end: new Date('2026-09-27T23:59:59+08:00') },
-  { week: 'w5', name: '第 5 周', title: '【第 5 周】手速極限突破爭霸 (9/28 - 10/04)', start: new Date('2026-09-28T00:00:00+08:00'), end: new Date('2026-10-04T23:59:59+08:00') }
+  { week: 'w2', name: '第 2 周', title: '【第2周】字根複合與首尾特訓 (9/7 - 9/13)', start: new Date('2026-09-07T00:00:00+08:00'), end: new Date('2026-09-13T23:59:59+08:00') },
+  { week: 'w3', name: '第 3 周', title: '【第 3 周】難字與分體字高頻特訓 (9/14 - 9/20)', start: new Date('2026-09-14T00:00:00+08:00'), end: new Date('2026-09-20T23:59:59+08:00') },
+  { week: 'w4', name: '第 4 周', title: '【第 4 周】期初實力排位激戰 (9/21 - 10/04，第4/5周合拼)', start: new Date('2026-09-21T00:00:00+08:00'), end: new Date('2026-10-04T23:59:59+08:00') },
+  { week: 'w6', name: '第 6 周', title: '【第 6 周】手速極限突破爭霸 (10/5 - 10/11)', start: new Date('2026-10-05T00:00:00+08:00'), end: new Date('2026-10-11T23:59:59+08:00') }
 ];
+var TIERS = window.TIERS;
+var SKILLS = window.SKILLS;
 var SPEED_WEEK_SCHEDULES = window.SPEED_WEEK_SCHEDULES;
