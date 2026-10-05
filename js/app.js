@@ -2088,88 +2088,66 @@ const SafeStorage = {
 
     function initSpeedWeekDropdown() {
       const select = document.getElementById('speed-ready-week-select');
-      if (!select) return;
-
-      select.innerHTML = '';
       const activeWk = getActiveSpeedWeek();
       const allBanks = (typeof MODE2_WEEKLY_BANKS === 'object' && MODE2_WEEKLY_BANKS) ? MODE2_WEEKLY_BANKS : {};
-      const allKeys = Object.keys(allBanks);
 
-      if (allKeys.length === 0) {
-        allBanks['demo_practice'] = {
-          key: 'demo_practice',
-          title: '【基礎練習】精選常用字根速成/倉頡特訓',
-          words: [
-            { char: "明", codes: ["日", "月"], keys: ["A", "B"], full: "日月 (AB)" },
-            { char: "鬼", codes: ["竹", "戈"], keys: ["H", "I"], full: "竹戈 (HI)" },
-            { char: "車", codes: ["十", "十"], keys: ["J", "J"], full: "十十 (JJ)" },
-            { char: "東", codes: ["木", "田"], keys: ["D", "W"], full: "木田 (DW)" },
-            { char: "門", codes: ["日", "弓"], keys: ["A", "N"], full: "日弓 (AN)" }
-          ]
-        };
-        allKeys.push('demo_practice');
-      }
-
-      // 排序：當前進行中週次排最前 (w5_hw1..4)，其餘按週次降序排列
-      const sortedKeys = allKeys.sort((a, b) => {
-        const isAActive = a.startsWith(activeWk);
-        const isBActive = b.startsWith(activeWk);
-        if (isAActive && !isBActive) return -1;
-        if (!isAActive && isBActive) return 1;
-        return b.localeCompare(a);
-      });
-
-      let defaultKey = null;
-      sortedKeys.forEach((k) => {
-        const bank = allBanks[k];
-        if (bank && Array.isArray(bank.words) && bank.words.length > 0) {
-          const opt = document.createElement('option');
-          opt.value = k;
-          const isThisWeek = k.startsWith(activeWk);
-          opt.textContent = (isThisWeek ? '🔥 ' : '📚 ') + (bank.title || k);
-          if (!defaultKey || (isThisWeek && !defaultKey.startsWith(activeWk))) {
-            defaultKey = k;
+      if (select) {
+        // 如果靜態 HTML 已經定義了完整的 optgroup，則保留完整結構並選中當前週次
+        if (select.options && select.options.length > 0 && select.querySelector && select.querySelector('optgroup')) {
+          const targetVal = `${activeWk}_hw1`;
+          let matched = false;
+          for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === targetVal) {
+              select.selectedIndex = i;
+              currentSpeedWeek = targetVal;
+              matched = true;
+              break;
+            }
           }
-          select.appendChild(opt);
+          if (!matched && select.options.length > 0) {
+            currentSpeedWeek = select.value;
+          }
+        } else {
+          // 動態構建分組選單
+          select.innerHTML = '';
+          const weekOrder = ['w5', 'w4', 'w3', 'w2'];
+          weekOrder.forEach(wk => {
+            const isCur = (wk === activeWk);
+            const grp = document.createElement('optgroup');
+            grp.label = isCur ? `🔥 第 ${wk.slice(1)} 周 速成手速字庫 (當前進行中)` : `📅 第 ${wk.slice(1)} 周 速成手速字庫 (溫故知新)`;
+            for (let idx = 1; idx <= 4; idx++) {
+              const k = `${wk}_hw${idx}`;
+              const bank = allBanks[k];
+              if (bank) {
+                const opt = document.createElement('option');
+                opt.value = k;
+                opt.textContent = bank.title ? bank.title.replace(/【.*?】/, '') : `第${wk.slice(1)}周功課${idx}`;
+                if (k === `${activeWk}_hw1`) opt.selected = true;
+                grp.appendChild(opt);
+              }
+            }
+            if (grp.children.length > 0) select.appendChild(grp);
+          });
+          if (select.options.length > 0) {
+            currentSpeedWeek = select.value;
+          }
         }
-      });
-
-      if (defaultKey) {
-        select.value = defaultKey;
-        currentSpeedWeek = defaultKey;
-      } else if (select.options.length > 0) {
-        select.selectedIndex = 0;
-        currentSpeedWeek = select.value;
       }
 
-      updateSpeedLeaderboardButtons(activeWk);
+      // 同步手速榜下拉選單
+      const lbSelect = document.getElementById('speed-lb-week-select');
+      if (lbSelect) {
+        if (!speedLeaderboardWeek) speedLeaderboardWeek = `${activeWk}_hw1`;
+        lbSelect.value = speedLeaderboardWeek;
+      }
     }
 
     function updateSpeedLeaderboardButtons(activeWk) {
-      const container = document.getElementById('speed-lb-week-buttons');
-      if (!container) return;
-      container.innerHTML = '';
-
-      const allBanks = (typeof MODE2_WEEKLY_BANKS === 'object' && MODE2_WEEKLY_BANKS) ? MODE2_WEEKLY_BANKS : {};
-      let hwKeys = [1, 2, 3, 4].map(idx => `${activeWk}_hw${idx}`);
-      // 若當前週次無題庫，展示所有可用題庫按鈕
-      if (!hwKeys.some(k => allBanks[k])) {
-        hwKeys = Object.keys(allBanks);
+      const lbSelect = document.getElementById('speed-lb-week-select');
+      if (lbSelect) {
+        if (!speedLeaderboardWeek) speedLeaderboardWeek = `${activeWk}_hw1`;
+        lbSelect.value = speedLeaderboardWeek;
       }
-
-      if (!hwKeys.includes(speedLeaderboardWeek)) {
-        speedLeaderboardWeek = hwKeys[0] || 'w5_hw1';
-      }
-
-      hwKeys.forEach(k => {
-        const bank = allBanks[k];
-        const btn = document.createElement('button');
-        btn.className = 'lb-sub-pill' + (k === speedLeaderboardWeek ? ' active' : '');
-        btn.id = `lb-week-${k}`;
-        btn.textContent = bank ? bank.title : k;
-        btn.onclick = () => filterSpeedLeaderboardWeek(k);
-        container.appendChild(btn);
-      });
     }
 
     function returnToSpeedReadyStage() {
@@ -2589,9 +2567,8 @@ const SafeStorage = {
         document.querySelectorAll('#speed-lb-sub-filters .lb-sub-pill[id^="lb-wc-"]').forEach(p => {
           p.classList.toggle('active', p.id === `lb-wc-${speedLeaderboardWordCount}`);
         });
-        document.querySelectorAll('#speed-lb-week-buttons .lb-sub-pill').forEach(p => {
-          p.classList.toggle('active', p.id === `lb-week-${speedLeaderboardWeek}`);
-        });
+        const select = document.getElementById('speed-lb-week-select');
+        if (select) select.value = speedLeaderboardWeek;
 
       burstConfetti();
     }
@@ -2632,9 +2609,10 @@ const SafeStorage = {
 
     function filterSpeedLeaderboardWeek(weekKey) {
       speedLeaderboardWeek = weekKey;
-      document.querySelectorAll('#speed-lb-week-buttons .lb-sub-pill').forEach(p => {
-        p.classList.toggle('active', p.id === `lb-week-${weekKey}`);
-      });
+      const select = document.getElementById('speed-lb-week-select');
+      if (select && select.value !== weekKey) {
+        select.value = weekKey;
+      }
       renderSpeedLeaderboardTable();
     }
 
@@ -2709,17 +2687,18 @@ const SafeStorage = {
           cloudList = DATA.cloud_speed_records;
         } else if (DATA.cloud_speed_records[speedLeaderboardWeek]) {
           cloudList = DATA.cloud_speed_records[speedLeaderboardWeek];
-        } else if (speedLeaderboardWeek === 'ALL' && DATA.cloud_speed_records['overall']) {
-          cloudList = DATA.cloud_speed_records['overall'];
+        } else if (speedLeaderboardWeek === 'ALL') {
+          const overallKey = (speedLeaderboardWordCount === 20) ? 'overall_20' : 'overall_10';
+          cloudList = DATA.cloud_speed_records[overallKey] || DATA.cloud_speed_records['overall'] || [];
         }
 
         cloudList.forEach(cs => {
           const mapKey = `${cs.cls}_${cs.num}`;
-          const time = cs.bestTime || cs.best10;
+          const time = (speedLeaderboardWordCount === 20) ? (cs.best20 || cs.bestTime) : (cs.best10 || cs.bestTime);
           if (time && typeof time === 'number' && time > 0 && time < 900) {
             const curEntry = allSpeedMap[mapKey];
             if (!curEntry || !curEntry.hasRecord || curEntry.bestTime > time) {
-              const cpm = cs.cpm || Math.round(10 / (time / 60));
+              const cpm = cs.cpm || Math.round(speedLeaderboardWordCount / (time / 60));
               allSpeedMap[mapKey] = {
                 cls: cs.cls,
                 num: cs.num,
@@ -2729,7 +2708,7 @@ const SafeStorage = {
                 cpm: cpm,
                 accuracy: cs.accuracy || 100,
                 accPenalty: cs.accPenalty || 0,
-                tier: cs.tier || getSpeedTier(time, 10),
+                tier: cs.tier || getSpeedTier(time, speedLeaderboardWordCount),
                 weekKey: cs.weekKey || speedLeaderboardWeek,
                 hasRecord: true
               };
