@@ -1,19 +1,70 @@
+/**
+ * =========================================================================
+ * 🎮 APP.JS - 四年級速成打字業務邏輯、UI 互動與跨電腦雲端同步核心
+ * 🤖 AI 迭代維護指南：
+ *    - 本模組包含四大模式狀態機 (錯字魔王、輔助字型、字母配對、極速手速賽)
+ *    - 包含排行榜渲染 (renderLeaderboardTable, renderSpeedLeaderboardTable)
+ *    - 包含 Webhook 雙向資料傳輸 (sendReliableWebhook, fetchCloudLeaderboard)
+ * =========================================================================
+ */
+
+const SafeStorage = window.SafeStorage = {
+  _mem: {},
+  getItem(key) {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const v = window.localStorage.getItem(key);
+        if (v !== null) return v;
+      }
+    } catch(e) {}
+    return this._mem[key] !== undefined ? this._mem[key] : null;
+  },
+  setItem(key, val) {
+    const strVal = String(val);
+    this._mem[key] = strVal;
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) window.localStorage.setItem(key, strVal);
+    } catch(e) {}
+  },
+  removeItem(key) {
+    delete this._mem[key];
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) window.localStorage.removeItem(key);
+    } catch(e) {}
+  },
+  getAllKeys() {
+    const keysSet = new Set(Object.keys(this._mem));
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        for (let i = 0; i < window.localStorage.length; i++) {
+          keysSet.add(window.localStorage.key(i));
+        }
+      }
+    } catch(e) {}
+    return Array.from(keysSet);
+  }
+};
+
 function inspectWebhookStatus() {
   const url = getGasWebhookUrl();
   const lastSync = (typeof lastCloudSyncTime !== 'undefined' && lastCloudSyncTime) ? lastCloudSyncTime.toLocaleString() : '尚未成功連通';
   const msg = [
-    '【雲端天梯連線診斷報告】',
+    '【四年級雲端天梯連線診斷報告】',
     '',
     '1. 當前偵測到的 Webhook 網址:',
-    url || '⚠️ (未讀取到，請確認 config.js 中的 GAS_WEBHOOK_URL 是否已填寫)',
+    url ? url : '⚠️ (未填寫或仍為範例預設值，處於安全本機離線模式)',
     '',
     '2. 最後成功同步時間:',
     lastSync,
     '',
-    '💡 常見故障排除排查指南：',
-    '・若顯示連線失敗或超時：請確認 Apps Script 部署設定中的「誰可以存取」是否選為「任何人 (Anyone)」，若選成「只有我」會被 Google 權限阻擋。',
-    '・若網址結尾為 /dev，請改為正式發布的 /exec 結尾網址。',
-    '・若修改了 GitHub 的 config.js，GitHub Pages 通常需 1~2 分鐘編譯，請按 Ctrl+F5 強制重新整理。'
+    '💡 如需連通 Google 試算表（全自動背景同步）：',
+    '① 打開「26-27_P4_錯字討伐小遊戲積分記錄表」試算表。',
+    '② 點擊上方選單「擴充功能」>「Apps Script」，貼上後端程式碼。',
+    '③ 點擊右上角「部署」>「新增部署」> 選擇「網頁應用程式」。',
+    '   - 執行身分：我 (Me)',
+    '   - 誰可以存取：任何人 (Anyone)',
+    '④ 複製生成的 /exec 結尾網址，貼至 js/config.js 的 CONFIG.GAS_WEBHOOK_URL 中。',
+    '⑤ 將 js/config.js 更新至 GitHub 倉庫，即可完成全自動背景同步！'
   ].join(String.fromCharCode(10));
   alert(msg);
 }
@@ -114,8 +165,11 @@ async function fetchCloudLeaderboard(silent = false) {
   if (isFetchingCloudLeaderboard) return;
   const url = getGasWebhookUrl();
   if (!url) {
+    // 即使在尚未配置雲端 Webhook 狀態下，點擊刷新也立即重繪本地最新手速天梯榜
+    if (typeof renderLeaderboardTable === 'function') renderLeaderboardTable();
+    if (typeof renderSpeedLeaderboardTable === 'function') renderSpeedLeaderboardTable();
     if (!silent) {
-      showPassToast('🟡 本機離線模式：全級榮譽榜已就緒');
+      inspectWebhookStatus();
     }
     return;
   }
@@ -202,62 +256,15 @@ async function fetchCloudLeaderboard(silent = false) {
   } catch(err) {
     clearTimeout(timeoutId);
     console.warn('雲端載入提醒 (自動維持本機安全離線模式):', err);
+    if (typeof renderLeaderboardTable === 'function') renderLeaderboardTable();
+    if (typeof renderSpeedLeaderboardTable === 'function') renderSpeedLeaderboardTable();
     if (!silent) showPassToast('⚠️ 雲端連線失敗: ' + (err.message || '權限或跨域阻擋'));
   } finally {
     isFetchingCloudLeaderboard = false;
   }
 }
 
-/**
- * =========================================================================
- * 🎮 APP.JS - 四年級速成打字業務邏輯、UI 互動與跨電腦雲端同步核心
- * 🤖 AI 迭代維護指南：
- *    - 本模組包含四大模式狀態機 (錯字魔王、輔助字型、字母配對、極速手速賽)
- *    - 包含排行榜渲染 (renderLeaderboardTable, renderSpeedLeaderboardTable)
- *    - 包含 Webhook 雙向資料傳輸 (sendReliableWebhook, fetchCloudLeaderboard)
- * =========================================================================
- */
-
-const SafeStorage = {
-      _mem: {},
-      getItem(key) {
-        try {
-          if (window.localStorage) {
-            const v = window.localStorage.getItem(key);
-            if (v !== null) return v;
-          }
-        } catch(e) {}
-        return this._mem[key] !== undefined ? this._mem[key] : null;
-      },
-      setItem(key, val) {
-        const strVal = String(val);
-        this._mem[key] = strVal;
-        try {
-          if (window.localStorage) window.localStorage.setItem(key, strVal);
-        } catch(e) {}
-      },
-      removeItem(key) {
-        delete this._mem[key];
-        try {
-          if (window.localStorage) window.localStorage.removeItem(key);
-        } catch(e) {}
-      },
-      getAllKeys() {
-        const keysSet = new Set(Object.keys(this._mem));
-        try {
-          if (window.localStorage) {
-            for (let i = 0; i < window.localStorage.length; i++) {
-              keysSet.add(window.localStorage.key(i));
-            }
-          }
-        } catch(e) {}
-        return Array.from(keysSet);
-      }
-    };
-
-    ;
-    
-    // =========================================================================
+// =========================================================================
     // 🎮 全域遊戲狀態變數集中顯式宣告 (嚴格防止 ReferenceError)
     // =========================================================================
     let activeTab = 'top40';
@@ -881,7 +888,7 @@ const SafeStorage = {
       };
       SafeStorage.setItem(`p4_score_${cls}_${num}`, JSON.stringify(updated));
 
-      // 同步內存基準排行榜資料，使學生切換分頁或打開技能館時立即感知最新總分
+      // 同步內存基準排行榜資料，使學生切換分頁或打開技能館時立即感知最新總分與手速成績
       if (typeof DATA !== 'undefined' && Array.isArray(DATA.benchmark_leaderboard)) {
         const padNum = parseInt(num, 10);
         const match = DATA.benchmark_leaderboard.find(item => item.cls === cls && parseInt(item.num, 10) === padNum);
@@ -890,6 +897,44 @@ const SafeStorage = {
           match.grandTotal = updated.totalScore;
           match.total = updated.totalScore;
           match.kills = updated.kills;
+          if (mode === 'speed' && bestTime) {
+            match.weekly_speed = match.weekly_speed || {};
+            if (!match.weekly_speed[weekKey] || bestTime < match.weekly_speed[weekKey]) {
+              match.weekly_speed[weekKey] = bestTime;
+            }
+            if (wordCount === 10) {
+              if (!match.best10 || bestTime < match.best10) {
+                match.best10 = bestTime;
+              }
+            }
+          }
+        }
+      }
+
+      // 同步記憶體雲端手速快取
+      if (mode === 'speed' && bestTime && typeof DATA !== 'undefined') {
+        if (!DATA.cloud_speed_records) DATA.cloud_speed_records = {};
+        if (!DATA.cloud_speed_records[weekKey]) DATA.cloud_speed_records[weekKey] = [];
+        const existing = DATA.cloud_speed_records[weekKey].find(x => x.cls === cls && parseInt(x.num, 10) === parseInt(num, 10));
+        if (existing) {
+          if (!existing.bestTime || bestTime < existing.bestTime) {
+            existing.bestTime = bestTime;
+            existing.best10 = bestTime;
+            existing.cpm = Math.round(10 / (bestTime / 60));
+            existing.tier = getSpeedTier(bestTime, 10);
+          }
+        } else {
+          DATA.cloud_speed_records[weekKey].push({
+            cls: cls,
+            num: parseInt(num, 10),
+            name: `${cls} ${(parseInt(num, 10) < 10 ? '0' : '') + parseInt(num, 10)}號`,
+            bestTime: bestTime,
+            best10: bestTime,
+            cpm: Math.round(10 / (bestTime / 60)),
+            accuracy: 100,
+            tier: getSpeedTier(bestTime, 10),
+            weekKey: weekKey
+          });
         }
       }
 
@@ -898,6 +943,9 @@ const SafeStorage = {
       }
       if (typeof renderSkillsHall === 'function') {
         try { renderSkillsHall(); } catch(e) {}
+      }
+      if (mode === 'speed' && typeof renderSpeedLeaderboardTable === 'function') {
+        try { renderSpeedLeaderboardTable(); } catch(e) {}
       }
 
       // 背景發送可靠 Webhook 至 Google Apps Script
@@ -2369,7 +2417,7 @@ const SafeStorage = {
       const rawWords = (bank && Array.isArray(bank.words) && bank.words.length > 0) ? [...bank.words] : [
         { char: "明", codes: ["日", "月"], keys: ["A", "B"], full: "日月 (AB)", secret: "速成首碼【日】(A) ＋ 尾碼【月】(B)" }
       ];
-      const shuffled = [...rawWords].sort(() => Math.random() - 0.5);
+      const shuffled = (typeof fisherYatesShuffle === 'function') ? fisherYatesShuffle([...rawWords]) : [...rawWords].sort(() => Math.random() - 0.5);
       speedWordList = shuffled.slice(0, currentSpeedWordCount);
 
       speedWordIdx = 0;
@@ -2765,6 +2813,18 @@ const SafeStorage = {
         const select = document.getElementById('speed-lb-week-select');
         if (select) select.value = speedLeaderboardWeek;
 
+      // ⚡ 立即重繪手速天梯榜，使天梯成績與排名即時更新生效！
+      if (typeof renderSpeedLeaderboardTable === 'function') {
+        renderSpeedLeaderboardTable();
+      }
+
+      // 在結算畫面即時展示名次回饋
+      const rankEl = document.getElementById('lb-my-rank');
+      const descEl = document.getElementById('speed-stat-time-desc');
+      if (descEl && rankEl && rankEl.textContent) {
+        descEl.innerHTML = `🌟 <strong>${rankEl.textContent.trim()}</strong>`;
+      }
+
       burstConfetti();
     }
 
@@ -2891,8 +2951,18 @@ const SafeStorage = {
           const cls = String(parts[0] || '').trim().toUpperCase();
           const num = parseInt(parts[1], 10);
           if (!cls || isNaN(num) || num < 1 || num > 36) return;
-          const recWc = parts[2] ? parseInt(parts[2], 10) : 10;
-          const recWk = parts.slice(3).join('_') || 'w6_hw1';
+
+          let recWc = 10;
+          let recWk = 'ALL';
+          if (parts.length >= 5) {
+            recWc = parseInt(parts[2], 10) || 10;
+            recWk = parts.slice(3).join('_');
+          } else if (parts.length === 2) {
+            recWc = 10;
+            recWk = 'ALL';
+          } else {
+            return;
+          }
 
           if (recWc !== 10) return; // 四年級週次功課鎖定純 10 字
           if (speedLeaderboardWeek !== 'ALL' && recWk !== speedLeaderboardWeek) return;
