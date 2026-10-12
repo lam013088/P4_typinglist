@@ -269,9 +269,9 @@ async function fetchCloudLeaderboard(silent = false) {
     // =========================================================================
     let activeTab = 'top40';
     let currentLeaderboardType = 'combat';
-    let speedLeaderboardWeek = 'w6_hw1';
+    let speedLeaderboardWeek = 'w7_hw1';
     let speedLeaderboardWordCount = 10;
-    let currentSpeedWeek = 'w6_hw1';
+    let currentSpeedWeek = 'w7_hw1';
     let currentSpeedWordCount = 10;
     let isSpeedPracticeMode = false;
     let currentClass = 'P4A';
@@ -870,7 +870,7 @@ async function fetchCloudLeaderboard(silent = false) {
       return stats;
     }
 
-    function saveStudentStats(cls, num, addScore, addKill, mode, bestTime = null, wordCount = 10, weekKey = 'w6_hw1') {
+    function saveStudentStats(cls, num, addScore, addKill, mode, bestTime = null, wordCount = 10, weekKey = 'w7_hw1') {
       const current = getStudentStats(cls, num);
       const updated = {
         totalScore: current.totalScore + addScore,
@@ -1057,7 +1057,7 @@ async function fetchCloudLeaderboard(silent = false) {
       const wcSelect = document.getElementById("speed-word-count-select");
       const wkSelect = document.getElementById("speed-ready-week-select");
       if (wcSelect) currentSpeedWordCount = parseInt(wcSelect.value, 10) || 10;
-      if (wkSelect) currentSpeedWeek = wkSelect.value || "w6_hw1";
+      if (wkSelect) currentSpeedWeek = wkSelect.value || "w7_hw1";
     }
 
     function toggleSpeedPracticeMode() {
@@ -2413,7 +2413,7 @@ async function fetchCloudLeaderboard(silent = false) {
       if (speedHintTimer) clearTimeout(speedHintTimer);
 
       const allBanks = (typeof MODE2_WEEKLY_BANKS === "object" && MODE2_WEEKLY_BANKS) ? MODE2_WEEKLY_BANKS : {};
-      const bank = allBanks[currentSpeedWeek] || allBanks["w6_hw1"] || Object.values(allBanks)[0] || { words: [] };
+      const bank = allBanks[currentSpeedWeek] || allBanks["w7_hw1"] || Object.values(allBanks)[0] || { words: [] };
       const rawWords = (bank && Array.isArray(bank.words) && bank.words.length > 0) ? [...bank.words] : [
         { char: "明", codes: ["日", "月"], keys: ["A", "B"], full: "日月 (AB)", secret: "速成首碼【日】(A) ＋ 尾碼【月】(B)" }
       ];

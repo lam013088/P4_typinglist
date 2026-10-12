@@ -17,7 +17,7 @@ if (!window.CONFIG.GAS_WEBHOOK_URL || window.CONFIG.GAS_WEBHOOK_URL.includes('Yo
     }
   } catch(e) {}
   if (!window.CONFIG.GAS_WEBHOOK_URL || window.CONFIG.GAS_WEBHOOK_URL.includes('YourDeploymentIdHere')) {
-    window.CONFIG.GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyeDwTwNtWzEJqbQ3jyZKiiMBoA6l8ItgsgErRiW2wmZ45Lsm2jeeWDGSjtYnpmSXrJ/exec';
+    window.CONFIG.GAS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyfD7gq5g4w3pS8T1z_YourDeploymentIdHere/exec';
   }
 }
 if (typeof window.CONFIG.GITHUB_PRIVACY_MODE === 'undefined') {
@@ -68,6 +68,7 @@ window.SPEED_WEEK_SCHEDULES = window.SPEED_WEEK_SCHEDULES || [
   { week: 'w2', name: '第 2 周', title: '【第2周】速成首尾二碼特訓 (9/7 - 9/13)', start: new Date('2026-09-07T00:00:00+08:00'), end: new Date('2026-09-13T23:59:59+08:00') },
   { week: 'w3', name: '第 3 周', title: '【第 3 周】高頻易錯字速成攻防 (9/14 - 9/20)', start: new Date('2026-09-14T00:00:00+08:00'), end: new Date('2026-09-20T23:59:59+08:00') },
   { week: 'w4', name: '第 4 周', title: '【第 4 周】期初實力排位激戰 (9/21 - 10/04，第4/5周合拼)', start: new Date('2026-09-21T00:00:00+08:00'), end: new Date('2026-10-04T23:59:59+08:00') },
-  { week: 'w6', name: '第 6 周', title: '【第 6 周】手速極限突破爭霸 (10/5 - 10/11)', start: new Date('2026-10-05T00:00:00+08:00'), end: new Date('2026-10-11T23:59:59+08:00') }
+  { week: 'w6', name: '第 6 周', title: '【第 6 周】手速極限突破爭霸 (10/5 - 10/11)', start: new Date('2026-10-05T00:00:00+08:00'), end: new Date('2026-10-11T23:59:59+08:00') },
+  { week: 'w7', name: '第 7 周', title: '【第 7 周】速成全級競速爭霸 (10/12 - 10/19)', start: new Date('2026-10-12T00:00:00+08:00'), end: new Date('2026-10-19T23:59:59+08:00') }
 ];
 var SPEED_WEEK_SCHEDULES = window.SPEED_WEEK_SCHEDULES;
