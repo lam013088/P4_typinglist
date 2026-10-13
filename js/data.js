@@ -11611,9 +11611,9 @@ const MODE2_WEEKLY_BANKS = {
           "D",
           "O"
         ],
-        "full": "木人 (DO)",
+        "full": "木戈 (DI)",
         "cj_full": "木人人 (DOO)",
-        "secret": "速成首碼【木】(D) ＋ 尾碼【人】(O)"
+        "secret": "速成首碼【木】(D) ＋ 尾碼【戈】(I)"
       },
       {
         "char": "睞",
@@ -12183,9 +12183,9 @@ const MODE2_WEEKLY_BANKS = {
           "D",
           "O"
         ],
-        "full": "木人 (DO)",
+        "full": "木戈 (DI)",
         "cj_full": "木人人 (DOO)",
-        "secret": "速成首碼【木】(D) ＋ 尾碼【人】(O)"
+        "secret": "速成首碼【木】(D) ＋ 尾碼【戈】(I)"
       },
       {
         "char": "睞",
@@ -12575,9 +12575,9 @@ const MODE2_WEEKLY_BANKS = {
           "D",
           "O"
         ],
-        "full": "木人 (DO)",
+        "full": "木戈 (DI)",
         "cj_full": "木人人 (DOO)",
-        "secret": "速成首碼【木】(D) ＋ 尾碼【人】(O)"
+        "secret": "速成首碼【木】(D) ＋ 尾碼【戈】(I)"
       },
       {
         "char": "卷",
@@ -14969,15 +14969,15 @@ const MODE2_WEEKLY_BANKS = {
         "char": "機",
         "codes": [
           "木",
-          "人"
+          "戈"
         ],
         "keys": [
           "D",
-          "O"
+          "I"
         ],
-        "full": "木人 (DO)",
-        "cj_full": "木女戈人 (DVIO)",
-        "secret": "速成首碼【木】(D) ＋ 尾碼【人】(O)"
+        "full": "木戈 (DI)",
+        "cj_full": "木女戈戈 (DVII)",
+        "secret": "速成首碼【木】(D) ＋ 尾碼【戈】(I)"
       },
       {
         "char": "封",

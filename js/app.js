@@ -224,6 +224,20 @@ async function fetchCloudLeaderboard(silent = false) {
 
       if (data.weeklyBanks && typeof data.weeklyBanks === 'object' && Object.keys(data.weeklyBanks).length > 0) {
         window.MODE2_WEEKLY_BANKS = data.weeklyBanks;
+            // 🛡️ 權威校本防護：防止雲端 Webhook 快取殘留或舊部署覆蓋導致字碼偏差
+            Object.values(window.MODE2_WEEKLY_BANKS).forEach(b => {
+              if (b && Array.isArray(b.words)) {
+                b.words.forEach(w => {
+                  if (w && w.char === '機') {
+                    w.codes = ['木', '戈'];
+                    w.keys = ['D', 'I'];
+                    w.full = '木戈 (DI)';
+                    w.cj_full = '木女戈戈 (DVII)';
+                    w.secret = '速成首碼【木】(D) ＋ 尾碼【戈】(I)';
+                  }
+                });
+              }
+            });
         if (typeof initSpeedWeekDropdown === 'function') {
           try { initSpeedWeekDropdown(); } catch(e) {}
         }
